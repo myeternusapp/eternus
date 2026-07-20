@@ -1,20 +1,19 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <!-- Primary Meta Tags -->
   <meta name="title" content="FAQ — Eternus" />
-  <meta name="description" content="A private space to preserve what matters most. Memories, voice, and stories — kept with care, shared with trust." />
-  <meta name="keywords" content="Eternus, memory preservation, private archive, trusted legacy, personal memories, memorial" />
+  <meta name="description" content="Clear answers about how Eternus works, how sharing is controlled and what to expect during private beta." />
+  <meta name="keywords" content="Eternus, FAQ, private memories, family legacy, intentional sharing" />
   <meta name="author" content="Eternus" />
   <meta name="theme-color" content="#06060a" />
-  <link rel="icon" type="image/png" href="assets/favicon.png">
 
   <!-- Open Graph / Facebook / WhatsApp -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://eternusapp.com/faq.html" />
-  <meta property="og:title" content="Eternus — Your private memory archive." />
-  <meta property="og:description" content="A private space to preserve what matters most. Memories, voice, and stories — kept with care, shared with trust." />
+  <meta property="og:title" content="FAQ — Eternus" />
+  <meta property="og:description" content="Clear answers about how Eternus works, how sharing is controlled and what to expect during private beta." />
   <meta property="og:image" content="https://myeternusapp.com/assets/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -24,11 +23,12 @@
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://eternusapp.com/faq.html" />
-  <meta name="twitter:title" content="Eternus — Your private memory archive." />
-  <meta name="twitter:description" content="A private space to preserve what matters most. Memories, voice, and stories — kept with care, shared with trust." />
+  <meta name="twitter:title" content="FAQ — Eternus" />
+  <meta name="twitter:description" content="Clear answers about how Eternus works, how sharing is controlled and what to expect during private beta." />
   <meta name="twitter:image" content="https://myeternusapp.com/assets/og-image.jpg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>FAQ — Eternus</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -39,10 +39,11 @@
       --gold: #c9a84c;
       --gold-light: #e8c97a;
       --white: #f5f0ea;
-      --muted: #9a8fa0;
+      --muted: #a89dae;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     html { scroll-behavior: smooth; }
 
     body {
@@ -53,6 +54,11 @@
       overflow-x: hidden;
     }
 
+    a { color: inherit; }
+    a:visited { color: inherit; }
+    img { max-width: 100%; }
+
+    /* NOISE TEXTURE OVERLAY */
     body::before {
       content: '';
       position: fixed;
@@ -63,16 +69,7 @@
       opacity: 0.4;
     }
 
-    body::after {
-      content: '';
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(220,210,255,0.25), rgba(255,245,220,0.2), rgba(220,210,255,0.25), transparent);
-      pointer-events: none;
-      z-index: 998;
-    }
-
+    /* AMBIENT GLOW */
     .glow-orb {
       position: fixed;
       border-radius: 50%;
@@ -96,291 +93,409 @@
       position: fixed; top: 0; left: 0; right: 0;
       z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 28px 60px;
-      background: linear-gradient(to bottom, rgba(6,6,10,0.95), transparent);
-      backdrop-filter: blur(4px);
+      padding: 24px 60px;
+      background: linear-gradient(to bottom, rgba(6,6,10,0.92), rgba(6,6,10,0.6) 70%, transparent);
+      backdrop-filter: blur(6px);
     }
     .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-      font-weight: 300;
-      letter-spacing: 0.2em;
-      color: var(--gold);
       text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.08em;
+      color: var(--gold);
     }
-    .nav-back {
-      font-size: 0.72rem;
+    .nav-center { display: flex; align-items: center; gap: 40px; }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a,
+    .nav-links a:visited {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--gold-light); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 32px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-static { cursor: default; opacity: 0.85; }
+    .btn-static:hover { transform: none; box-shadow: none; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: var(--black);
+      border: 1px solid var(--gold);
+    }
+    .btn-nav { padding: 10px 24px; font-size: 0.7rem; }
+
+    /* HAMBURGER */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 6px 2px;
+      z-index: 101;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 1px;
+      background: var(--muted);
+      transition: background 0.3s, transform 0.3s, opacity 0.3s;
+    }
+    .nav-hamburger:hover span { background: var(--gold-light); }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 99;
+      padding-top: 84px;
+      background: rgba(6,6,10,0.97);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+      transform: translateY(-100%);
+      transition: transform 0.35s ease;
+    }
+    .mobile-menu.open { transform: translateY(0); }
+    .mobile-menu-links { list-style: none; padding: 16px 28px 28px; }
+    .mobile-menu-links li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .mobile-menu-links li:last-child { border-bottom: none; }
+    .mobile-menu-links a,
+    .mobile-menu-links a:visited {
+      display: block;
+      padding: 15px 0;
+      font-size: 0.75rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--muted);
       text-decoration: none;
       transition: color 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
-    .nav-back:hover { color: var(--gold-light); }
-    .nav-back svg { width: 14px; height: 14px; }
+    .mobile-menu-links a:hover { color: var(--gold-light); }
+    .mobile-menu-cta { padding: 20px 0 8px; }
 
-    /* HEADER */
-    .page-header {
-      position: relative; z-index: 1;
-      padding: 160px 60px 80px;
-      max-width: 900px;
-      margin: 0 auto;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-    }
-    .page-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.4em;
+    /* SECTION SCAFFOLDING */
+    section { position: relative; z-index: 1; }
+    .section-inner { max-width: 1000px; margin: 0 auto; padding: 90px 60px; }
+    .section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.35em;
       text-transform: uppercase;
       color: var(--gold);
+      margin-bottom: 18px;
       display: block;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.1rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.18;
       margin-bottom: 20px;
     }
-    .page-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 300;
-      line-height: 1.1;
-      margin-bottom: 24px;
-    }
-    .page-title em { font-style: italic; color: var(--gold); }
-    .page-subtitle {
-      font-size: 0.88rem;
+    .section-title em { font-style: italic; color: var(--gold); }
+    .section-sub {
+      font-size: 0.95rem;
       line-height: 1.9;
-      color: var(--muted);
-      max-width: 560px;
+      color: rgba(245,240,234,0.72);
+      max-width: 620px;
+    }
+    .center { text-align: center; margin-left: auto; margin-right: auto; }
+    .divider {
+      width: 100%; max-width: 900px;
+      margin: 0 auto;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent);
     }
 
-    /* CONTENT */
-    .content {
-      position: relative; z-index: 1;
-      max-width: 900px;
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* HERO */
+    .faq-hero {
+      min-height: 44vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 170px 60px 60px;
+    }
+    .faq-hero-inner { max-width: 700px; }
+    .faq-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 1.6vw, 1.2rem);
+      letter-spacing: 0.1em;
+      color: var(--gold-light);
+      margin-bottom: 22px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.1s;
+    }
+    .faq-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      line-height: 1.15;
+      margin-bottom: 22px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.25s;
+    }
+    .faq-intro {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: rgba(245,240,234,0.75);
+      max-width: 540px;
       margin: 0 auto;
-      padding: 80px 60px 120px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.4s;
+    }
+
+    /* CATEGORY NAV */
+    .faq-nav-wrap {
+      position: sticky;
+      top: 86px;
+      z-index: 50;
+      background: rgba(6,6,10,0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .faq-nav-wrap::before,
+    .faq-nav-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 36px;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .faq-nav-wrap::before { left: 0; background: linear-gradient(to right, rgba(6,6,10,0.9), transparent); }
+    .faq-nav-wrap::after { right: 0; background: linear-gradient(to left, rgba(6,6,10,0.9), transparent); }
+    .faq-nav-wrap nav {
+      display: block;
+      position: static;
+      padding: 0;
+      background: none;
+      backdrop-filter: none;
+    }
+    .faq-nav-scroll {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 16px 60px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .faq-nav-scroll::-webkit-scrollbar { display: none; }
+    .faq-nav {
+      display: inline-flex;
+      min-width: 100%;
+      justify-content: center;
+      gap: 10px;
+      list-style: none;
+    }
+    .faq-nav li { flex-shrink: 0; }
+    .faq-nav a,
+    .faq-nav a:visited {
+      display: inline-block;
+      padding: 9px 18px;
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 999px;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color 0.3s, border-color 0.3s, background 0.3s;
+    }
+    .faq-nav a:hover, .faq-nav a:focus-visible {
+      color: var(--gold-light);
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.06);
     }
 
     /* CATEGORY */
-    .faq-category {
-      margin-bottom: 64px;
-    }
+    .faq-category { scroll-margin-top: 150px; }
+    .faq-category:not(:first-child) { margin-top: 8px; }
 
-    .category-title {
-      font-size: 0.65rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .category-title::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(to right, rgba(201,168,76,0.2), transparent);
-    }
-
-    /* FAQ ITEM */
+    /* FAQ ITEM (accordion) */
+    .faq-list { margin-top: 40px; }
     .faq-item {
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      margin-bottom: 14px;
+      transition: background 0.4s, border-color 0.4s;
       overflow: hidden;
     }
-
-    .faq-question {
+    .faq-item:hover { border-color: rgba(201,168,76,0.25); }
+    .faq-question-btn {
       width: 100%;
-      background: none;
-      border: none;
-      padding: 24px 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 24px;
-      cursor: pointer;
-      text-align: left;
-    }
-
-    .faq-question-text {
+      gap: 20px;
+      padding: 22px 26px;
+      background: none;
+      border: none;
+      color: inherit;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       font-weight: 400;
-      color: var(--white);
-      line-height: 1.4;
-      transition: color 0.3s;
+      text-align: left;
+      cursor: pointer;
     }
-
-    .faq-question:hover .faq-question-text { color: var(--gold-light); }
-
-    .faq-icon {
-      width: 20px;
-      height: 20px;
+    .faq-question-btn:hover { color: var(--gold-light); }
+    .faq-question-btn:focus-visible {
+      outline: 2px solid rgba(201,168,76,0.6);
+      outline-offset: -2px;
+      border-radius: 12px;
+    }
+    .faq-chevron {
       flex-shrink: 0;
+      width: 18px; height: 18px;
       color: var(--gold);
-      transition: transform 0.4s ease;
+      transition: transform 0.35s ease;
     }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
 
-    .faq-item.open .faq-icon {
-      transform: rotate(45deg);
-    }
-
-    .faq-answer {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease, padding 0.4s ease;
-    }
-
-    .faq-item.open .faq-answer {
-      max-height: 400px;
-    }
-
-    .faq-answer-inner {
-      padding-bottom: 24px;
-      font-size: 0.88rem;
-      line-height: 2;
-      color: rgba(245,240,234,0.6);
-    }
-
-    .faq-answer-inner a {
-      color: var(--gold-light);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(201,168,76,0.3);
-      transition: color 0.3s;
-    }
-    .faq-answer-inner a:hover { color: var(--white); }
-
-    /* LAYER MINI GRID */
-    .layer-callout {
-      margin: 0 0 64px;
-      padding: 32px 0;
-      border-top: 1px solid rgba(255,255,255,0.04);
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-    }
-    .layer-callout-label {
-      font-size: 0.62rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 20px;
-    }
-    .layer-mini-grid {
+    .faq-answer-wrap {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.35s ease;
     }
-    .layer-mini-card {
-      padding: 24px 20px;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.04);
-      position: relative;
-      overflow: hidden;
-      transition: background 0.4s, border-color 0.4s;
+    .faq-item.open .faq-answer-wrap { grid-template-rows: 1fr; }
+    .faq-answer-inner-clip { overflow: hidden; }
+    .faq-answer {
+      padding: 0 26px 24px;
+      font-size: 0.9rem;
+      line-height: 1.9;
+      color: rgba(245,240,234,0.68);
     }
-    .layer-mini-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-    .layer-mini-card:hover { background: rgba(201,168,76,0.03); border-color: rgba(201,168,76,0.15); }
-    .layer-mini-card:hover::before { opacity: 1; }
-    .layer-mini-title {
-      font-size: 0.62rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 10px;
-    }
-    .layer-mini-text {
-      font-size: 0.82rem;
-      line-height: 1.8;
-      color: var(--muted);
+    .faq-answer p + p { margin-top: 14px; }
+    .faq-answer a { color: var(--gold-light); text-decoration: underline; text-decoration-color: rgba(232,201,122,0.4); }
+    .faq-answer a:hover { color: var(--white); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .faq-answer-wrap { transition: none; }
+      .faq-chevron { transition: none; }
     }
 
-    /* FOOTER LINKS */
-    .footer-link {
-      font-size: 0.72rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(154,143,160,0.5);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    .footer-link:hover { color: var(--gold-light); }
-
-    /* CONTACT BLOCK */
-    .still-questions {
-      margin-top: 80px;
-      padding: 48px 40px;
-      border: 1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.02);
-      text-align: center;
-      position: relative;
-    }
-    .still-questions::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
-    }
-    .still-questions h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem;
-      font-weight: 300;
-      margin-bottom: 12px;
-    }
-    .still-questions h3 em { font-style: italic; color: var(--gold); }
-    .still-questions p {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 24px;
-    }
-    .contact-email {
-      font-size: 0.85rem;
-      letter-spacing: 0.1em;
+    /* CONTACT */
+    .contact-email-link {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
       color: var(--gold-light);
       text-decoration: none;
-      border-bottom: 1px solid rgba(201,168,76,0.3);
-      padding-bottom: 2px;
-      transition: color 0.3s;
+      border-bottom: 1px solid rgba(201,168,76,0.35);
+      padding-bottom: 3px;
+      transition: color 0.3s, border-color 0.3s;
     }
-    .contact-email:hover { color: var(--white); }
+    .contact-email-link:visited { color: var(--gold-light); }
+    .contact-email-link:hover { color: var(--white); border-color: var(--gold-light); }
 
     /* FOOTER */
-    footer {
-      position: relative; z-index: 1;
-      padding: 40px 60px;
-      border-top: 1px solid rgba(255,255,255,0.04);
+    footer { padding: 48px 60px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .footer-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 28px;
+      max-width: 1120px;
+      margin: 0 auto 32px;
     }
+    .footer-brand { flex: 1 1 240px; }
     .footer-logo {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       font-weight: 300;
-      letter-spacing: 0.2em;
-      color: var(--gold);
-    }
-    .footer-copy {
-      font-size: 0.72rem;
       letter-spacing: 0.1em;
-      color: rgba(154,143,160,0.4);
+      color: var(--gold);
+      margin-bottom: 10px;
+      display: block;
+    }
+    .footer-tagline {
+      font-size: 0.8rem;
+      color: rgba(245,240,234,0.55);
+      line-height: 1.7;
+      max-width: 320px;
+    }
+    .footer-nav { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 28px; }
+    .footer-contact { flex: 1 1 240px; text-align: right; font-size: 0.8rem; }
+    footer a,
+    footer a:visited {
+      color: rgba(245,240,234,0.6);
+      text-decoration: none;
+      transition: color 0.3s ease, opacity 0.3s ease;
+    }
+    footer a:hover,
+    footer a:focus {
+      color: var(--gold-light);
+      text-decoration: underline;
+      text-decoration-color: rgba(232,201,122,0.4);
+      text-underline-offset: 4px;
+    }
+    footer a:focus { outline: 1px solid rgba(201,168,76,0.5); outline-offset: 4px; }
+    .footer-bottom {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      color: rgba(245,240,234,0.4);
+      text-align: center;
     }
 
+    /* RESPONSIVE */
     @media (max-width: 768px) {
-      nav { padding: 24px; }
-      .page-header { padding: 140px 24px 60px; }
-      .content { padding: 60px 24px 80px; }
-      .layer-mini-grid { grid-template-columns: 1fr; }
-      footer { padding: 32px 24px; }
+      nav { padding: 20px 24px; }
+      .nav-center { display: none; }
+      .nav-hamburger { display: flex; }
+      .mobile-menu { display: block; }
+
+      .faq-hero { padding: 130px 24px 40px; }
+      .faq-nav-wrap { top: 65px; }
+      .faq-nav-scroll { padding: 14px 20px; }
+      .faq-nav-wrap::before, .faq-nav-wrap::after { width: 24px; }
+      .section-inner { padding: 56px 24px; }
+      .faq-category { scroll-margin-top: 128px; }
+
+      .footer-top { flex-direction: column; text-align: center; gap: 20px; }
+      .footer-brand, .footer-contact { flex: none; text-align: center; }
+      footer { padding: 40px 24px; }
     }
   </style>
 </head>
@@ -391,324 +506,614 @@
 
   <!-- NAV -->
   <nav>
-    <a class="nav-logo" href="index.html">Eternus</a>
-    <a class="nav-back" href="index.html">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-      </svg>
-      Back to Eternus
+    <a class="nav-logo" href="index.html">
+      <img src="assets/logo-eternus-gold.png" alt="Eternus" style="height:22px; width:auto; display:block;" />
+      Eternus
     </a>
+    <div class="nav-center">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="faq.html" aria-current="page">FAQ</a></li>
+        <li><a href="privacy-policy.html">Privacy</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul>
+      <span class="btn btn-primary btn-nav btn-static" aria-disabled="true">Coming Soon</span>
+    </div>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </nav>
 
-  <!-- HEADER -->
-  <div class="page-header">
-    <span class="page-label">Support</span>
-    <h1 class="page-title">Frequently Asked <em>Questions</em></h1>
-    <p class="page-subtitle">Everything you need to know about Eternus. Can't find what you're looking for? Reach out to us directly.</p>
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <ul class="mobile-menu-links">
+      <li><a href="index.html" class="mobile-link">Home</a></li>
+      <li><a href="about.html" class="mobile-link">About</a></li>
+      <li><a href="faq.html" class="mobile-link" aria-current="page">FAQ</a></li>
+      <li><a href="privacy-policy.html" class="mobile-link">Privacy</a></li>
+      <li><a href="support.html" class="mobile-link">Support</a></li>
+    </ul>
+    <div class="mobile-menu-cta" style="padding: 0 28px 28px;">
+      <span class="btn btn-primary btn-static" style="width:100%;" aria-disabled="true">Coming Soon</span>
+    </div>
   </div>
 
-  <!-- CONTENT -->
-  <div class="content">
-
-    <!-- CATEGORY 1 -->
-    <div class="faq-category">
-      <div class="category-title">About the App</div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span class="faq-question-text">What is Eternus?</span>
-          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Eternus is a private memory system built on trust — not a social network. It lets you capture and preserve your memories across three layers: private (just for you), trusted circle (family and close friends), and legacy (long-term access you define and control). Optionally, a memory continuity feature allows your loved ones to stay connected to your story through the memories and recordings you chose to preserve.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span class="faq-question-text">Is Eternus free to use?</span>
-          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Eternus will offer a free tier with core features available at no cost. Premium plans with expanded storage and advanced features will also be available. Full pricing details will be announced at launch.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span class="faq-question-text">When will Eternus be available?</span>
-          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Eternus is currently in development. Join our waiting list to be among the first to know when we launch. We'll notify you by email as soon as the app is ready.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span class="faq-question-text">Which devices will Eternus support?</span>
-          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Eternus will be available on iOS (App Store) and Android (Google Play). A web version may also be considered in a future update.</div>
-        </div>
-      </div>
+  <!-- HERO -->
+  <section class="faq-hero" id="top">
+    <div class="faq-hero-inner">
+      <p class="faq-eyebrow">FAQ</p>
+      <h1 class="faq-title">Frequently asked <em style="font-style:italic;color:var(--gold);">questions.</em></h1>
+      <p class="faq-intro">Clear answers about how Eternus works, how sharing is controlled and what to expect during private beta.</p>
     </div>
+  </section>
 
-    <!-- CATEGORY 2 -->
-    <div class="faq-category">
-      <div class="category-title">Your Memories</div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span class="faq-question-text">What types of files can I upload?</span>
-          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">You can upload photos, videos, voice recordings and written messages. We support the most common file formats including JPG, PNG, MP4, MOV, MP3 and more. Full format support details will be available at launch.</div>
-        </div>
+  <!-- CATEGORY NAV -->
+  <div class="faq-nav-wrap">
+    <nav aria-label="FAQ categories">
+      <div class="faq-nav-scroll">
+        <ul class="faq-nav">
+          <li><a href="#about-eternus">About Eternus</a></li>
+          <li><a href="#memories">Memories &amp; Moments</a></li>
+          <li><a href="#layers">Private, Circle &amp; Legacy</a></li>
+          <li><a href="#talk">Talk to Eternus</a></li>
+          <li><a href="#mytree">My Tree &amp; Connections</a></li>
+          <li><a href="#privacy">Privacy &amp; Control</a></li>
+          <li><a href="#beta">Private Beta</a></li>
+        </ul>
       </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span class="faq-question-text">Is there a storage limit?</span>
-          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">The free plan will include a generous base storage allowance. Premium plans will offer expanded or unlimited storage. We believe everyone deserves to preserve their memories without worrying about space.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span class="faq-question-text">Can I edit or delete my memories at any time?</span>
-          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Yes, absolutely. You are always in full control of your vault. You can add, edit, organise or permanently delete any memory at any time. Your content belongs entirely to you.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CATEGORY 3 -->
-    <div class="faq-category">
-      <div class="category-title">Memory Continuity</div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span class="faq-question-text">How does memory continuity work?</span>
-          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Eternus draws on the memories, recordings, stories and moments you have chosen to preserve. It helps organise and surface what you stored — making it accessible to the trusted contacts you personally designate, never the general public.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span class="faq-question-text">Is memory continuity ever activated without my consent?</span>
-          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">No. Memory continuity is strictly opt-in and is never activated without your prior, explicit consent. You decide whether this feature is enabled, and you can change or revoke that decision at any time.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span class="faq-question-text">What does Eternus actually preserve?</span>
-          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Eternus preserves what you choose to store: photos, voice recordings, written memories, personal stories, dates, context and shared moments. It is a personal archive — not a simulation. Eternus preserves memory and context, not human consciousness or identity.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span class="faq-question-text">Does Eternus pretend to be a real person?</span>
-          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">No. Eternus does not simulate consciousness or claim to be a real person. The platform is designed to preserve memories, context, voice recordings and shared experiences — not to recreate human identity. The goal of Eternus is continuity of memory, not imitation of a human being.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- LAYER CALLOUT -->
-    <div class="layer-callout">
-      <div class="layer-callout-label">How Eternus works</div>
-      <div class="layer-mini-grid">
-        <div class="layer-mini-card">
-          <div class="layer-mini-title">Private</div>
-          <p class="layer-mini-text">Only visible to you. Your space, entirely your own.</p>
-        </div>
-        <div class="layer-mini-card">
-          <div class="layer-mini-title">Trusted Circle</div>
-          <p class="layer-mini-text">Shared intentionally with the people closest to you.</p>
-        </div>
-        <div class="layer-mini-card">
-          <div class="layer-mini-title">Legacy</div>
-          <p class="layer-mini-text">Long-term access controlled by your permissions.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- CATEGORY 4 -->
-    <div class="faq-category">
-      <div class="category-title">Privacy & Security</div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span class="faq-question-text">Who owns my memories and data?</span>
-          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">You do. Always. Your memories, recordings, photos and personal archives remain your property and under your control. Eternus does not sell, license or monetise your personal memories.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span class="faq-question-text">Who can access my memories?</span>
-          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Eternus works in three layers — private (only you), trusted circle (people you designate), and legacy (controlled future access). You decide what goes in each layer. No one else, including Eternus staff, can access your memories without your explicit permission.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span class="faq-question-text">Is my data safe?</span>
-          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Yes. All data is encrypted in transit and at rest using industry-standard protocols. Our servers are hosted within the European Union in full compliance with GDPR. We take the security of your memories extremely seriously. For full details, please read our <a href="privacy-policy.html">Privacy Policy</a>.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span class="faq-question-text">What happens to my data if I delete my account?</span>
-          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">If you delete your account, all your personal data and memories will be permanently and irreversibly deleted from our servers within 30 days. We do not retain any copies after this period.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span class="faq-question-text">Do you sell my data to third parties?</span>
-          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Never. We will never sell, rent or share your personal data with third parties for commercial or advertising purposes. Your memories are yours alone.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CATEGORY 5 -->
-    <div class="faq-category">
-      <div class="category-title">Your Legacy</div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span class="faq-question-text">How do I choose who has access to my legacy?</span>
-          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Inside the app, you assign people to your trust circles — family, close friends, or designated legacy contacts. Each person only sees what you have explicitly allowed them to see. You can change or revoke access at any time.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span class="faq-question-text">Can my trusted contacts deactivate memory continuity?</span>
-          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">Yes. Any designated trusted contact can request deactivation of memory continuity at any time. We respect the emotional wellbeing of everyone who uses Eternus and understand that this feature may not be right for everyone.</div>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-question" onclick="toggleFaq(this)">
-          <span class="faq-question-text">What happens to my account if I don't set any instructions?</span>
-          <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-          </svg>
-        </button>
-        <div class="faq-answer">
-          <div class="faq-answer-inner">If no legacy instructions are set and your account remains inactive for an extended period, your data will be securely retained for up to 10 years, after which it will be permanently deleted. We strongly encourage all users to configure their legacy settings to ensure their wishes are respected.</div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- STILL QUESTIONS -->
-    <div class="still-questions">
-      <h3>Still have <em>questions?</em></h3>
-      <p>We're happy to help. Send us a message and we'll get back to you as soon as possible.</p>
-      <a class="contact-email" href="mailto:hello@myeternusapp.com">hello@myeternusapp.com</a>
-    </div>
-
+    </nav>
   </div>
+
+  <!-- ABOUT ETERNUS -->
+  <section class="faq-category" id="about-eternus">
+    <div class="section-inner">
+      <span class="section-label">About Eternus</span>
+      <h2 class="section-title">The essentials.</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q1" aria-expanded="false" aria-controls="a1">
+            <span>What is Eternus?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a1" role="region" aria-labelledby="q1">
+                <p>Eternus is a private space for preserving personal memories, meaningful relationships and the legacy a person chooses to build over time.</p>
+                <p>It combines Moments, guided reflection, intentional sharing and My Tree inside one experience designed around trust and control.</p>
+                <p>Eternus is not a public social network, memorial platform or digital simulation of a person.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q2" aria-expanded="false" aria-controls="a2">
+            <span>Is Eternus a social network?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a2" role="region" aria-labelledby="q2">
+                <p>No. Eternus does not use a public follower system or a public feed designed for reach, popularity or performance.</p>
+                <p>Private interactions such as likes and comments may exist inside trusted Circle and Legacy relationships.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q3" aria-expanded="false" aria-controls="a3">
+            <span>Does Eternus show advertising?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a3" role="region" aria-labelledby="q3">
+                <p>No. Eternus is being built without advertising.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MEMORIES & MOMENTS -->
+  <section class="faq-category" id="memories">
+    <div class="section-inner">
+      <span class="section-label">Memories &amp; Moments</span>
+      <h2 class="section-title">Capturing what matters.</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q4" aria-expanded="false" aria-controls="a4">
+            <span>What can I preserve in Eternus?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a4" role="region" aria-labelledby="q4">
+                <p>You can preserve meaningful Moments using photographs, written stories, dates, places and personal context.</p>
+                <p>Additional media capabilities may evolve as Eternus develops.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q5" aria-expanded="false" aria-controls="a5">
+            <span>Can I edit or delete a Moment?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a5" role="region" aria-labelledby="q5">
+                <p>Yes. You remain in control of the Moments you create and can update or remove them through the available controls in the app.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q6" aria-expanded="false" aria-controls="a6">
+            <span>Who can see my Moments?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a6" role="region" aria-labelledby="q6">
+                <p>That depends on the layer you choose: Private, Circle or Legacy.</p>
+                <p>Nothing should be shared outside the layer and people you intentionally select.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PRIVATE, CIRCLE & LEGACY -->
+  <section class="faq-category" id="layers">
+    <div class="section-inner">
+      <span class="section-label">Private, Circle &amp; Legacy</span>
+      <h2 class="section-title">How the three layers work.</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q7" aria-expanded="false" aria-controls="a7">
+            <span>What is Private?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a7" role="region" aria-labelledby="q7">
+                <p>Private is your personal space. Moments kept there are visible only to you.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q8" aria-expanded="false" aria-controls="a8">
+            <span>What is Circle?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a8" role="region" aria-labelledby="q8">
+                <p>Circle is for selected Moments you choose to share with people you trust today, such as family, close friends or meaningful connections.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q9" aria-expanded="false" aria-controls="a9">
+            <span>What is Legacy?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a9" role="region" aria-labelledby="q9">
+                <p>Legacy is for memories, stories and access you intentionally preserve for the future and for the people you choose.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q10" aria-expanded="false" aria-controls="a10">
+            <span>Does Legacy include Circle?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a10" role="region" aria-labelledby="q10">
+                <p>Yes. A person with Legacy access can also receive the Circle access shared with them.</p>
+                <p>Circle access alone does not include Legacy access.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q11" aria-expanded="false" aria-controls="a11">
+            <span>Can I change someone's access?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a11" role="region" aria-labelledby="q11">
+                <p>Yes. Access is intentional and should remain under your control. You can update or revoke access through the available people-management controls.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- TALK TO ETERNUS -->
+  <section class="faq-category" id="talk">
+    <div class="section-inner">
+      <span class="section-label">Talk to Eternus</span>
+      <h2 class="section-title">Guided reflection, not a chatbot.</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q12" aria-expanded="false" aria-controls="a12">
+            <span>What is Talk to Eternus?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a12" role="region" aria-labelledby="q12">
+                <p>Talk to Eternus is a guided reflection experience designed to help memories and meaningful stories emerge naturally.</p>
+                <p>It can explore people, places, experiences, work, family and personal moments worth preserving.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q13" aria-expanded="false" aria-controls="a13">
+            <span>Is Talk to Eternus a generic chatbot?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a13" role="region" aria-labelledby="q13">
+                <p>No. It is designed specifically around reflection, memory and personal storytelling rather than open-ended AI conversation.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q14" aria-expanded="false" aria-controls="a14">
+            <span>Does Eternus pretend to be another person?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a14" role="region" aria-labelledby="q14">
+                <p>No. Eternus does not claim to be a real person, recreate human consciousness or simulate a deceased person.</p>
+                <p>Its role is to help preserve and explore memories with emotional care.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q15" aria-expanded="false" aria-controls="a15">
+            <span>Can I use voice?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a15" role="region" aria-labelledby="q15">
+                <p>Voice is an important part of the Eternus experience and is intended to make reflection feel more natural where supported.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MY TREE & CONNECTIONS -->
+  <section class="faq-category" id="mytree">
+    <div class="section-inner">
+      <span class="section-label">My Tree &amp; Connections</span>
+      <h2 class="section-title">The people in your Legacy.</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q16" aria-expanded="false" aria-controls="a16">
+            <span>What is My Tree?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a16" role="region" aria-labelledby="q16">
+                <p>My Tree brings together the people you have intentionally included in your Legacy and the Eternus connections shared with you.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q17" aria-expanded="false" aria-controls="a17">
+            <span>Does every person keep control of their own memories?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a17" role="region" aria-labelledby="q17">
+                <p>Yes. Each person keeps control of their own Eternus, Moments and access choices.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q18" aria-expanded="false" aria-controls="a18">
+            <span>Can someone in my Circle automatically see my Legacy?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a18" role="region" aria-labelledby="q18">
+                <p>No. Circle access alone does not grant Legacy access.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q19" aria-expanded="false" aria-controls="a19">
+            <span>Can I remove someone?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a19" role="region" aria-labelledby="q19">
+                <p>Yes. Connections and access can be managed through the available people-management controls.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PRIVACY & CONTROL -->
+  <section class="faq-category" id="privacy">
+    <div class="section-inner">
+      <span class="section-label">Privacy &amp; Control</span>
+      <h2 class="section-title">How your information is handled.</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q20" aria-expanded="false" aria-controls="a20">
+            <span>Who owns my memories?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a20" role="region" aria-labelledby="q20">
+                <p>You retain control over the personal content you create and upload to Eternus, subject to the applicable Terms and Privacy Policy.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q21" aria-expanded="false" aria-controls="a21">
+            <span>Is everything public?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a21" role="region" aria-labelledby="q21">
+                <p>No. Eternus is private by default and sharing is based on intentional access choices.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q22" aria-expanded="false" aria-controls="a22">
+            <span>Does Eternus sell my memories for advertising?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a22" role="region" aria-labelledby="q22">
+                <p>Eternus is being built without advertising and does not use personal memories to create a public attention-based experience.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q23" aria-expanded="false" aria-controls="a23">
+            <span>How is my information protected?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a23" role="region" aria-labelledby="q23">
+                <p>Eternus uses Firebase and appropriate access controls to protect account and content data.</p>
+                <p>Security and privacy protections continue to be reviewed as the product develops. For formal details, read the <a href="privacy-policy.html">Privacy Policy</a>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q24" aria-expanded="false" aria-controls="a24">
+            <span>What happens if I delete my account?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a24" role="region" aria-labelledby="q24">
+                <p>Account deletion and data-handling procedures are governed by the current product implementation, Terms and Privacy Policy.</p>
+                <p>Read the <a href="privacy-policy.html">Privacy Policy</a> for full details.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PRIVATE BETA -->
+  <section class="faq-category" id="beta">
+    <div class="section-inner">
+      <span class="section-label">Private Beta</span>
+      <h2 class="section-title">What to expect right now.</h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q25" aria-expanded="false" aria-controls="a25">
+            <span>Is Eternus available now?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a25" role="region" aria-labelledby="q25">
+                <p>Eternus is currently in private beta with a small group of invited testers.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q26" aria-expanded="false" aria-controls="a26">
+            <span>Why is the beta private?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a26" role="region" aria-labelledby="q26">
+                <p>We are testing the complete experience carefully before a wider release, including usability, privacy, sharing and reliability.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q27" aria-expanded="false" aria-controls="a27">
+            <span>Can anyone join?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a27" role="region" aria-labelledby="q27">
+                <p>Not yet. Access is currently limited to invited testers.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q28" aria-expanded="false" aria-controls="a28">
+            <span>Which devices are supported?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a28" role="region" aria-labelledby="q28">
+                <p>The current beta is being tested on supported Android devices.</p>
+                <p>Future platform availability will be announced only when confirmed.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question-btn" id="q29" aria-expanded="false" aria-controls="a29">
+            <span>Will Eternus be free?</span>
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer-wrap">
+            <div class="faq-answer-inner-clip">
+              <div class="faq-answer" id="a29" role="region" aria-labelledby="q29">
+                <p>Final plans and pricing have not yet been announced.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-inner center">
+      <h2 class="section-title">Still have <em>questions?</em></h2>
+      <p class="section-sub center">We're happy to help with questions, feedback or concerns.</p>
+      <a class="contact-email-link" href="mailto:hello@myeternusapp.com">hello@myeternusapp.com</a>
+    </div>
+  </section>
 
   <!-- FOOTER -->
   <footer>
-    <span class="footer-logo">Eternus</span>
-    <div style="display:flex; gap:32px; align-items:center; flex-wrap:wrap;">
-      <a href="privacy-policy.html" class="footer-link">Privacy Policy</a>
-      <span class="footer-copy">© 2026 Eternus. All rights reserved.</span>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-logo">Eternus</span>
+        <p class="footer-tagline">Preserve your moments. Build what remains.</p>
+      </div>
+      <ul class="footer-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="privacy-policy.html">Privacy</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul>
+      <div class="footer-contact">
+        <a href="mailto:hello@myeternusapp.com">hello@myeternusapp.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> Eternus. All rights reserved.</span>
     </div>
   </footer>
 
   <script>
-    function toggleFaq(btn) {
-      const item = btn.parentElement;
-      const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
-    }
-  </script>
+    document.getElementById('year').textContent = new Date().getFullYear();
 
+    document.addEventListener('DOMContentLoaded', function() {
+      const hamburger = document.getElementById('nav-hamburger');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      hamburger.addEventListener('click', function() {
+        const isOpen = mobileMenu.classList.toggle('open');
+        hamburger.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+        mobileMenu.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      });
+
+      document.querySelectorAll('.mobile-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+          mobileMenu.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-label', 'Open navigation');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+        });
+      });
+
+      document.querySelectorAll('.faq-category').forEach(function(category) {
+        const items = category.querySelectorAll('.faq-item');
+
+        function setOpen(item, open) {
+          const btn = item.querySelector('.faq-question-btn');
+          item.classList.toggle('open', open);
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        }
+
+        items.forEach(function(item) {
+          const btn = item.querySelector('.faq-question-btn');
+          btn.addEventListener('click', function() {
+            const willOpen = !item.classList.contains('open');
+            items.forEach(function(other) {
+              if (other !== item) setOpen(other, false);
+            });
+            setOpen(item, willOpen);
+          });
+        });
+      });
+    });
+  </script>
 </body>
 </html>

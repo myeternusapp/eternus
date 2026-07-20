@@ -1,19 +1,19 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <!-- Primary Meta Tags -->
-  <meta name="title" content="Eternus — Your private memory archive." />
-  <meta name="description" content="A private space to preserve what matters most. Memories, voice, and stories — kept with care, shared with trust." />
-  <meta name="keywords" content="Eternus, memory preservation, private archive, trusted legacy, personal memories, memorial" />
+  <meta name="title" content="Eternus — Preserve your moments. Build what remains." />
+  <meta name="description" content="Eternus is a private space for your memories, the people who matter, and the legacy you choose to leave behind." />
+  <meta name="keywords" content="Eternus, private memories, family legacy, personal moments, memory app, intentional sharing" />
   <meta name="author" content="Eternus" />
   <meta name="theme-color" content="#06060a" />
 
   <!-- Open Graph / Facebook / WhatsApp -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://eternusapp.com/" />
-  <meta property="og:title" content="Eternus — Your private memory archive." />
-  <meta property="og:description" content="A private space to preserve what matters most. Memories, voice, and stories — kept with care, shared with trust." />
+  <meta property="og:title" content="Eternus — Preserve your moments. Build what remains." />
+  <meta property="og:description" content="Eternus is a private space for your memories, the people who matter, and the legacy you choose to leave behind." />
   <meta property="og:image" content="https://myeternusapp.com/assets/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -23,11 +23,11 @@
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://eternusapp.com/" />
-  <meta name="twitter:title" content="Eternus — Your private memory archive." />
-  <meta name="twitter:description" content="A private space to preserve what matters most. Memories, voice, and stories — kept with care, shared with trust." />
+  <meta name="twitter:title" content="Eternus — Preserve your moments. Build what remains." />
+  <meta name="twitter:description" content="Eternus is a private space for your memories, the people who matter, and the legacy you choose to leave behind." />
   <meta name="twitter:image" content="https://myeternusapp.com/assets/og-image.jpg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Eternus — Your private memory archive.</title>
+  <title>Eternus — Preserve your moments. Build what remains.</title>
   <link rel="icon" type="image/png" href="assets/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet"/>
   <style>
@@ -39,7 +39,7 @@
       --gold: #c9a84c;
       --gold-light: #e8c97a;
       --white: #f5f0ea;
-      --muted: #9a8fa0;
+      --muted: #a89dae;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -54,6 +54,9 @@
       overflow-x: hidden;
     }
 
+    a { color: inherit; }
+    img { max-width: 100%; }
+
     /* NOISE TEXTURE OVERLAY */
     body::before {
       content: '';
@@ -63,17 +66,6 @@
       pointer-events: none;
       z-index: 999;
       opacity: 0.4;
-    }
-
-    /* SOFT LIGHT FROM ABOVE */
-    body::after {
-      content: '';
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(220,210,255,0.25), rgba(255,245,220,0.2), rgba(220,210,255,0.25), transparent);
-      pointer-events: none;
-      z-index: 998;
     }
 
     /* AMBIENT GLOW */
@@ -88,658 +80,88 @@
       width: 800px; height: 800px;
       background: radial-gradient(circle, rgba(220,210,255,0.07) 0%, rgba(150,120,220,0.04) 40%, transparent 70%);
       top: -300px; left: -200px;
-      animation: drift1 25s ease-in-out infinite alternate;
     }
     .glow-orb-2 {
       width: 600px; height: 600px;
       background: radial-gradient(circle, rgba(255,245,220,0.06) 0%, rgba(201,168,76,0.03) 40%, transparent 70%);
       bottom: 100px; right: -150px;
-      animation: drift2 30s ease-in-out infinite alternate;
     }
-    .glow-orb-3 {
-      width: 700px; height: 700px;
-      background: radial-gradient(circle, rgba(180,200,255,0.05) 0%, rgba(100,120,200,0.02) 40%, transparent 70%);
-      top: 40%; left: 50%;
-      transform: translate(-50%, -50%);
-      animation: drift3 35s ease-in-out infinite alternate;
-      filter: blur(140px);
-    }
-    @keyframes drift3 { from { transform: translate(-50%,-50%) scale(1); } to { transform: translate(-48%,-52%) scale(1.08); } }
-
-    @keyframes drift1 { from { transform: translate(0,0); } to { transform: translate(80px, 60px); } }
-    @keyframes drift2 { from { transform: translate(0,0); } to { transform: translate(-60px, -80px); } }
 
     /* NAV */
     nav {
       position: fixed; top: 0; left: 0; right: 0;
       z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 28px 60px;
-      background: linear-gradient(to bottom, rgba(8,8,8,0.9), transparent);
-      backdrop-filter: blur(4px);
+      padding: 24px 60px;
+      background: linear-gradient(to bottom, rgba(6,6,10,0.92), rgba(6,6,10,0.6) 70%, transparent);
+      backdrop-filter: blur(6px);
     }
     .nav-logo {
       text-decoration: none;
       display: flex;
       align-items: center;
+      gap: 10px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+    }
+    .nav-center {
+      display: flex; align-items: center; gap: 40px;
     }
     .nav-links {
       display: flex; gap: 40px; list-style: none;
     }
     .nav-links a {
       font-size: 0.75rem;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--muted);
       text-decoration: none;
       transition: color 0.3s;
     }
-    .nav-links a:hover { color: var(--gold-light); }
+    .nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--gold-light); }
 
-    /* HERO */
-    .hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: 100px 40px 100px;
-      z-index: 1;
-      overflow: hidden;
-    }
-
-    .hero::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background:
-        radial-gradient(ellipse 60% 40% at 50% 0%, rgba(210,200,255,0.06) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 30% at 50% 100%, rgba(201,168,76,0.04) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* CIRCLE RING DECORATION */
-    .hero-ring {
-      position: absolute;
-      border-radius: 50%;
-      border: 1px solid;
-      pointer-events: none;
-    }
-    .ring-1 {
-      width: 500px; height: 500px;
-      border-color: rgba(201,168,76,0.08);
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      animation: rotateSlow 40s linear infinite;
-    }
-    .ring-2 {
-      width: 700px; height: 700px;
-      border-color: rgba(107,63,160,0.06);
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      animation: rotateSlow 60s linear infinite reverse;
-    }
-    .ring-3 {
-      width: 900px; height: 900px;
-      border-color: rgba(201,168,76,0.04);
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      animation: rotateSlow 80s linear infinite;
-    }
-    @keyframes rotateSlow { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
-
-    /* HERO CONTENT WRAPPER */
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      max-width: 760px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      transform: translateY(18px);
-    }
-
-    .hero-eyebrow {
-      position: absolute;
-      top: -90px;
-      left: 0;
-      right: 0;
-      text-align: center;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-      font-style: italic;
-      letter-spacing: 0.15em;
-      color: var(--gold-light);
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 0.3s;
-    }
-
-    .hero-slogan {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: clamp(1.1rem, 2vw, 1.5rem);
-      color: rgba(245, 240, 234, 0.62);
-      letter-spacing: 0.02em;
-      margin-top: 22px;
-      margin-bottom: 24px;
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 0.7s;
-    }
-
-    .hero-desc {
-      max-width: 640px;
-      font-size: 0.95rem;
-      line-height: 2;
-      color: rgba(232, 201, 122, 0.78);
-      margin-bottom: 36px;
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 0.9s;
-    }
-
-
-
-    .btn-note {
-      margin-top: 16px;
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
-      color: rgba(154,143,160,0.5);
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 1.2s;
-    }
-
-    .hero-logo {
-      width: 340px !important;
-      max-width: 30vw !important;
-      height: auto !important;
-      object-fit: contain;
-      transform: none !important;
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 0.5s;
-      margin-bottom: 10px;
-    }
-
-    .hero-wordmark {
-      display: block;
-      margin-top: 4px;
-      margin-bottom: 8px;
-      margin-right: -0.38em; /* compensate trailing letter-spacing for optical centering */
-      font-family: 'Jost', sans-serif;
-      font-size: clamp(2rem, 4.2vw, 3.8rem);
-      font-weight: 300;
-      letter-spacing: 0.38em;
-      color: var(--gold);
-      text-transform: uppercase;
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 0.65s;
-    }
-
-    .download-badges {
-      display: flex;
-      gap: 20px;
+    .btn {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      flex-wrap: wrap;
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 1.1s;
-    }
-
-    .badge-link {
-      display: inline-block;
-      transition: opacity 0.3s, transform 0.3s;
-    }
-
-    .badge-link:hover {
-      opacity: 0.8;
-      transform: translateY(-2px);
-    }
-
-    .store-badge {
-      height: 52px;
-      width: auto;
-    }
-
-    /* COMING SOON BANNER */
-    .coming-soon-banner {
-      margin: 0 auto 48px;
-      max-width: 600px;
-      padding: 40px;
-      border: 1px solid rgba(201,168,76,0.2);
-      background: rgba(201,168,76,0.04);
-      position: relative;
-      overflow: hidden;
-    }
-    .coming-soon-banner::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
-    }
-    .coming-soon-inner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-      text-align: center;
-    }
-    .coming-soon-badges {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      justify-content: center;
-      opacity: 0.6;
-    }
-    .store-badge-sm {
-      height: 38px;
-      width: auto;
-    }
-    .coming-soon-text {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      text-align: center;
-    }
-    .coming-soon-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-      font-weight: 400;
-      color: var(--gold-light);
-      letter-spacing: 0.1em;
-    }
-    .coming-soon-desc {
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
-
-    /* WAITLIST SECTION */
-    .waitlist {
-      position: relative; z-index: 1;
-      text-align: center;
-      padding: 100px 40px;
-      background: linear-gradient(to bottom, transparent, rgba(45,27,78,0.1), transparent);
-    }
-    .waitlist-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 300;
-      line-height: 1.1;
-      margin-bottom: 16px;
-    }
-    .waitlist-title em { font-style: italic; color: var(--gold); }
-    .waitlist-sub {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 48px;
-      letter-spacing: 0.05em;
-    }
-    .waitlist-form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      max-width: 480px;
-      margin: 0 auto;
-    }
-    .waitlist-input {
-      width: 100%;
-      padding: 16px 24px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      color: var(--white);
-      font-family: 'Jost', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 300;
-      letter-spacing: 0.05em;
-      outline: none;
-      transition: border-color 0.3s, background 0.3s;
-    }
-    .waitlist-input::placeholder { color: rgba(154,143,160,0.5); }
-    .waitlist-input:focus {
-      border-color: rgba(201,168,76,0.4);
-      background: rgba(255,255,255,0.06);
-    }
-    .waitlist-btn {
-      width: 100%;
-      padding: 16px 48px;
-      background: transparent;
-      border: 1px solid var(--gold);
-      color: var(--gold-light);
+      gap: 10px;
+      padding: 14px 32px;
       font-family: 'Jost', sans-serif;
       font-size: 0.75rem;
       font-weight: 400;
-      letter-spacing: 0.3em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 999px;
       cursor: pointer;
-      position: relative;
-      overflow: hidden;
-      transition: color 0.4s;
+      transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
     }
-    .waitlist-btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--gold);
-      transform: translateX(-100%);
-      transition: transform 0.4s ease;
-      z-index: -1;
+    .btn:hover { transform: translateY(-2px); }
+    .btn-static {
+      cursor: default;
+      opacity: 0.85;
     }
-    .waitlist-btn:hover { color: var(--black); }
-    .waitlist-btn:hover::before { transform: translateX(0); }
-    .waitlist-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .waitlist-message {
-      font-size: 0.8rem;
-      letter-spacing: 0.1em;
-      margin-top: 8px;
-      min-height: 20px;
+    .btn-static:hover { transform: none; box-shadow: none; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: var(--black);
+      border: 1px solid var(--gold);
     }
-    .waitlist-message.success { color: var(--gold-light); }
-    .waitlist-message.error { color: #e07070; }
-    .waitlist-count {
-      margin-top: 32px;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: rgba(154,143,160,0.4);
+    .btn-primary:hover { box-shadow: 0 10px 30px rgba(201,168,76,0.25); }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(201,168,76,0.4);
+      color: var(--gold-light);
     }
-
-        /* WOW SECTION */
-    .wow-section {
-      position: relative; z-index: 1;
-      padding: 120px 60px;
-      max-width: 1100px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .wow-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 300;
-      line-height: 1.2;
-      margin-bottom: 16px;
-    }
-    .wow-title em { font-style: italic; color: var(--gold); }
-    .wow-subtitle {
-      font-size: 0.88rem;
-      color: var(--muted);
-      margin-bottom: 64px;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.9;
-    }
-    .wow-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 2px;
-    }
-    .wow-card {
-      padding: 40px 32px;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.04);
-      text-align: left;
-      position: relative;
-      overflow: hidden;
-      transition: background 0.4s, border-color 0.4s;
-    }
-    .wow-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-    .wow-card:hover { background: rgba(201,168,76,0.03); border-color: rgba(201,168,76,0.15); }
-    .wow-card:hover::before { opacity: 1; }
-    .wow-card-quote {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 1.1rem;
-      color: var(--white);
-      line-height: 1.6;
-      margin-bottom: 16px;
-    }
-    .wow-card-label {
+    .btn-secondary:hover { border-color: var(--gold); background: rgba(201,168,76,0.06); }
+    .btn-nav {
+      padding: 10px 24px;
       font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
     }
 
-        @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeUpScaled {
-      from { opacity: 0; transform: translateY(24px) scale(1.02); }
-      to   { opacity: 1; transform: scale(1.02); }
-    }
-
-    /* DIVIDER */
-    .divider {
-      width: 100%; max-width: 900px;
-      margin: 0 auto;
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent);
-    }
-
-    /* PROBLEM CARDS */
-    .problem-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-      margin-bottom: 60px;
-    }
-    .problem-card {
-      padding: 32px 28px;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.04);
-      position: relative;
-      overflow: hidden;
-      transition: background 0.4s, border-color 0.4s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .problem-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-    .problem-card:hover { background: rgba(201,168,76,0.03); border-color: rgba(201,168,76,0.15); }
-    .problem-card:hover::before { opacity: 1; }
-    .problem-card p {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      color: rgba(245,240,234,0.7);
-      line-height: 1.8;
-      text-align: center;
-    }
-
-    /* FEATURES */
-    .features {
-      position: relative; z-index: 1;
-      padding: 120px 60px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .section-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 16px;
-      display: block;
-    }
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.2rem, 4vw, 3.4rem);
-      font-weight: 300;
-      line-height: 1.15;
-      margin-bottom: 80px;
-    }
-    .section-title em { font-style: italic; color: var(--violet); }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2px;
-    }
-    .feature-card {
-      padding: 48px 40px;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.04);
-      position: relative;
-      overflow: hidden;
-      transition: background 0.4s, border-color 0.4s;
-    }
-    .feature-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-    .feature-card:hover { background: rgba(201,168,76,0.03); border-color: rgba(201,168,76,0.15); }
-    .feature-card:hover::before { opacity: 1; }
-
-    .feature-icon {
-      font-size: 1.8rem;
-      margin-bottom: 24px;
-      display: block;
-    }
-    .feature-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-      font-weight: 400;
-      margin-bottom: 12px;
-      color: var(--white);
-    }
-    .feature-text {
-      font-size: 0.82rem;
-      line-height: 1.9;
-      color: var(--muted);
-    }
-
-    /* HOW IT WORKS */
-    .how {
-      position: relative; z-index: 1;
-      padding: 80px 60px 120px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 2px;
-      margin-top: 80px;
-    }
-    .step {
-      padding: 48px 40px;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.04);
-      display: flex; flex-direction: column; gap: 16px;
-      position: relative;
-      overflow: hidden;
-      transition: background 0.4s, border-color 0.4s;
-    }
-    .step::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-    .step:hover { background: rgba(201,168,76,0.03); border-color: rgba(201,168,76,0.15); }
-    .step:hover::before { opacity: 1; }
-    .step-icon {
-      margin-bottom: 8px;
-      display: block;
-    }
-    .step-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem;
-      font-weight: 300;
-      color: rgba(201,168,76,0.3);
-      line-height: 1;
-    }
-    .step-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
-      font-weight: 400;
-      color: var(--white);
-    }
-    .step-text {
-      font-size: 0.82rem;
-      line-height: 1.9;
-      color: var(--muted);
-    }
-
-    /* CTA */
-    .cta {
-      position: relative; z-index: 1;
-      text-align: center;
-      padding: 120px 40px;
-      background: linear-gradient(to bottom, transparent, rgba(45,27,78,0.15), transparent);
-    }
-    .cta-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.5rem, 5vw, 5rem);
-      font-weight: 300;
-      line-height: 1.1;
-      margin-bottom: 24px;
-    }
-    .cta-title em { font-style: italic; color: var(--gold); }
-    .cta-sub {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 48px;
-      letter-spacing: 0.05em;
-    }
-
-    /* FOOTER */
-    footer {
-      position: relative; z-index: 1;
-      padding: 40px 60px;
-      border-top: 1px solid rgba(255,255,255,0.04);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-    .footer-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
-      font-weight: 300;
-      letter-spacing: 0.2em;
-      color: var(--gold);
-    }
-    .footer-copy {
-      font-size: 0.72rem;
-      letter-spacing: 0.1em;
-      color: rgba(154,143,160,0.4);
-    }
-
-    /* RESPONSIVE */
-    /* HAMBURGER BUTTON */
+    /* HAMBURGER */
     .nav-hamburger {
       display: none;
       flex-direction: column;
@@ -763,13 +185,12 @@
     .nav-hamburger.open span:nth-child(2) { opacity: 0; }
     .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
-    /* MOBILE MENU */
     .mobile-menu {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 99;
-      padding-top: 88px;
+      padding-top: 84px;
       background: rgba(6,6,10,0.97);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(201,168,76,0.12);
@@ -781,63 +202,567 @@
       list-style: none;
       padding: 16px 28px 28px;
     }
-    .mobile-menu-links li {
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-    }
+    .mobile-menu-links li { border-bottom: 1px solid rgba(255,255,255,0.06); }
     .mobile-menu-links li:last-child { border-bottom: none; }
     .mobile-menu-links a {
       display: block;
       padding: 15px 0;
-      font-size: 0.72rem;
-      letter-spacing: 0.25em;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--muted);
       text-decoration: none;
       transition: color 0.3s;
     }
     .mobile-menu-links a:hover { color: var(--gold-light); }
+    .mobile-menu-cta { padding: 20px 0 8px; }
+
+    /* SECTION SCAFFOLDING */
+    section { position: relative; z-index: 1; }
+    .section-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 110px 60px;
+    }
+    .section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+      display: block;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.1rem, 4vw, 3.2rem);
+      font-weight: 300;
+      line-height: 1.18;
+      margin-bottom: 20px;
+    }
+    .section-title em { font-style: italic; color: var(--gold); }
+    .section-sub {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: rgba(245,240,234,0.72);
+      max-width: 620px;
+    }
+    .center { text-align: center; margin-left: auto; margin-right: auto; }
+    .divider {
+      width: 100%; max-width: 900px;
+      margin: 0 auto;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent);
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 150px 60px 100px;
+      overflow: hidden;
+    }
+    .hero-grid {
+      max-width: 1180px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: center;
+      gap: 48px;
+    }
+    .hero-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 1.6vw, 1.2rem);
+      letter-spacing: 0.1em;
+      color: var(--gold-light);
+      margin-bottom: 22px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.1s;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.6rem, 5.2vw, 4.2rem);
+      line-height: 1.12;
+      margin-bottom: 26px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.25s;
+    }
+    .hero-title em { font-style: italic; color: var(--gold); }
+    .hero-desc {
+      max-width: 520px;
+      font-size: 1rem;
+      line-height: 1.9;
+      color: rgba(245,240,234,0.75);
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.4s;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.55s;
+    }
+    .hero-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 460px;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.5s;
+    }
+    .hero-visual::before {
+      content: '';
+      position: absolute;
+      inset: -10%;
+      background: radial-gradient(ellipse at center, rgba(201,168,76,0.14) 0%, transparent 70%);
+      filter: blur(40px);
+      z-index: 0;
+    }
+
+    /* PHONE STACK (two real app screenshots) */
+    .phone-stack {
+      position: relative;
+      z-index: 1;
+      width: min(425px, 92vw);
+      transform: translateX(-6%);
+    }
+    .phone-frame {
+      position: relative;
+      padding: 12px;
+      background: linear-gradient(165deg, #14101c 0%, #08060c 65%);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 34px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.03) inset,
+        0 30px 70px -20px rgba(0,0,0,0.75);
+    }
+    .phone-frame-front {
+      position: relative;
+      z-index: 2;
+      width: 66%;
+    }
+    .phone-frame-back {
+      position: absolute;
+      z-index: 1;
+      top: 10%;
+      right: 0;
+      width: 58%;
+      opacity: 0.85;
+      filter: brightness(0.82);
+    }
+    .phone-notch {
+      position: absolute;
+      top: 10px; left: 50%;
+      transform: translateX(-50%);
+      width: 46px; height: 4px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.1);
+      z-index: 2;
+    }
+    .phone-screen {
+      width: 100%;
+      border-radius: 24px;
+      overflow: hidden;
+      background: #0c0c11;
+    }
+    .phone-frame-front .phone-screen { aspect-ratio: 860 / 1829; }
+    .phone-frame-back .phone-screen { aspect-ratio: 1024 / 1536; }
+    .phone-screen img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* THREE LAYERS */
+    .layers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .layer-card {
+      position: relative;
+      height: 400px;
+      perspective: 1400px;
+      cursor: pointer;
+      border-radius: 20px;
+      transition: transform 0.4s;
+    }
+    .layer-card:hover { transform: translateY(-4px); }
+    .layer-card:focus-visible { outline: 2px solid rgba(201,168,76,0.55); outline-offset: 5px; }
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      transform-style: preserve-3d;
+    }
+    .layer-card.is-flipped .flip-card-inner { transform: rotateY(180deg); }
+    .flip-card-front,
+    .flip-card-back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 20px;
+      padding: 40px 34px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      flex-direction: column;
+      transition: background 0.4s, border-color 0.4s;
+    }
+    .layer-card:hover .flip-card-front,
+    .layer-card:hover .flip-card-back {
+      background: rgba(201,168,76,0.045);
+      border-color: rgba(201,168,76,0.25);
+    }
+    .flip-card-back { transform: rotateY(180deg); }
+    .layer-icon {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.35);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+      flex-shrink: 0;
+    }
+    .layer-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--gold-light);
+      margin-bottom: 12px;
+      flex-shrink: 0;
+    }
+    .layer-text {
+      font-size: 0.88rem;
+      line-height: 1.85;
+      color: rgba(245,240,234,0.68);
+    }
+    .layer-back-text {
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: rgba(245,240,234,0.68);
+      overflow-y: auto;
+      flex: 1;
+      padding-right: 6px;
+    }
+    .layer-back-text p { margin-bottom: 11px; }
+    .layer-back-text p:last-child { margin-bottom: 0; }
+    .flip-hint {
+      margin-top: auto;
+      padding-top: 14px;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(201,168,76,0.55);
+      flex-shrink: 0;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .flip-card-inner { transition: none; }
+      .layer-card, .layer-card:hover { transition: none; }
+      .feature-card, .feature-card:hover { transition: none; }
+    }
+    .layers-note {
+      margin-top: 44px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: rgba(232,201,122,0.85);
+      max-width: 680px;
+    }
+
+    /* FEATURE CARDS (More than a memory app) */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      max-width: 800px;
+      margin: 56px auto 0;
+    }
+    .feature-card {
+      position: relative;
+      height: 380px;
+      perspective: 1400px;
+      cursor: pointer;
+      border-radius: 20px;
+      transition: transform 0.4s;
+    }
+    .feature-card:hover { transform: translateY(-4px); }
+    .feature-card.is-flipped .flip-card-inner { transform: rotateY(180deg); }
+    .feature-card:focus-visible { outline: 2px solid rgba(201,168,76,0.55); outline-offset: 5px; }
+    .feature-card:hover .flip-card-front,
+    .feature-card:hover .flip-card-back {
+      background: rgba(201,168,76,0.045);
+      border-color: rgba(201,168,76,0.25);
+    }
+    .feature-card .flip-card-front,
+    .feature-card .flip-card-back {
+      padding: 40px 32px;
+    }
+    .feature-icon { margin-bottom: 22px; display: block; flex-shrink: 0; }
+    .feature-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      margin-bottom: 12px;
+      color: var(--white);
+      flex-shrink: 0;
+    }
+    .feature-text {
+      font-size: 0.85rem;
+      line-height: 1.85;
+      color: rgba(245,240,234,0.65);
+    }
+    .feature-back-text {
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: rgba(245,240,234,0.65);
+      overflow-y: auto;
+      flex: 1;
+      padding-right: 6px;
+    }
+    .feature-back-text p { margin-bottom: 11px; }
+    .feature-back-text p:last-child { margin-bottom: 0; }
+
+    /* MY TREE */
+    .tree-section .section-inner { max-width: 1000px; }
+    .tree-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .tree-visual {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      padding: 20px 10px 10px;
+    }
+    .tree-root {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      position: relative; z-index: 2;
+    }
+    .tree-avatar {
+      box-sizing: border-box;
+      width: 62px; height: 62px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.4);
+      background: linear-gradient(160deg, rgba(107,63,160,0.18), rgba(201,168,76,0.1));
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--gold-light);
+    }
+    .tree-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .tree-avatar-root {
+      width: 78px; height: 78px;
+      font-size: 1.4rem;
+      box-shadow: 0 0 0 6px rgba(201,168,76,0.07), 0 0 30px rgba(201,168,76,0.15);
+    }
+    .tree-avatar-invite {
+      border-style: dashed;
+      background: transparent;
+      color: rgba(232,201,122,0.6);
+    }
+    .tree-name {
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+      color: var(--white);
+    }
+    .tree-role {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .tree-connector {
+      width: 1px; height: 44px;
+      background: linear-gradient(to bottom, rgba(201,168,76,0.5), rgba(201,168,76,0.15));
+    }
+    .tree-branch {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px 26px;
+      padding-top: 44px;
+    }
+    .tree-branch::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 8%; right: 8%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(201,168,76,0.35), rgba(201,168,76,0.35), transparent);
+    }
+    .tree-node {
+      position: relative;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .tree-node::before {
+      content: '';
+      position: absolute;
+      top: -44px; left: 50%;
+      width: 1px; height: 44px;
+      background: rgba(201,168,76,0.35);
+    }
+    .tree-copy .section-sub { margin-bottom: 28px; }
+
+    /* PRIVACY */
+    .privacy-points {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px 40px;
+      max-width: 640px;
+      margin: 40px auto 0;
+      text-align: left;
+    }
+    .privacy-points li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: rgba(245,240,234,0.78);
+      line-height: 1.6;
+    }
+    .privacy-points li svg { flex-shrink: 0; margin-top: 3px; }
+
+    /* FINAL CTA */
+    .cta-final { text-align: center; }
+    .cta-final .section-title { max-width: 780px; margin-left: auto; margin-right: auto; }
+
+    /* FOOTER */
+    footer {
+      padding: 48px 60px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 28px;
+      max-width: 1120px;
+      margin: 0 auto 32px;
+    }
+    .footer-brand { flex: 1 1 240px; }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 10px;
+      display: block;
+    }
+    .footer-tagline {
+      font-size: 0.8rem;
+      color: rgba(245,240,234,0.55);
+      line-height: 1.7;
+      max-width: 320px;
+    }
+    .footer-nav {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 28px;
+    }
+    .footer-contact {
+      flex: 1 1 240px;
+      text-align: right;
+      font-size: 0.8rem;
+    }
+    footer a,
+    footer a:visited {
+      color: rgba(245,240,234,0.6);
+      text-decoration: none;
+      transition: color 0.3s ease, opacity 0.3s ease;
+    }
+    footer a:hover,
+    footer a:focus {
+      color: var(--gold-light);
+      text-decoration: underline;
+      text-decoration-color: rgba(232,201,122,0.4);
+      text-underline-offset: 4px;
+    }
+    footer a:focus {
+      outline: 1px solid rgba(201,168,76,0.5);
+      outline-offset: 4px;
+    }
+    .footer-bottom {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      color: rgba(245,240,234,0.4);
+      text-align: center;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .hero-desc { margin-left: auto; margin-right: auto; }
+      .hero-ctas { justify-content: center; }
+      .hero-visual { order: -1; max-width: 450px; margin: 0 auto 20px; }
+      .layers-grid { grid-template-columns: 1fr; }
+      .layers-note { margin-left: auto; margin-right: auto; }
+      .features-grid { grid-template-columns: 1fr; }
+      .tree-layout { grid-template-columns: 1fr; }
+      .tree-copy { text-align: center; }
+      .tree-copy .section-sub { margin-left: auto; margin-right: auto; }
+    }
 
     @media (max-width: 768px) {
-      nav { padding: 24px 24px; }
-      .nav-links { display: none; }
+      nav { padding: 20px 24px; }
+      .nav-center { display: none; }
       .nav-hamburger { display: flex; }
       .mobile-menu { display: block; }
 
-      /* Section vertical rhythm */
-      .features, .how { padding: 60px 24px; }
-      .wow-section { padding: 60px 24px; }
-      .waitlist { padding: 60px 24px; }
-      .cta { padding: 60px 24px; }
+      .section-inner { padding: 64px 24px; }
+      .hero { padding: 130px 24px 70px; }
 
-      /* Inline-styled sections (require !important to override) */
-      .problem-section { padding: 60px 24px !important; }
-      .privacy-section { padding: 44px 24px !important; }
+      .privacy-points { grid-template-columns: 1fr; }
+      .tree-branch { gap: 24px 18px; }
+      .tree-avatar { width: 54px; height: 54px; }
 
-      /* Internal component spacing */
-      .section-title { margin-bottom: 48px; }
-      .steps { margin-top: 48px; }
-      .wow-subtitle { margin-bottom: 40px; }
+      .hero-grid { gap: 20px; }
+      .hero-eyebrow { margin-bottom: 12px; }
+      .hero-title { margin-bottom: 14px; }
+      .hero-desc { margin-bottom: 22px; }
+      .hero-ctas { gap: 12px; }
+      .hero-ctas .btn { padding: 9px 18px; letter-spacing: 0.08em; flex: 1 1 0; white-space: nowrap; }
+      .hero-visual { min-height: 0; order: 0; margin: 12px auto 0; }
+      .phone-stack { width: min(250px, 66vw); transform: none; }
+      .phone-frame-back { opacity: 0.6; filter: brightness(0.7); }
 
-      /* CTA banner — remove stacked bottom margin */
-      .coming-soon-banner { margin-bottom: 0; padding: 28px 20px; }
-
-      /* Problem cards stack on mobile */
-      .problem-grid { grid-template-columns: 1fr; }
-      .problem-card { padding: 28px 24px; }
-
-      /* Logo sizes on mobile */
-      .hero-logo {
-        width: 230px !important;
-        max-width: 72vw !important;
-      }
-      .hero-wordmark {
-        font-size: clamp(2rem, 12vw, 3.4rem);
-        letter-spacing: 0.28em;
-        margin-right: -0.28em;
-      }
-      .nav-logo img { height: 20px !important; }
-
-      footer { padding: 28px 24px; }
+      .footer-top { flex-direction: column; text-align: center; gap: 20px; }
+      .footer-brand, .footer-contact { flex: none; text-align: center; }
+      footer { padding: 40px 24px; }
     }
   </style>
 </head>
@@ -845,18 +770,23 @@
 
   <div class="glow-orb glow-orb-1"></div>
   <div class="glow-orb glow-orb-2"></div>
-  <div class="glow-orb glow-orb-3"></div>
 
   <!-- NAV -->
   <nav>
-    <a class="nav-logo" href="#"><img src="assets/logo-eternus-gold.png" alt="Eternus" style="height:24px; width:auto; display:block;" /></a>
-    <ul class="nav-links">
-      <li><a href="#features">Features</a></li>
-      <li><a href="#how">How it works</a></li>
-      <li><a href="#waitlist">Waitlist</a></li>
-      <li><a href="faq.html">FAQ</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
+    <a class="nav-logo" href="index.html">
+      <img src="assets/logo-eternus-gold.png" alt="Eternus" style="height:22px; width:auto; display:block;" />
+      Eternus
+    </a>
+    <div class="nav-center">
+      <ul class="nav-links">
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="privacy-policy.html">Privacy</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul>
+      <span class="btn btn-primary btn-nav btn-static" aria-disabled="true">Coming Soon</span>
+    </div>
     <button class="nav-hamburger" id="nav-hamburger" aria-label="Open navigation">
       <span></span>
       <span></span>
@@ -867,366 +797,365 @@
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
     <ul class="mobile-menu-links">
-      <li><a href="#features" class="mobile-link">Features</a></li>
-      <li><a href="#how" class="mobile-link">How it works</a></li>
-      <li><a href="#waitlist" class="mobile-link">Waitlist</a></li>
-      <li><a href="faq.html" class="mobile-link">FAQ</a></li>
+      <li><a href="index.html" class="mobile-link">Home</a></li>
       <li><a href="about.html" class="mobile-link">About</a></li>
-      <li><a href="privacy-policy.html" class="mobile-link">Privacy Policy</a></li>
+      <li><a href="faq.html" class="mobile-link">FAQ</a></li>
+      <li><a href="privacy-policy.html" class="mobile-link">Privacy</a></li>
+      <li><a href="support.html" class="mobile-link">Support</a></li>
     </ul>
+    <div class="mobile-menu-cta" style="padding: 0 28px 28px;">
+      <span class="btn btn-primary btn-static" style="width:100%;" aria-disabled="true">Coming Soon</span>
+    </div>
   </div>
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="hero-ring ring-1"></div>
-    <div class="hero-ring ring-2"></div>
-    <div class="hero-ring ring-3"></div>
-
-    <div class="hero-content">
-      <p class="hero-eyebrow">Your private memory space</p>
-      <img src="assets/logo-eternus-gold.png" alt="Eternus" class="hero-logo" />
-      <span class="hero-wordmark">ETERNUS</span>
-      <p class="hero-slogan">"A calmer place for the moments that matter."</p>
-      <p class="hero-desc">
-        A private space for memories, voice, photos and personal moments —<br>designed for you and the people you trust.
-      </p>
-      <p class="btn-note" style="opacity:0; animation: fadeUp 1s ease forwards 1.1s;">Coming soon &nbsp;·&nbsp; Join the waiting list below</p>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- PROBLEM SECTION -->
-  <section class="problem-section" style="position:relative; z-index:1; padding: 100px 60px; max-width: 900px; margin: 0 auto; text-align: center;">
-    <span class="section-label">The problem</span>
-    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 300; line-height: 1.2; margin-bottom: 48px; color: var(--white);">We lose our lives <em style="font-style:italic; color: var(--gold);">in pieces.</em></h2>
-    <div class="problem-grid">
-      <div class="problem-card">
-        <p>Photos trapped in old phones no one charges anymore.</p>
-      </div>
-      <div class="problem-card">
-        <p>Videos buried in chats nobody scrolls back to.</p>
-      </div>
-      <div class="problem-card">
-        <p>Voices forgotten in apps no one opens anymore.</p>
-      </div>
-      <div class="problem-card">
-        <p>Important moments become scattered across devices, apps, and time.</p>
-      </div>
-      <div class="problem-card">
-        <p>Stories remain untold because there is no quiet place to keep them.</p>
-      </div>
-      <div class="problem-card">
-        <p>Context fades when memories are saved without the people, dates, and meaning around them.</p>
-      </div>
-    </div>
-    <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.2rem, 2.5vw, 1.6rem); color: var(--gold-light); line-height: 1.6;">Most digital spaces were never designed for meaningful memories.</p>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- FEATURES -->
-  <section class="features" id="features">
-    <span class="section-label">A private archive for life's meaningful moments</span>
-    <h2 class="section-title">Not a social network.<br>Not another <em>cloud folder.</em></h2>
-    <div class="features-grid">
-      <div class="feature-card">
-        <span class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="url(#grad1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <defs>
-            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#6b3fa0"/>
-              <stop offset="100%" style="stop-color:#c9a84c"/>
-            </linearGradient>
-          </defs>
-          <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
-          <circle cx="12" cy="13" r="3"/>
-        </svg>
-      </span>
-        <h3 class="feature-name">Memory Capture</h3>
-        <p class="feature-text">A photo, a video, a voice note — captured in seconds. Every moment preserved exactly as you lived it, in your own words and images.</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="url(#grad2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <defs>
-            <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#6b3fa0"/>
-              <stop offset="100%" style="stop-color:#c9a84c"/>
-            </linearGradient>
-          </defs>
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-          <line x1="12" y1="8" x2="12" y2="12"/>
-          <line x1="12" y1="16" x2="12.01" y2="16"/>
-        </svg>
-      </span>
-        <h3 class="feature-name">Private & Secure</h3>
-        <p class="feature-text">Your memories belong to you. Every file is protected and only accessible to people you personally choose to trust.</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="url(#grad3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <defs>
-            <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#6b3fa0"/>
-              <stop offset="100%" style="stop-color:#c9a84c"/>
-            </linearGradient>
-          </defs>
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-          <circle cx="9" cy="7" r="4"/>
-          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-        </svg>
-      </span>
-        <h3 class="feature-name">Trust Circles</h3>
-        <p class="feature-text">Three layers of access — private, trusted circle, and legacy. You decide exactly who sees what and when, with complete control always in your hands.</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="url(#grad4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <defs>
-            <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#6b3fa0"/>
-              <stop offset="100%" style="stop-color:#c9a84c"/>
-            </linearGradient>
-          </defs>
-          <rect x="4" y="4" width="16" height="16" rx="2"/>
-          <rect x="9" y="9" width="6" height="6"/>
-          <line x1="9" y1="1" x2="9" y2="4"/>
-          <line x1="15" y1="1" x2="15" y2="4"/>
-          <line x1="9" y1="20" x2="9" y2="23"/>
-          <line x1="15" y1="20" x2="15" y2="23"/>
-          <line x1="20" y1="9" x2="23" y2="9"/>
-          <line x1="20" y1="14" x2="23" y2="14"/>
-          <line x1="1" y1="9" x2="4" y2="9"/>
-          <line x1="1" y1="14" x2="4" y2="14"/>
-        </svg>
-      </span>
-        <h3 class="feature-name">Controlled Access</h3>
-        <p class="feature-text">No feed, no audience, no performance. Eternus is not social media — it is a private system of trust where permissions, not likes, define what is shared.</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="url(#grad5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <defs>
-            <linearGradient id="grad5" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#6b3fa0"/>
-              <stop offset="100%" style="stop-color:#c9a84c"/>
-            </linearGradient>
-          </defs>
-          <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
-          <path d="M12 8v4l3 3"/>
-          <path d="M3.6 9h.01M20.4 9h.01M3.6 15h.01M20.4 15h.01"/>
-        </svg>
-      </span>
-        <h3 class="feature-name">Memory Recovery</h3>
-        <p class="feature-text">Find moments, stories and recordings through context — not endless scrolling.</p>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="url(#grad6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <defs>
-            <linearGradient id="grad6" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#6b3fa0"/>
-              <stop offset="100%" style="stop-color:#c9a84c"/>
-            </linearGradient>
-          </defs>
-          <path d="M12 18.5c0 0-7-4.5-7-9a7 7 0 0 1 14 0c0 4.5-7 9-7 9z"/>
-          <circle cx="12" cy="9.5" r="2.5"/>
-          <path d="M9 21c0 0 1-1 3-1s3 1 3 1"/>
-        </svg>
-      </span>
-        <h3 class="feature-name">Guided Reflection</h3>
-        <p class="feature-text">Eternus helps organise meaningful memories with context, clarity and emotional continuity over time.</p>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- HOW IT WORKS -->
-  <section class="how" id="how">
-    <span class="section-label">Simple by design</span>
-    <h2 class="section-title">Four steps.<br><em>A life's memories</em>, preserved.</h2>
-    <div class="steps">
-      <div class="step">
-        <span class="step-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="url(#stepgrad1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <defs>
-              <linearGradient id="stepgrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#6b3fa0"/>
-                <stop offset="100%" style="stop-color:#c9a84c"/>
-              </linearGradient>
-            </defs>
-            <rect x="5" y="2" width="14" height="20" rx="2"/>
-            <line x1="12" y1="18" x2="12.01" y2="18"/>
-          </svg>
-        </span>
-        <span class="step-num">01</span>
-        <h3 class="step-title">Capture</h3>
-        <p class="step-text">A photo, a video, a voice note, a written thought. Always simple, always fast — in 5 to 10 seconds, your memory is safe.</p>
-      </div>
-      <div class="step">
-        <span class="step-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="url(#stepgrad2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <defs>
-              <linearGradient id="stepgrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#6b3fa0"/>
-                <stop offset="100%" style="stop-color:#c9a84c"/>
-              </linearGradient>
-            </defs>
-            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
-            <line x1="12" y1="11" x2="12" y2="17"/>
-            <line x1="9" y1="14" x2="15" y2="14"/>
-          </svg>
-        </span>
-        <span class="step-num">02</span>
-        <h3 class="step-title">Classify</h3>
-        <p class="step-text">Eternus silently organises your memories into three layers — private, trusted circle, or legacy. You only adjust when you want to.</p>
-      </div>
-      <div class="step">
-        <span class="step-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="url(#stepgrad3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <defs>
-              <linearGradient id="stepgrad3" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#6b3fa0"/>
-                <stop offset="100%" style="stop-color:#c9a84c"/>
-              </linearGradient>
-            </defs>
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <polyline points="16 11 18 13 22 9"/>
-          </svg>
-        </span>
-        <span class="step-num">03</span>
-        <h3 class="step-title">Share with control</h3>
-        <p class="step-text">Decide what stays private, what your trusted circle can see, and what becomes part of your legacy. You are always in control.</p>
-      </div>
-      <div class="step">
-        <span class="step-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="url(#stepgrad4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <defs>
-              <linearGradient id="stepgrad4" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style="stop-color:#6b3fa0"/>
-                <stop offset="100%" style="stop-color:#c9a84c"/>
-              </linearGradient>
-            </defs>
-            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
-            <path d="M12 8v4"/>
-            <path d="M8 12c0 2.2 1.8 4 4 4s4-1.8 4-4"/>
-          </svg>
-        </span>
-        <span class="step-num">04</span>
-        <h3 class="step-title">Recover</h3>
-        <p class="step-text">Revisit memories naturally through context, dates, people and personal moments — without endless searching.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- WOW SECTION -->
-  <section class="wow-section">
-    <span class="section-label">Imagine using Eternus</span>
-    <h2 class="wow-title">Some memories are not<br>for <em>today.</em></h2>
-    <p class="wow-subtitle">They are for tomorrow. For the people who matter most. For moments worth holding on to.</p>
-    <div class="wow-cards">
-      <div class="wow-card">
-        <p class="wow-card-quote">"I recorded a message for my daughter's wedding day — something meaningful for her to keep."</p>
-        <span class="wow-card-label">Legacy message</span>
-      </div>
-      <div class="wow-card">
-        <p class="wow-card-quote">"My father kept a private archive of stories, recordings and memories our family still values today."</p>
-        <span class="wow-card-label">Trusted archive</span>
-      </div>
-      <div class="wow-card">
-        <p class="wow-card-quote">"I keep a private diary — photos, voice notes, memories — that only my family can access."</p>
-        <span class="wow-card-label">Trusted circle</span>
-      </div>
-      <div class="wow-card">
-        <p class="wow-card-quote">"I left a time capsule for my children to open when they turn 18."</p>
-        <span class="wow-card-label">Time capsule</span>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- WAITLIST -->
-  <section class="waitlist" id="waitlist">
-    <span class="section-label">Early Access</span>
-    <h2 class="waitlist-title">Be the first to <em>experience</em> Eternus.</h2>
-    <p class="waitlist-sub">Join the waiting list and we'll notify you as soon as we launch.</p>
-    <div class="waitlist-form">
-      <input class="waitlist-input" type="text" id="waitlist-name" placeholder="Your name" autocomplete="off" />
-      <input class="waitlist-input" type="email" id="waitlist-email" placeholder="Your email address" autocomplete="off" />
-      <button class="waitlist-btn" id="waitlist-btn">Join the waiting list</button>
-      <p class="waitlist-message" id="waitlist-message"></p>
-    </div>
-    <p class="waitlist-count" id="waitlist-count"></p>
-  </section>
-
-  <!-- PRIVACY SECTION -->
-  <section class="privacy-section" style="position:relative; z-index:1; padding: 80px 60px; max-width: 900px; margin: 0 auto; text-align: center;">
-    <span class="section-label">Privacy first</span>
-    <h2 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; line-height: 1.2; margin-bottom: 24px; color: var(--white);">Your memories <em style="font-style:italic; color: var(--gold);">are yours.</em></h2>
-    <div style="display: flex; flex-direction: column; gap: 16px; max-width: 560px; margin: 0 auto;">
-      <p style="font-size: 0.9rem; line-height: 2; color: rgba(245,240,234,0.6);">Private by default. Shared only by your choice.</p>
-      <p style="font-size: 0.9rem; line-height: 2; color: rgba(245,240,234,0.6);">No noise. No public feed. No algorithms fighting for your attention.</p>
-      <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.2rem; color: var(--gold-light); margin-top: 16px;">Three layers of trust — private, circle, legacy.<br>Always in your hands.</p>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- CTA -->
-  <section class="cta">
-    <h2 class="cta-title">Because life is not meant<br>to be <em>scrolled.</em></h2>
-    <p class="cta-sub">Built to preserve what matters most.</p>
-
-    <div class="coming-soon-banner">
-      <div class="coming-soon-inner">
-        <div class="coming-soon-badges">
-          <img src="assets/badge-appstore.svg" alt="App Store" class="store-badge-sm" />
-          <img src="assets/badge-googleplay.svg" alt="Google Play" class="store-badge-sm" />
-        </div>
-        <div class="coming-soon-text">
-          <span class="coming-soon-label">Coming Soon</span>
-          <span class="coming-soon-desc">Eternus will be available on iOS & Android</span>
+  <section class="hero" id="top">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="hero-eyebrow">A private space for what matters</p>
+        <h1 class="hero-title">Preserve your moments.<br><em>Build what remains.</em></h1>
+        <p class="hero-desc">Eternus is a private space for your memories, the people who matter, and the legacy you choose to leave behind.</p>
+        <div class="hero-ctas">
+          <a href="#layers" class="btn btn-primary">Discover Eternus</a>
+          <a href="about.html" class="btn btn-secondary">Learn More</a>
         </div>
       </div>
+      <div class="hero-visual">
+        <div class="phone-stack">
+          <div class="phone-frame phone-frame-back">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <img src="assets/eternus-tree-real.jpg" alt="Screenshot of the Eternus app My Digital Tree screen." loading="eager" />
+            </div>
+          </div>
+          <div class="phone-frame phone-frame-front">
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <img src="assets/eternus-home-real.jpg" alt="Screenshot of the Eternus app Home screen." loading="eager" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- THREE LAYERS -->
+  <section id="layers">
+    <div class="section-inner center">
+      <span class="section-label">How Eternus is organised</span>
+      <h2 class="section-title">Share with <em>intention.</em></h2>
+      <p class="section-sub center">Every memory you keep in Eternus lives in one of three layers. You decide what belongs where — and you can change your mind at any time.</p>
+      <div class="layers-grid">
+        <div class="layer-card" tabindex="0" role="button" aria-pressed="false" aria-label="Private layer. Press Enter or Space to learn more.">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="layer-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold-light)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </div>
+              <h3 class="layer-name">Private</h3>
+              <p class="layer-text">Your personal space. Moments that remain entirely yours, visible only to you.</p>
+              <span class="flip-hint" aria-hidden="true">Tap to learn more</span>
+            </div>
+            <div class="flip-card-back" aria-hidden="true">
+              <h3 class="layer-name">Private</h3>
+              <div class="layer-back-text">
+                <p>Your personal space inside Eternus.</p>
+                <p>Memories saved here are visible only to you.</p>
+                <p>Use it for personal moments, thoughts, drafts, photographs, stories or anything you do not want to share.</p>
+                <p>Nothing moves to Circle or Legacy unless you intentionally change its visibility.</p>
+              </div>
+              <span class="flip-hint" aria-hidden="true">Tap to return</span>
+            </div>
+          </div>
+        </div>
+        <div class="layer-card" tabindex="0" role="button" aria-pressed="false" aria-label="Circle layer. Press Enter or Space to learn more.">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="layer-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold-light)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <h3 class="layer-name">Circle</h3>
+              <p class="layer-text">Share selected moments with the people closest to you, on your terms.</p>
+              <span class="flip-hint" aria-hidden="true">Tap to learn more</span>
+            </div>
+            <div class="flip-card-back" aria-hidden="true">
+              <h3 class="layer-name">Circle</h3>
+              <div class="layer-back-text">
+                <p>Share selected memories with the people you trust today.</p>
+                <p>You decide who belongs in your Circle and which moments they can see.</p>
+                <p>Circle is designed for family, close friends and meaningful connections.</p>
+                <p>Circle access does not automatically include Legacy access.</p>
+              </div>
+              <span class="flip-hint" aria-hidden="true">Tap to return</span>
+            </div>
+          </div>
+        </div>
+        <div class="layer-card" tabindex="0" role="button" aria-pressed="false" aria-label="Legacy layer. Press Enter or Space to learn more.">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <div class="layer-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold-light)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2c-1.5 3-5 5-5 9a5 5 0 0 0 10 0c0-4-3.5-6-5-9z"/>
+                  <path d="M12 15v7"/>
+                  <path d="M8 22h8"/>
+                </svg>
+              </div>
+              <h3 class="layer-name">Legacy</h3>
+              <p class="layer-text">Preserve what matters for the people and generations you choose. Legacy includes your Circle — Circle alone does not include Legacy.</p>
+              <span class="flip-hint" aria-hidden="true">Tap to learn more</span>
+            </div>
+            <div class="flip-card-back" aria-hidden="true">
+              <h3 class="layer-name">Legacy</h3>
+              <div class="layer-back-text">
+                <p>Preserve memories, stories, values and messages for the people you choose.</p>
+                <p>Legacy is designed for the future and for the people you intentionally include.</p>
+                <p>A person with Legacy access can also see Circle content shared with them.</p>
+                <p>Circle access alone does not include Legacy access.</p>
+              </div>
+              <span class="flip-hint" aria-hidden="true">Tap to return</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="layers-note center">You are always in control. Nothing moves between layers without your choice.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MORE THAN A MEMORY APP -->
+  <section id="experience">
+    <div class="section-inner center">
+      <span class="section-label">More than a memory app</span>
+      <h2 class="section-title">A legacy <em>experience.</em></h2>
+      <div class="features-grid" style="text-align:left;">
+        <div class="feature-card" tabindex="0" role="button" aria-pressed="false" aria-label="Capture your Moments. Press Enter or Space to learn more.">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <span class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="url(#g1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <defs><linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6b3fa0"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient></defs>
+                  <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+                  <circle cx="12" cy="13" r="3"/>
+                </svg>
+              </span>
+              <h3 class="feature-name">Capture your Moments</h3>
+              <p class="feature-text">Save photos, videos and stories in your private space. Your life, your way.</p>
+              <span class="flip-hint" aria-hidden="true">Learn more</span>
+            </div>
+            <div class="flip-card-back" aria-hidden="true">
+              <h3 class="feature-name">Capture your Moments</h3>
+              <div class="feature-back-text">
+                <p>Preserve photographs, videos, stories and meaningful details in one private space.</p>
+                <p>Add dates, places and context so every Moment keeps more than just an image.</p>
+                <p>You decide whether each Moment stays Private or is shared through Circle or Legacy.</p>
+              </div>
+              <span class="flip-hint" aria-hidden="true">Tap to return</span>
+            </div>
+          </div>
+        </div>
+        <div class="feature-card" tabindex="0" role="button" aria-pressed="false" aria-label="Talk to Eternus. Press Enter or Space to learn more.">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <span class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="url(#g2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6b3fa0"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient></defs>
+                  <path d="M18.178 8c5.096 0 5.096 8 0 8-5.095 0-7.133-8-12.229-8-5.096 0-5.096 8 0 8 5.096 0 7.133-8 12.229-8z"/>
+                </svg>
+              </span>
+              <h3 class="feature-name">Talk to Eternus</h3>
+              <p class="feature-text">Have meaningful conversations about your life, your memories and what matters most.</p>
+              <span class="flip-hint" aria-hidden="true">Learn more</span>
+            </div>
+            <div class="flip-card-back" aria-hidden="true">
+              <h3 class="feature-name">Talk to Eternus</h3>
+              <div class="feature-back-text">
+                <p>Reflect on your life through guided conversations designed to help meaningful memories emerge naturally.</p>
+                <p>Eternus can help you explore people, places, experiences and stories worth preserving.</p>
+                <p>It is not a generic chatbot. It is a guided part of building your personal story.</p>
+              </div>
+              <span class="flip-hint" aria-hidden="true">Tap to return</span>
+            </div>
+          </div>
+        </div>
+        <div class="feature-card" tabindex="0" role="button" aria-pressed="false" aria-label="Connect your people. Press Enter or Space to learn more.">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <span class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="url(#g3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <defs><linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6b3fa0"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient></defs>
+                  <circle cx="9" cy="8" r="3.2"/>
+                  <circle cx="17" cy="9" r="2.6"/>
+                  <path d="M3.5 20v-1.2A4.8 4.8 0 0 1 8.3 14h1.4a4.8 4.8 0 0 1 4.8 4.8V20"/>
+                  <path d="M15.5 14.3a4.2 4.2 0 0 1 5 4.1V20"/>
+                </svg>
+              </span>
+              <h3 class="feature-name">Connect your people</h3>
+              <p class="feature-text">Invite family and close friends. Share with intention across Circle and Legacy.</p>
+              <span class="flip-hint" aria-hidden="true">Learn more</span>
+            </div>
+            <div class="flip-card-back" aria-hidden="true">
+              <h3 class="feature-name">Connect your people</h3>
+              <div class="feature-back-text">
+                <p>Invite family, close friends and meaningful connections into your Circle or Legacy.</p>
+                <p>You choose each person's level of access and which Moments they can see.</p>
+                <p>Every person keeps control of their own memories and story.</p>
+              </div>
+              <span class="flip-hint" aria-hidden="true">Tap to return</span>
+            </div>
+          </div>
+        </div>
+        <div class="feature-card" tabindex="0" role="button" aria-pressed="false" aria-label="Build your Legacy. Press Enter or Space to learn more.">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <span class="feature-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="url(#g4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <defs><linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6b3fa0"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient></defs>
+                  <path d="M12 2c-1.5 3-5 5-5 9a5 5 0 0 0 10 0c0-4-3.5-6-5-9z"/>
+                  <path d="M12 15v7"/>
+                  <path d="M8 22h8"/>
+                </svg>
+              </span>
+              <h3 class="feature-name">Build your Legacy</h3>
+              <p class="feature-text">Organise what matters, guide the future, and leave something that lasts.</p>
+              <span class="flip-hint" aria-hidden="true">Learn more</span>
+            </div>
+            <div class="flip-card-back" aria-hidden="true">
+              <h3 class="feature-name">Build your Legacy</h3>
+              <div class="feature-back-text">
+                <p>Bring together the memories, stories, values and messages you intentionally want to preserve for the future.</p>
+                <p>Choose who becomes part of your Legacy and what they will be able to access.</p>
+                <p>Your Legacy remains private, intentional and controlled by you.</p>
+              </div>
+              <span class="flip-hint" aria-hidden="true">Tap to return</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MY TREE -->
+  <section class="tree-section" id="mytree">
+    <div class="section-inner">
+      <div class="tree-layout">
+        <div class="tree-copy">
+          <span class="section-label">My Tree</span>
+          <h2 class="section-title">Your legacy.<br><em>Your people.</em></h2>
+          <p class="section-sub">My Tree brings together the people you have intentionally included in your Legacy — while every person keeps control of their own memories and story.</p>
+        </div>
+        <div class="tree-visual" role="img" aria-label="A diagram showing you at the centre, connected to people you have included in your Legacy, plus an option to invite someone new.">
+          <div class="tree-root">
+            <div class="tree-avatar tree-avatar-root"><img class="tree-photo" src="assets/You.png" alt="You" /></div>
+            <span class="tree-name">You</span>
+            <span class="tree-role">Owner</span>
+          </div>
+          <div class="tree-connector"></div>
+          <div class="tree-branch">
+            <div class="tree-node">
+              <div class="tree-avatar"><img class="tree-photo" src="assets/Mother.png" alt="Mother" /></div>
+              <span class="tree-name">Mother</span>
+            </div>
+            <div class="tree-node">
+              <div class="tree-avatar"><img class="tree-photo" src="assets/Father.png" alt="Father" /></div>
+              <span class="tree-name">Father</span>
+            </div>
+            <div class="tree-node">
+              <div class="tree-avatar"><img class="tree-photo" src="assets/Sibling.png" alt="Sibling" /></div>
+              <span class="tree-name">Sibling</span>
+            </div>
+            <div class="tree-node">
+              <div class="tree-avatar"><img class="tree-photo" src="assets/Partner.png" alt="Partner" /></div>
+              <span class="tree-name">Partner</span>
+            </div>
+            <div class="tree-node">
+              <div class="tree-avatar tree-avatar-invite">+</div>
+              <span class="tree-name">Invite someone</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PRIVACY -->
+  <section id="privacy">
+    <div class="section-inner center">
+      <span class="section-label">Privacy first</span>
+      <h2 class="section-title">Privacy by design.<br>You are <em>in control.</em></h2>
+      <p class="section-sub center">Your memories remain yours. Eternus is built around intentional access, clear boundaries and trusted connections.</p>
+      <ul class="privacy-points">
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Private by default
+        </li>
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
+          Intentional sharing
+        </li>
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.9" y1="4.9" x2="19.1" y2="19.1"/></svg>
+          No advertising
+        </li>
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M1 21v-2a4 4 0 0 1 4-4h8"/><line x1="17" y1="8" x2="23" y2="14"/><line x1="23" y1="8" x2="17" y2="14"/></svg>
+          No public follower system
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FINAL CTA / PRIVATE BETA NOTICE -->
+  <section class="cta-final">
+    <div class="section-inner center">
+      <span class="section-label">Private beta</span>
+      <h2 class="section-title">Eternus is currently<br>in <em>private beta.</em></h2>
+      <p class="section-sub center">We are refining the experience with a small group of invited testers before a wider release.</p>
     </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <span class="footer-logo">Eternus</span>
-    <div style="display:flex; gap:32px; align-items:center; flex-wrap:wrap;">
-      <a href="about.html" style="font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(154,143,160,0.5); text-decoration:none; transition:color 0.3s;" onmouseover="this.style.color='#e8c97a'" onmouseout="this.style.color='rgba(154,143,160,0.5)'">About</a>
-      <a href="faq.html" style="font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(154,143,160,0.5); text-decoration:none; transition:color 0.3s;" onmouseover="this.style.color='#e8c97a'" onmouseout="this.style.color='rgba(154,143,160,0.5)'">FAQ</a>
-      <a href="support.html" style="font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(154,143,160,0.5); text-decoration:none;">Support</a>
-      <a href="privacy-policy.html" style="font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; color:rgba(154,143,160,0.5); text-decoration:none; transition:color 0.3s;" onmouseover="this.style.color='#e8c97a'" onmouseout="this.style.color='rgba(154,143,160,0.5)'">Privacy Policy</a>
-      <a href="https://www.instagram.com/eternusapp/" target="_blank" style="display:inline-flex; align-items:center; transition:opacity 0.3s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="url(#iggrad)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <defs>
-            <linearGradient id="iggrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#6b3fa0"/>
-              <stop offset="100%" style="stop-color:#c9a84c"/>
-            </linearGradient>
-          </defs>
-          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-          <circle cx="12" cy="12" r="4"/>
-          <circle cx="17.5" cy="6.5" r="0.5" fill="url(#iggrad)" stroke="none"/>
-        </svg>
-      </a>
-      <span class="footer-copy">© 2026 Eternus. All rights reserved.</span>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-logo">Eternus</span>
+        <p class="footer-tagline">Preserve your moments. Build what remains.</p>
+      </div>
+      <ul class="footer-nav">
+        <li><a href="about.html">About</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="privacy-policy.html">Privacy</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul>
+      <div class="footer-contact">
+        <a href="mailto:hello@myeternusapp.com">hello@myeternusapp.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> Eternus. All rights reserved.</span>
     </div>
   </footer>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyxfMvjq1epaz_zI7xDbXYE4rm2-zvAkYTgZE5sgENOKdPRvIKCSAzMZaz3Qn6KBgnkpQ/exec";
+    document.getElementById('year').textContent = new Date().getFullYear();
 
     document.addEventListener('DOMContentLoaded', function() {
-      document.getElementById('waitlist-btn').addEventListener('click', submitWaitlist);
-
       const hamburger = document.getElementById('nav-hamburger');
       const mobileMenu = document.getElementById('mobile-menu');
 
@@ -1245,49 +1174,71 @@
           mobileMenu.setAttribute('aria-hidden', 'true');
         });
       });
-    });
 
-    async function submitWaitlist() {
-      const name = document.getElementById('waitlist-name').value.trim();
-      const email = document.getElementById('waitlist-email').value.trim();
-      const btn = document.getElementById('waitlist-btn');
-      const msg = document.getElementById('waitlist-message');
+      const layerCards = document.querySelectorAll('.layer-card');
 
-      if (!name) {
-        msg.textContent = 'Please enter your name.';
-        msg.className = 'waitlist-message error';
-        return;
-      }
-      if (!email || !email.includes('@')) {
-        msg.textContent = 'Please enter a valid email address.';
-        msg.className = 'waitlist-message error';
-        return;
+      function setFlipped(card, flipped) {
+        card.classList.toggle('is-flipped', flipped);
+        card.setAttribute('aria-pressed', flipped ? 'true' : 'false');
+        const front = card.querySelector('.flip-card-front');
+        const back = card.querySelector('.flip-card-back');
+        if (front) front.setAttribute('aria-hidden', flipped ? 'true' : 'false');
+        if (back) back.setAttribute('aria-hidden', flipped ? 'false' : 'true');
       }
 
-      btn.disabled = true;
-      btn.textContent = 'Joining...';
-      msg.textContent = '';
-
-      try {
-        await fetch(SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, email })
+      function toggleCard(card) {
+        const willFlip = !card.classList.contains('is-flipped');
+        layerCards.forEach(function(other) {
+          if (other !== card) setFlipped(other, false);
         });
-
-        msg.textContent = "✦ You're on the list! We'll be in touch soon.";
-        msg.className = 'waitlist-message success';
-        btn.textContent = "You're in!";
-        document.getElementById('waitlist-name').value = '';
-        document.getElementById('waitlist-email').value = '';
-      } catch (error) {
-        msg.textContent = 'Something went wrong. Please try again.';
-        msg.className = 'waitlist-message error';
-        btn.disabled = false;
-        btn.textContent = 'Join the waiting list';
+        setFlipped(card, willFlip);
       }
-    }
+
+      layerCards.forEach(function(card) {
+        setFlipped(card, false);
+        card.addEventListener('click', function() {
+          toggleCard(card);
+        });
+        card.addEventListener('keydown', function(event) {
+          if (event.key === 'Enter' || event.key === ' ' || event.key === 'Spacebar') {
+            event.preventDefault();
+            toggleCard(card);
+          }
+        });
+      });
+
+      const featureCards = document.querySelectorAll('.feature-card');
+
+      function setFeatureFlipped(card, flipped) {
+        card.classList.toggle('is-flipped', flipped);
+        card.setAttribute('aria-pressed', flipped ? 'true' : 'false');
+        const front = card.querySelector('.flip-card-front');
+        const back = card.querySelector('.flip-card-back');
+        if (front) front.setAttribute('aria-hidden', flipped ? 'true' : 'false');
+        if (back) back.setAttribute('aria-hidden', flipped ? 'false' : 'true');
+      }
+
+      function toggleFeatureCard(card) {
+        const willFlip = !card.classList.contains('is-flipped');
+        featureCards.forEach(function(other) {
+          if (other !== card) setFeatureFlipped(other, false);
+        });
+        setFeatureFlipped(card, willFlip);
+      }
+
+      featureCards.forEach(function(card) {
+        setFeatureFlipped(card, false);
+        card.addEventListener('click', function() {
+          toggleFeatureCard(card);
+        });
+        card.addEventListener('keydown', function(event) {
+          if (event.key === 'Enter' || event.key === ' ' || event.key === 'Spacebar') {
+            event.preventDefault();
+            toggleFeatureCard(card);
+          }
+        });
+      });
+    });
   </script>
 </body>
 </html>

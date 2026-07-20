@@ -1,20 +1,19 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <!-- Primary Meta Tags -->
   <meta name="title" content="About — Eternus" />
-  <meta name="description" content="A private space to preserve what matters most. Memories, voice, and stories — kept with care, shared with trust." />
-  <meta name="keywords" content="Eternus, memory preservation, private archive, trusted legacy, personal memories, memorial" />
+  <meta name="description" content="The story behind Eternus — a private space built around trust, intentional sharing and the people who matter most." />
+  <meta name="keywords" content="Eternus, about Eternus, private memories, family legacy, intentional sharing" />
   <meta name="author" content="Eternus" />
   <meta name="theme-color" content="#06060a" />
-  <link rel="icon" type="image/png" href="assets/favicon.png">
 
   <!-- Open Graph / Facebook / WhatsApp -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://eternusapp.com/about.html" />
-  <meta property="og:title" content="Eternus — Your private memory archive." />
-  <meta property="og:description" content="A private space to preserve what matters most. Memories, voice, and stories — kept with care, shared with trust." />
+  <meta property="og:title" content="About — Eternus" />
+  <meta property="og:description" content="The story behind Eternus — a private space built around trust, intentional sharing and the people who matter most." />
   <meta property="og:image" content="https://myeternusapp.com/assets/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -24,11 +23,12 @@
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://eternusapp.com/about.html" />
-  <meta name="twitter:title" content="Eternus — Your private memory archive." />
-  <meta name="twitter:description" content="A private space to preserve what matters most. Memories, voice, and stories — kept with care, shared with trust." />
+  <meta name="twitter:title" content="About — Eternus" />
+  <meta name="twitter:description" content="The story behind Eternus — a private space built around trust, intentional sharing and the people who matter most." />
   <meta name="twitter:image" content="https://myeternusapp.com/assets/og-image.jpg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>About — Eternus</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -39,10 +39,11 @@
       --gold: #c9a84c;
       --gold-light: #e8c97a;
       --white: #f5f0ea;
-      --muted: #9a8fa0;
+      --muted: #a89dae;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     html { scroll-behavior: smooth; }
 
     body {
@@ -53,6 +54,11 @@
       overflow-x: hidden;
     }
 
+    a { color: inherit; }
+    a:visited { color: inherit; }
+    img { max-width: 100%; }
+
+    /* NOISE TEXTURE OVERLAY */
     body::before {
       content: '';
       position: fixed;
@@ -63,16 +69,7 @@
       opacity: 0.4;
     }
 
-    body::after {
-      content: '';
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(220,210,255,0.25), rgba(255,245,220,0.2), rgba(220,210,255,0.25), transparent);
-      pointer-events: none;
-      z-index: 998;
-    }
-
+    /* AMBIENT GLOW */
     .glow-orb {
       position: fixed;
       border-radius: 50%;
@@ -84,376 +81,431 @@
       width: 800px; height: 800px;
       background: radial-gradient(circle, rgba(220,210,255,0.07) 0%, rgba(150,120,220,0.04) 40%, transparent 70%);
       top: -300px; left: -200px;
-      animation: drift1 25s ease-in-out infinite alternate;
     }
     .glow-orb-2 {
       width: 600px; height: 600px;
       background: radial-gradient(circle, rgba(255,245,220,0.06) 0%, rgba(201,168,76,0.03) 40%, transparent 70%);
       bottom: 100px; right: -150px;
-      animation: drift2 30s ease-in-out infinite alternate;
     }
-    @keyframes drift1 { from { transform: translate(0,0); } to { transform: translate(80px, 60px); } }
-    @keyframes drift2 { from { transform: translate(0,0); } to { transform: translate(-60px, -80px); } }
 
     /* NAV */
     nav {
       position: fixed; top: 0; left: 0; right: 0;
       z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 28px 60px;
-      background: linear-gradient(to bottom, rgba(6,6,10,0.95), transparent);
-      backdrop-filter: blur(4px);
+      padding: 24px 60px;
+      background: linear-gradient(to bottom, rgba(6,6,10,0.92), rgba(6,6,10,0.6) 70%, transparent);
+      backdrop-filter: blur(6px);
     }
     .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-      font-weight: 300;
-      letter-spacing: 0.2em;
-      color: var(--gold);
       text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.08em;
+      color: var(--gold);
     }
-    .nav-back {
-      font-size: 0.72rem;
+    .nav-center {
+      display: flex; align-items: center; gap: 40px;
+    }
+    .nav-links {
+      display: flex; gap: 40px; list-style: none;
+    }
+    .nav-links a,
+    .nav-links a:visited {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--gold-light); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 32px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-static { cursor: default; opacity: 0.85; }
+    .btn-static:hover { transform: none; box-shadow: none; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: var(--black);
+      border: 1px solid var(--gold);
+    }
+    .btn-primary:hover { box-shadow: 0 10px 30px rgba(201,168,76,0.25); }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(201,168,76,0.4);
+      color: var(--gold-light);
+    }
+    .btn-secondary:hover { border-color: var(--gold); background: rgba(201,168,76,0.06); }
+    .btn-nav { padding: 10px 24px; font-size: 0.7rem; }
+
+    /* HAMBURGER */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 6px 2px;
+      z-index: 101;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 1px;
+      background: var(--muted);
+      transition: background 0.3s, transform 0.3s, opacity 0.3s;
+    }
+    .nav-hamburger:hover span { background: var(--gold-light); }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 99;
+      padding-top: 84px;
+      background: rgba(6,6,10,0.97);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+      transform: translateY(-100%);
+      transition: transform 0.35s ease;
+    }
+    .mobile-menu.open { transform: translateY(0); }
+    .mobile-menu-links { list-style: none; padding: 16px 28px 28px; }
+    .mobile-menu-links li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .mobile-menu-links li:last-child { border-bottom: none; }
+    .mobile-menu-links a,
+    .mobile-menu-links a:visited {
+      display: block;
+      padding: 15px 0;
+      font-size: 0.75rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--muted);
       text-decoration: none;
       transition: color 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
-    .nav-back:hover { color: var(--gold-light); }
-    .nav-back svg { width: 14px; height: 14px; }
+    .mobile-menu-links a:hover { color: var(--gold-light); }
+    .mobile-menu-cta { padding: 20px 0 8px; }
 
-    /* HERO */
-    .about-hero {
-      position: relative; z-index: 1;
-      min-height: 70vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 160px 60px 100px;
-      overflow: hidden;
-    }
-
-    .about-hero::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(210,200,255,0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero-ring {
-      position: absolute;
-      border-radius: 50%;
-      border: 1px solid;
-      pointer-events: none;
-    }
-    .ring-1 {
-      width: 400px; height: 400px;
-      border-color: rgba(201,168,76,0.06);
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      animation: rotateSlow 40s linear infinite;
-    }
-    .ring-2 {
-      width: 600px; height: 600px;
-      border-color: rgba(107,63,160,0.04);
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      animation: rotateSlow 60s linear infinite reverse;
-    }
-    @keyframes rotateSlow {
-      from { transform: translate(-50%,-50%) rotate(0deg); }
-      to { transform: translate(-50%,-50%) rotate(360deg); }
-    }
-
-    .page-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.4em;
+    /* SECTION SCAFFOLDING */
+    section { position: relative; z-index: 1; }
+    .section-inner { max-width: 1120px; margin: 0 auto; padding: 110px 60px; }
+    .section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.35em;
       text-transform: uppercase;
       color: var(--gold);
+      margin-bottom: 18px;
       display: block;
-      margin-bottom: 24px;
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 0.3s;
     }
-
-    .about-title {
+    .section-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3rem, 7vw, 6rem);
+      font-size: clamp(2.1rem, 4vw, 3.2rem);
       font-weight: 300;
-      line-height: 1.05;
-      margin-bottom: 32px;
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 0.5s;
+      line-height: 1.18;
+      margin-bottom: 20px;
     }
-    .about-title em { font-style: italic; color: var(--gold); }
-
-    .about-intro {
-      max-width: 600px;
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: clamp(1.1rem, 2vw, 1.4rem);
-      line-height: 1.8;
-      color: rgba(245,240,234,0.6);
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 0.7s;
+    .section-title em { font-style: italic; color: var(--gold); }
+    .section-sub {
+      font-size: 0.95rem;
+      line-height: 1.9;
+      color: rgba(245,240,234,0.72);
+      max-width: 620px;
     }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
+    .center { text-align: center; margin-left: auto; margin-right: auto; }
     .divider {
       width: 100%; max-width: 900px;
       margin: 0 auto;
       height: 1px;
       background: linear-gradient(to right, transparent, rgba(201,168,76,0.3), transparent);
     }
-
-    /* CONTENT */
-    .content {
-      position: relative; z-index: 1;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 100px 60px 60px;
-    }
-
-    /* STORY BLOCK */
-    .story-block {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 60px;
-      margin-bottom: 100px;
-      align-items: start;
-    }
-
-    .story-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--gold);
-      padding-top: 6px;
-      position: sticky;
-      top: 120px;
-    }
-
-    .story-text p {
-      font-size: 0.95rem;
-      line-height: 2.1;
-      color: rgba(245,240,234,0.7);
-      margin-bottom: 24px;
-    }
-    .story-text p:last-child { margin-bottom: 0; }
-    .story-text em {
-      font-style: italic;
-      color: var(--gold-light);
-    }
-    .story-text strong {
-      font-weight: 400;
-      color: var(--white);
-    }
-
-    /* PULL QUOTE */
-    .pull-quote {
-      margin: 0 0 100px;
-      padding: 48px 60px;
-      border-left: 2px solid var(--gold);
-      background: linear-gradient(to right, rgba(201,168,76,0.04), transparent);
-      position: relative;
-    }
-    .pull-quote p {
+    .section-note {
+      margin-top: 44px;
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: clamp(1.4rem, 3vw, 2rem);
-      font-weight: 300;
-      line-height: 1.5;
-      color: var(--white);
-    }
-    .pull-quote p em { color: var(--gold); font-style: normal; }
-
-    /* VALUES */
-    .values-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 2px;
-      margin-bottom: 100px;
-    }
-
-    .value-card {
-      padding: 40px 36px;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.04);
-      position: relative;
-      overflow: hidden;
-      transition: background 0.4s, border-color 0.4s;
-    }
-    .value-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-    .value-card:hover { background: rgba(201,168,76,0.03); border-color: rgba(201,168,76,0.15); }
-    .value-card:hover::before { opacity: 1; }
-
-    .value-number {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.5rem;
-      font-weight: 300;
-      color: rgba(201,168,76,0.12);
-      line-height: 1;
-      margin-bottom: 20px;
-    }
-    .value-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
-      font-weight: 400;
-      color: var(--white);
-      margin-bottom: 12px;
-    }
-    .value-text {
-      font-size: 0.82rem;
-      line-height: 1.9;
-      color: var(--muted);
-    }
-
-    /* LAYER GRID — Private / Circle / Legacy */
-    .layer-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-      margin-top: 40px;
-    }
-    .layer-card {
-      padding: 28px 24px;
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.04);
-      position: relative;
-      overflow: hidden;
-      transition: background 0.4s, border-color 0.4s;
-    }
-    .layer-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-    .layer-card:hover { background: rgba(201,168,76,0.03); border-color: rgba(201,168,76,0.15); }
-    .layer-card:hover::before { opacity: 1; }
-    .layer-card-title {
-      font-size: 0.62rem;
-      letter-spacing: 0.35em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 12px;
-    }
-    .layer-card-text {
-      font-size: 0.82rem;
-      line-height: 1.8;
-      color: var(--muted);
-    }
-
-    /* FOOTER LINKS */
-    .footer-link {
-      font-size: 0.72rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(154,143,160,0.5);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    .footer-link:hover { color: var(--gold-light); }
-
-    /* CONTACT BLOCK */
-    .contact-block {
-      padding: 60px 40px;
-      border: 1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.02);
-      text-align: center;
-      position: relative;
-      margin-bottom: 0;
-    }
-    .contact-block::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
-    }
-    .contact-block h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 3vw, 2.4rem);
-      font-weight: 300;
-      margin-bottom: 16px;
-    }
-    .contact-block h3 em { font-style: italic; color: var(--gold); }
-    .contact-block p {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 28px;
-      max-width: 460px;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: rgba(232,201,122,0.85);
+      max-width: 680px;
       margin-left: auto;
       margin-right: auto;
-      line-height: 1.9;
     }
-    .contact-email {
-      font-size: 0.85rem;
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* HERO */
+    .about-hero {
+      position: relative;
+      min-height: 68vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 170px 60px 100px;
+      overflow: hidden;
+    }
+    .hero-ring {
+      position: absolute;
+      top: 50%; left: 50%;
+      border-radius: 50%;
+      border: 1px solid;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .ring-1 { width: 420px; height: 420px; border-color: rgba(201,168,76,0.12); }
+    .ring-2 { width: 620px; height: 620px; border-color: rgba(107,63,160,0.09); }
+    .ring-3 { width: 840px; height: 840px; border-color: rgba(201,168,76,0.05); }
+    .hero-mark {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold-light);
+      box-shadow: 0 0 14px rgba(232,201,122,0.6);
+      margin: 0 auto 22px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0s;
+    }
+    .about-hero-inner { position: relative; z-index: 1; max-width: 760px; }
+    .about-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 1.6vw, 1.2rem);
       letter-spacing: 0.1em;
       color: var(--gold-light);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(201,168,76,0.3);
-      padding-bottom: 2px;
-      transition: color 0.3s;
+      margin-bottom: 22px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.1s;
     }
-    .contact-email:hover { color: var(--white); }
+    .about-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.6rem, 5.6vw, 4.4rem);
+      line-height: 1.12;
+      margin-bottom: 26px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.25s;
+    }
+    .about-title em { font-style: italic; color: var(--gold); }
+    .about-intro {
+      font-size: 1rem;
+      line-height: 1.9;
+      color: rgba(245,240,234,0.75);
+      max-width: 560px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: fadeUp 0.9s ease forwards 0.4s;
+    }
+
+    /* IDEA — editorial two-column */
+    .idea-grid {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .idea-grid .section-label { margin-bottom: 16px; }
+    .idea-body p {
+      font-size: 0.95rem;
+      line-height: 2;
+      color: rgba(245,240,234,0.75);
+      margin-bottom: 22px;
+    }
+    .idea-body p:last-child { margin-bottom: 0; }
+
+    /* CARDS shared (Layers / More than storage / Values) */
+    .cards-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+    }
+    .cards-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      max-width: 800px;
+      margin: 56px auto 0;
+      text-align: left;
+    }
+    .about-card {
+      padding: 40px 34px;
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px;
+      transition: background 0.4s, border-color 0.4s, transform 0.4s;
+    }
+    .about-card:hover {
+      background: rgba(201,168,76,0.045);
+      border-color: rgba(201,168,76,0.25);
+      transform: translateY(-4px);
+    }
+    .card-icon {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.35);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+    }
+    .card-icon-sm {
+      width: auto; height: auto;
+      border: none;
+      margin-bottom: 22px;
+      display: block;
+    }
+    .card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 400;
+      color: var(--gold-light);
+      margin-bottom: 12px;
+    }
+    .about-card .card-name.white { color: var(--white); }
+    .card-text {
+      font-size: 0.88rem;
+      line-height: 1.85;
+      color: rgba(245,240,234,0.68);
+    }
+
+    /* DIFFERENT — point list */
+    .point-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px 40px;
+      max-width: 640px;
+      margin: 40px auto 0;
+      text-align: left;
+    }
+    .point-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: rgba(245,240,234,0.78);
+      line-height: 1.6;
+    }
+    .point-list li svg { flex-shrink: 0; margin-top: 3px; }
+
+    /* FINAL CTA / BETA */
+    .cta-final { text-align: center; }
+    .cta-final .section-title { max-width: 780px; margin-left: auto; margin-right: auto; }
+
+    /* CONTACT */
+    .contact-email-link {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      color: var(--gold-light);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(201,168,76,0.35);
+      padding-bottom: 3px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+    .contact-email-link:visited { color: var(--gold-light); }
+    .contact-email-link:hover { color: var(--white); border-color: var(--gold-light); }
 
     /* FOOTER */
-    footer {
-      position: relative; z-index: 1;
-      padding: 40px 60px;
-      border-top: 1px solid rgba(255,255,255,0.04);
+    footer { padding: 48px 60px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .footer-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 80px;
+      gap: 28px;
+      max-width: 1120px;
+      margin: 0 auto 32px;
     }
+    .footer-brand { flex: 1 1 240px; }
     .footer-logo {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       font-weight: 300;
-      letter-spacing: 0.2em;
-      color: var(--gold);
-    }
-    .footer-copy {
-      font-size: 0.72rem;
       letter-spacing: 0.1em;
-      color: rgba(154,143,160,0.4);
+      color: var(--gold);
+      margin-bottom: 10px;
+      display: block;
+    }
+    .footer-tagline {
+      font-size: 0.8rem;
+      color: rgba(245,240,234,0.55);
+      line-height: 1.7;
+      max-width: 320px;
+    }
+    .footer-nav { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 28px; }
+    .footer-contact { flex: 1 1 240px; text-align: right; font-size: 0.8rem; }
+    footer a,
+    footer a:visited {
+      color: rgba(245,240,234,0.6);
+      text-decoration: none;
+      transition: color 0.3s ease, opacity 0.3s ease;
+    }
+    footer a:hover,
+    footer a:focus {
+      color: var(--gold-light);
+      text-decoration: underline;
+      text-decoration-color: rgba(232,201,122,0.4);
+      text-underline-offset: 4px;
+    }
+    footer a:focus { outline: 1px solid rgba(201,168,76,0.5); outline-offset: 4px; }
+    .footer-bottom {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      color: rgba(245,240,234,0.4);
+      text-align: center;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .idea-grid { grid-template-columns: 1fr; gap: 16px; }
+      .cards-grid-3 { grid-template-columns: 1fr; }
+      .cards-grid-2 { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 768px) {
-      nav { padding: 24px; }
-      .about-hero { padding: 140px 24px 80px; }
-      .content { padding: 60px 24px 60px; }
-      .story-block { grid-template-columns: 1fr; gap: 24px; }
-      .story-label { position: static; }
-      .pull-quote { padding: 32px 28px; }
-      .layer-grid { grid-template-columns: 1fr; }
-      footer { padding: 32px 24px; }
+      nav { padding: 20px 24px; }
+      .nav-center { display: none; }
+      .nav-hamburger { display: flex; }
+      .mobile-menu { display: block; }
+
+      .section-inner { padding: 64px 24px; }
+      .about-hero { padding: 130px 24px 70px; }
+
+      .point-list { grid-template-columns: 1fr; }
+
+      .footer-top { flex-direction: column; text-align: center; gap: 20px; }
+      .footer-brand, .footer-contact { flex: none; text-align: center; }
+      footer { padding: 40px 24px; }
     }
   </style>
 </head>
@@ -464,117 +516,316 @@
 
   <!-- NAV -->
   <nav>
-    <a class="nav-logo" href="index.html">Eternus</a>
-    <a class="nav-back" href="index.html">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-      </svg>
-      Back to Eternus
+    <a class="nav-logo" href="index.html">
+      <img src="assets/logo-eternus-gold.png" alt="Eternus" style="height:22px; width:auto; display:block;" />
+      Eternus
     </a>
+    <div class="nav-center">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html" aria-current="page">About</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="privacy-policy.html">Privacy</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul>
+      <span class="btn btn-primary btn-nav btn-static" aria-disabled="true">Coming Soon</span>
+    </div>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </nav>
 
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <ul class="mobile-menu-links">
+      <li><a href="index.html" class="mobile-link">Home</a></li>
+      <li><a href="about.html" class="mobile-link" aria-current="page">About</a></li>
+      <li><a href="faq.html" class="mobile-link">FAQ</a></li>
+      <li><a href="privacy-policy.html" class="mobile-link">Privacy</a></li>
+      <li><a href="support.html" class="mobile-link">Support</a></li>
+    </ul>
+    <div class="mobile-menu-cta" style="padding: 0 28px 28px;">
+      <span class="btn btn-primary btn-static" style="width:100%;" aria-disabled="true">Coming Soon</span>
+    </div>
+  </div>
+
   <!-- HERO -->
-  <section class="about-hero">
+  <section class="about-hero" id="top">
     <div class="hero-ring ring-1"></div>
     <div class="hero-ring ring-2"></div>
-    <span class="page-label">Our Story</span>
-    <h1 class="about-title">Not a network.<br>A system of <em>trust.</em></h1>
-    <p class="about-intro">Eternus began with a quieter question: how do we preserve the moments, voices and stories that shape a life?</p>
+    <div class="hero-ring ring-3"></div>
+    <div class="about-hero-inner">
+      <div class="hero-mark" aria-hidden="true"></div>
+      <p class="about-eyebrow">Our story</p>
+      <h1 class="about-title">Not a network.<br><em>A system of trust.</em></h1>
+      <p class="about-intro">Eternus began with a quieter question: how do we preserve the moments, voices and stories that shape a life — while keeping people in control of who can see them?</p>
+    </div>
   </section>
 
   <div class="divider"></div>
 
-  <!-- CONTENT -->
-  <div class="content">
-
-    <!-- THE IDEA -->
-    <div class="story-block">
-      <div class="story-label">The Idea</div>
-      <div class="story-text">
-        <p>Most of us have voice notes we've never listened back to, family photos spread across three different devices, and stories buried in old conversations. Moments that felt ordinary when they happened — and irreplaceable later.</p>
-        <p>Eternus was created to give those moments a home. To preserve the connection people leave behind through memories, voice and shared moments — built from the most personal thing any of us has: <em>our stories.</em></p>
-        <p>Sometimes all we want is one more voice note. Eternus is not a social network. There are no likes, no feeds, no public performance. It is something far more human — a <strong>private system of memory and trust</strong>, designed for the people who matter most to you.</p>
-        <p>We believe that a life fully lived deserves to be preserved — and shared only with those who truly deserve to hold it.</p>
-      </div>
-    </div>
-
-    <!-- PULL QUOTE -->
-    <div class="pull-quote">
-      <p>"We are not building a social network. We are building <em>infrastructure for human memory</em> — with permission, with trust, and with love."</p>
-    </div>
-
-    <!-- THE MISSION -->
-    <div class="story-block">
-      <div class="story-label">Our Mission</div>
-      <div class="story-text">
-        <p>Our mission is to give every person the tools to preserve who they are — in their own words, their own images and their own voice — and to pass that on to the people who matter most.</p>
-        <p>Eternus works in three layers: what stays <em>private</em>, what is shared with your <strong>trusted circle</strong>, and what becomes your <strong>legacy</strong>. You remain in full control of every layer, at every stage.</p>
-        <p>We are building something closer to infrastructure than an app — a place where memory becomes legacy, where trust is the foundation, and where you are always in control.</p>
-        <p>Eternus is not about death. <strong>It is about life</strong> — and the quiet mark that every person leaves on those around them.</p>
-        <div class="layer-grid">
-          <div class="layer-card">
-            <div class="layer-card-title">Private</div>
-            <p class="layer-card-text">Personal memories visible only to you. Your space, entirely your own.</p>
-          </div>
-          <div class="layer-card">
-            <div class="layer-card-title">Trusted Circle</div>
-            <p class="layer-card-text">Moments intentionally shared with the people closest to you.</p>
-          </div>
-          <div class="layer-card">
-            <div class="layer-card-title">Legacy</div>
-            <p class="layer-card-text">Long-term access designed around continuity, trust and permission.</p>
-          </div>
+  <!-- THE IDEA -->
+  <section id="idea">
+    <div class="section-inner">
+      <div class="idea-grid">
+        <div>
+          <span class="section-label">The idea</span>
+          <h2 class="section-title">Some moments deserve more than storage.</h2>
+        </div>
+        <div class="idea-body">
+          <p>Most of us have voice notes we rarely revisit, family photographs spread across different devices, and meaningful stories buried in old conversations.</p>
+          <p>Moments can feel ordinary when they happen and become deeply important later.</p>
+          <p>Eternus was created to give those moments context, connection and a place designed around trust.</p>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- VALUES -->
-    <div class="story-block">
-      <div class="story-label">Our Values</div>
-      <div class="story-text" style="padding: 0;">
-        <div class="values-grid">
-          <div class="value-card">
-            <div class="value-number">01</div>
-            <h3 class="value-name">Human First</h3>
-            <p class="value-text">Every decision we make is guided by the impact it has on real people. Technology serves humanity — never the other way around.</p>
+  <div class="divider"></div>
+
+  <!-- WHY ETERNUS EXISTS -->
+  <section id="why">
+    <div class="section-inner center">
+      <span class="section-label">Why Eternus exists</span>
+      <h2 class="section-title">Built for life as it is lived.</h2>
+      <p class="section-sub center">Eternus helps people preserve memories in their own words, images and voice — and share them only with the people they intentionally choose.</p>
+      <p class="section-sub center" style="margin-top: 18px;">It is designed for everyday moments, family stories, personal reflections, meaningful relationships and the legacy a person chooses to build over time.</p>
+      <p class="section-note center">"Your memories remain yours. Sharing is always intentional."</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- HOW ETERNUS WORKS -->
+  <section id="layers">
+    <div class="section-inner center">
+      <span class="section-label">How Eternus is organised</span>
+      <h2 class="section-title">Three layers. One clear choice: <em>yours.</em></h2>
+      <div class="cards-grid-3">
+        <div class="about-card">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold-light)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
           </div>
-          <div class="value-card">
-            <div class="value-number">02</div>
-            <h3 class="value-name">Radical Privacy</h3>
-            <p class="value-text">Your memories are sacred. No feeds, no likes, no public exposure. We will never monetise, sell or compromise the personal data entrusted to us. Ever.</p>
+          <h3 class="card-name">Private</h3>
+          <p class="card-text">Your personal space for memories that remain entirely yours.</p>
+        </div>
+        <div class="about-card">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold-light)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
           </div>
-          <div class="value-card">
-            <div class="value-number">03</div>
-            <h3 class="value-name">Trust by Design</h3>
-            <p class="value-text">Three layers — private, trusted circle, legacy. You decide what goes where, who has access, and when. Always in your hands. Always your choice.</p>
+          <h3 class="card-name">Circle</h3>
+          <p class="card-text">Selected moments shared with the people you trust today.</p>
+        </div>
+        <div class="about-card">
+          <div class="card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold-light)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2c-1.5 3-5 5-5 9a5 5 0 0 0 10 0c0-4-3.5-6-5-9z"/>
+              <path d="M12 15v7"/>
+              <path d="M8 22h8"/>
+            </svg>
           </div>
-          <div class="value-card">
-            <div class="value-number">04</div>
-            <h3 class="value-name">Emotional Integrity</h3>
-            <p class="value-text">We approach grief, loss and memory with the deepest respect. Eternus will never trivialise what it means to lose someone you love.</p>
-          </div>
+          <h3 class="card-name">Legacy</h3>
+          <p class="card-text">Memories, stories and access intentionally preserved for the future.</p>
+        </div>
+      </div>
+      <p class="section-note center">Legacy includes Circle access. Circle access alone does not include Legacy.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MORE THAN STORAGE -->
+  <section id="more">
+    <div class="section-inner center">
+      <span class="section-label">More than storage</span>
+      <h2 class="section-title">Eternus gives memories meaning through <em>context.</em></h2>
+      <div class="cards-grid-2">
+        <div class="about-card">
+          <span class="card-icon card-icon-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="url(#a1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <defs><linearGradient id="a1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6b3fa0"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient></defs>
+              <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+              <circle cx="12" cy="13" r="3"/>
+            </svg>
+          </span>
+          <h3 class="card-name white">Capture your Moments</h3>
+          <p class="card-text">Preserve photographs, videos, stories, dates and places together.</p>
+        </div>
+        <div class="about-card">
+          <span class="card-icon card-icon-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="url(#a2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <defs><linearGradient id="a2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6b3fa0"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient></defs>
+              <path d="M18.178 8c5.096 0 5.096 8 0 8-5.095 0-7.133-8-12.229-8-5.096 0-5.096 8 0 8 5.096 0 7.133-8 12.229-8z"/>
+            </svg>
+          </span>
+          <h3 class="card-name white">Talk to Eternus</h3>
+          <p class="card-text">Use guided reflection to explore experiences and uncover stories worth preserving.</p>
+        </div>
+        <div class="about-card">
+          <span class="card-icon card-icon-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="url(#a3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <defs><linearGradient id="a3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6b3fa0"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient></defs>
+              <circle cx="9" cy="8" r="3.2"/>
+              <circle cx="17" cy="9" r="2.6"/>
+              <path d="M3.5 20v-1.2A4.8 4.8 0 0 1 8.3 14h1.4a4.8 4.8 0 0 1 4.8 4.8V20"/>
+              <path d="M15.5 14.3a4.2 4.2 0 0 1 5 4.1V20"/>
+            </svg>
+          </span>
+          <h3 class="card-name white">Connect your people</h3>
+          <p class="card-text">Invite family, close friends and meaningful connections with intentional access.</p>
+        </div>
+        <div class="about-card">
+          <span class="card-icon card-icon-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="url(#a4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <defs><linearGradient id="a4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6b3fa0"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient></defs>
+              <path d="M12 2c-1.5 3-5 5-5 9a5 5 0 0 0 10 0c0-4-3.5-6-5-9z"/>
+              <path d="M12 15v7"/>
+              <path d="M8 22h8"/>
+            </svg>
+          </span>
+          <h3 class="card-name white">Build your Legacy</h3>
+          <p class="card-text">Choose what matters, who becomes part of it and what they can access.</p>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- CONTACT -->
-    <div class="contact-block">
-      <h3>Want to know <em>more?</em></h3>
-      <p>We'd love to hear from you — whether you have a question, a suggestion, or simply want to share your story with us.</p>
-      <a class="contact-email" href="mailto:hello@myeternusapp.com">hello@myeternusapp.com</a>
+  <div class="divider"></div>
+
+  <!-- WHAT MAKES ETERNUS DIFFERENT -->
+  <section id="different">
+    <div class="section-inner center">
+      <span class="section-label">What makes Eternus different</span>
+      <h2 class="section-title">Private by design.<br>Human by <em>nature.</em></h2>
+      <ul class="point-list">
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M1 21v-2a4 4 0 0 1 4-4h8"/><line x1="17" y1="8" x2="23" y2="14"/><line x1="23" y1="8" x2="17" y2="14"/></svg>
+          No public follower system
+        </li>
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M12 20l-3-3M12 20l3-3"/><path d="M5 10a7 7 0 0 1 14 0"/><circle cx="12" cy="10" r="1"/></svg>
+          No public performance or popularity metrics
+        </li>
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.9" y1="4.9" x2="19.1" y2="19.1"/></svg>
+          No advertising
+        </li>
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          No automatic sharing
+        </li>
+      </ul>
+      <p class="section-note center">There is no public feed designed for attention, reach or performance. Private interactions such as likes and comments may exist inside trusted Circle and Legacy relationships.</p>
     </div>
+  </section>
 
-  </div>
+  <div class="divider"></div>
+
+  <!-- OUR VALUES -->
+  <section id="values">
+    <div class="section-inner center">
+      <span class="section-label">Our values</span>
+      <h2 class="section-title">What guides <em>how we build.</em></h2>
+      <div class="cards-grid-2">
+        <div class="about-card">
+          <h3 class="card-name white">Human First</h3>
+          <p class="card-text">Technology should support real relationships, not replace them.</p>
+        </div>
+        <div class="about-card">
+          <h3 class="card-name white">Privacy by Design</h3>
+          <p class="card-text">Access begins private and changes only through clear, intentional choices.</p>
+        </div>
+        <div class="about-card">
+          <h3 class="card-name white">Trust through Control</h3>
+          <p class="card-text">You decide what is preserved, where it belongs and who can access it.</p>
+        </div>
+        <div class="about-card">
+          <h3 class="card-name white">Emotional Integrity</h3>
+          <p class="card-text">Eternus treats personal memories, relationships and life stories with care and respect.</p>
+        </div>
+      </div>
+      <p class="section-note center">Eternus is being built without advertising and around strict access boundaries.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PRIVATE BETA -->
+  <section class="cta-final">
+    <div class="section-inner center">
+      <span class="section-label">Private beta</span>
+      <h2 class="section-title">Currently in <em>private beta.</em></h2>
+      <p class="section-sub center">We are refining Eternus with a small group of invited testers before a wider release.</p>
+      <p class="section-sub center" style="margin-top: 14px;">The goal is not to launch quickly. It is to build something people can trust.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- FINAL CONTACT -->
+  <section id="contact">
+    <div class="section-inner center">
+      <h2 class="section-title">Want to know <em>more?</em></h2>
+      <p class="section-sub center">Questions, ideas and thoughtful feedback are always welcome.</p>
+      <a class="contact-email-link" href="mailto:hello@myeternusapp.com">hello@myeternusapp.com</a>
+    </div>
+  </section>
 
   <!-- FOOTER -->
   <footer>
-    <span class="footer-logo">Eternus</span>
-    <div style="display:flex; gap:32px; align-items:center; flex-wrap:wrap;">
-      <a href="faq.html" class="footer-link">FAQ</a>
-      <a href="privacy-policy.html" class="footer-link">Privacy Policy</a>
-      <span class="footer-copy">© 2026 Eternus. All rights reserved.</span>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-logo">Eternus</span>
+        <p class="footer-tagline">Preserve your moments. Build what remains.</p>
+      </div>
+      <ul class="footer-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="privacy-policy.html">Privacy</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul>
+      <div class="footer-contact">
+        <a href="mailto:hello@myeternusapp.com">hello@myeternusapp.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> Eternus. All rights reserved.</span>
     </div>
   </footer>
 
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const hamburger = document.getElementById('nav-hamburger');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      hamburger.addEventListener('click', function() {
+        const isOpen = mobileMenu.classList.toggle('open');
+        hamburger.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+        mobileMenu.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      });
+
+      document.querySelectorAll('.mobile-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+          mobileMenu.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-label', 'Open navigation');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+        });
+      });
+    });
+  </script>
 </body>
 </html>

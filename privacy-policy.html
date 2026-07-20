@@ -1,20 +1,42 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  IMPORTANT — INTERNAL NOTE (not shown to site visitors)
+
+  This Privacy Policy is a working draft written for a product currently in
+  private beta. It intentionally avoids stating unverified facts: exact data
+  locations, named sub-processors, retention periods, security certifications
+  and response deadlines are described in general, accurate terms rather than
+  invented specifics.
+
+  Before this page is relied upon as a final, public, legally-binding policy,
+  it MUST be reviewed and approved by a qualified privacy/legal professional,
+  who should confirm (at minimum):
+    - the correct legal entity name, registration and registered address;
+    - the actual production infrastructure and sub-processors in use
+      (e.g. whether Firebase/Google is confirmed, and any AI provider);
+    - real data-hosting regions and any international-transfer mechanisms;
+    - real retention periods per data category;
+    - real security measures and whether any certifications/audits apply;
+    - applicable law and required response/deletion deadlines per jurisdiction;
+    - whether the website currently sets any analytics/non-essential cookies.
+  ============================================================================
+-->
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <!-- Primary Meta Tags -->
   <meta name="title" content="Privacy Policy — Eternus" />
-  <meta name="description" content="A private space to preserve what matters most. Memories, voice, and stories — kept with care, shared with trust." />
-  <meta name="keywords" content="Eternus, memory preservation, private archive, trusted legacy, personal memories, memorial" />
+  <meta name="description" content="How Eternus processes information: what is collected, how Private, Circle and Legacy access works, and your privacy rights." />
+  <meta name="keywords" content="Eternus, privacy policy, data protection, GDPR" />
   <meta name="author" content="Eternus" />
   <meta name="theme-color" content="#06060a" />
-  <link rel="icon" type="image/png" href="assets/favicon.png">
 
   <!-- Open Graph / Facebook / WhatsApp -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://eternusapp.com/privacy-policy.html" />
-  <meta property="og:title" content="Eternus — Your private memory archive." />
-  <meta property="og:description" content="A private space to preserve what matters most. Memories, voice, and stories — kept with care, shared with trust." />
+  <meta property="og:title" content="Privacy Policy — Eternus" />
+  <meta property="og:description" content="How Eternus processes information: what is collected, how Private, Circle and Legacy access works, and your privacy rights." />
   <meta property="og:image" content="https://myeternusapp.com/assets/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -24,11 +46,12 @@
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://eternusapp.com/privacy-policy.html" />
-  <meta name="twitter:title" content="Eternus — Your private memory archive." />
-  <meta name="twitter:description" content="A private space to preserve what matters most. Memories, voice, and stories — kept with care, shared with trust." />
+  <meta name="twitter:title" content="Privacy Policy — Eternus" />
+  <meta name="twitter:description" content="How Eternus processes information: what is collected, how Private, Circle and Legacy access works, and your privacy rights." />
   <meta name="twitter:image" content="https://myeternusapp.com/assets/og-image.jpg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Privacy Policy — Eternus</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -39,10 +62,11 @@
       --gold: #c9a84c;
       --gold-light: #e8c97a;
       --white: #f5f0ea;
-      --muted: #9a8fa0;
+      --muted: #a89dae;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     html { scroll-behavior: smooth; }
 
     body {
@@ -53,6 +77,11 @@
       overflow-x: hidden;
     }
 
+    a { color: inherit; }
+    a:visited { color: inherit; }
+    img { max-width: 100%; }
+
+    /* NOISE TEXTURE OVERLAY */
     body::before {
       content: '';
       position: fixed;
@@ -63,16 +92,7 @@
       opacity: 0.4;
     }
 
-    body::after {
-      content: '';
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(220,210,255,0.25), rgba(255,245,220,0.2), rgba(220,210,255,0.25), transparent);
-      pointer-events: none;
-      z-index: 998;
-    }
-
+    /* AMBIENT GLOW */
     .glow-orb {
       position: fixed;
       border-radius: 50%;
@@ -96,198 +116,370 @@
       position: fixed; top: 0; left: 0; right: 0;
       z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 28px 60px;
-      background: linear-gradient(to bottom, rgba(6,6,10,0.95), transparent);
-      backdrop-filter: blur(4px);
+      padding: 24px 60px;
+      background: linear-gradient(to bottom, rgba(6,6,10,0.92), rgba(6,6,10,0.6) 70%, transparent);
+      backdrop-filter: blur(6px);
     }
     .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-      font-weight: 300;
-      letter-spacing: 0.2em;
-      color: var(--gold);
       text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.08em;
+      color: var(--gold);
     }
-    .nav-back {
-      font-size: 0.72rem;
+    .nav-center { display: flex; align-items: center; gap: 40px; }
+    .nav-links { display: flex; gap: 40px; list-style: none; }
+    .nav-links a,
+    .nav-links a:visited {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--gold-light); }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 32px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+    .btn-static { cursor: default; opacity: 0.85; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: var(--black);
+      border: 1px solid var(--gold);
+    }
+    .btn-nav { padding: 10px 24px; font-size: 0.7rem; }
+
+    /* HAMBURGER */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 6px 2px;
+      z-index: 101;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 1px;
+      background: var(--muted);
+      transition: background 0.3s, transform 0.3s, opacity 0.3s;
+    }
+    .nav-hamburger:hover span { background: var(--gold-light); }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 99;
+      padding-top: 84px;
+      background: rgba(6,6,10,0.97);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+      transform: translateY(-100%);
+      transition: transform 0.35s ease;
+    }
+    .mobile-menu.open { transform: translateY(0); }
+    .mobile-menu-links { list-style: none; padding: 16px 28px 28px; }
+    .mobile-menu-links li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .mobile-menu-links li:last-child { border-bottom: none; }
+    .mobile-menu-links a,
+    .mobile-menu-links a:visited {
+      display: block;
+      padding: 15px 0;
+      font-size: 0.75rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--muted);
       text-decoration: none;
       transition: color 0.3s;
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
-    .nav-back:hover { color: var(--gold-light); }
-    .nav-back svg { width: 14px; height: 14px; }
+    .mobile-menu-links a:hover { color: var(--gold-light); }
+    .mobile-menu-cta { padding: 20px 0 8px; }
 
-    /* HEADER */
-    .page-header {
-      position: relative; z-index: 1;
-      padding: 160px 60px 80px;
+    /* HERO */
+    .legal-hero {
+      padding: 170px 60px 60px;
       max-width: 900px;
       margin: 0 auto;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      text-align: center;
     }
-    .page-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--gold);
-      display: block;
+    .legal-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 1.6vw, 1.2rem);
+      letter-spacing: 0.1em;
+      color: var(--gold-light);
       margin-bottom: 20px;
     }
-    .page-title {
+    .legal-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.5rem, 5vw, 4rem);
       font-weight: 300;
-      line-height: 1.1;
-      margin-bottom: 24px;
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      line-height: 1.15;
+      margin-bottom: 22px;
     }
-    .page-title em { font-style: italic; color: var(--gold); }
-    .page-date {
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
+    .legal-intro {
+      font-size: 0.98rem;
+      line-height: 1.9;
+      color: rgba(245,240,234,0.75);
+      max-width: 620px;
+      margin: 0 auto 22px;
+    }
+    .legal-updated {
+      display: inline-block;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 999px;
+      padding: 8px 18px;
+    }
+
+    /* BODY LAYOUT */
+    .legal-body {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 60px 100px;
+    }
+    .legal-layout {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    /* TOC */
+    .legal-toc {
+      display: block;
+      position: sticky;
+      top: 110px;
+      padding: 0;
+      background: none;
+      backdrop-filter: none;
+    }
+    .legal-toc-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: block;
+    }
+    .legal-toc ol {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .legal-toc a,
+    .legal-toc a:visited {
+      display: block;
+      padding: 7px 0;
+      font-size: 0.78rem;
+      line-height: 1.4;
       color: var(--muted);
+      text-decoration: none;
+      border-left: 2px solid transparent;
+      padding-left: 12px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+    .legal-toc a:hover, .legal-toc a:focus-visible {
+      color: var(--gold-light);
+      border-left-color: var(--gold);
     }
 
     /* CONTENT */
-    .content {
-      position: relative; z-index: 1;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 80px 60px 120px;
+    .legal-content { max-width: 680px; }
+    .legal-section {
+      padding-top: 44px;
+      margin-top: 44px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      scroll-margin-top: 110px;
     }
-
-    .section {
-      margin-bottom: 64px;
+    .legal-section:first-child {
+      padding-top: 0;
+      margin-top: 0;
+      border-top: none;
     }
-
-    .section-title {
+    .legal-section-head {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .legal-num {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem;
-      font-weight: 400;
-      color: var(--white);
-      margin-bottom: 24px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid rgba(201,168,76,0.15);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--gold);
+      flex-shrink: 0;
     }
-
-    .section p {
-      font-size: 0.88rem;
-      line-height: 2;
-      color: rgba(245,240,234,0.7);
+    .legal-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 1.5rem;
+      line-height: 1.3;
+      color: var(--white);
+    }
+    .legal-section p {
+      font-size: 0.92rem;
+      line-height: 1.9;
+      color: rgba(245,240,234,0.72);
       margin-bottom: 16px;
     }
+    .legal-section p:last-child { margin-bottom: 0; }
+    .legal-section a { color: var(--gold-light); text-decoration: underline; text-decoration-color: rgba(232,201,122,0.4); }
+    .legal-section a:visited { color: var(--gold-light); }
+    .legal-section a:hover { color: var(--white); }
+    .legal-section a:focus-visible { outline: 2px solid rgba(201,168,76,0.6); outline-offset: 2px; }
 
-    .section p:last-child { margin-bottom: 0; }
-
-    .section ul {
-      list-style: none;
-      margin: 16px 0;
+    .legal-subhead {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin: 26px 0 12px;
     }
+    .legal-subhead:first-of-type { margin-top: 8px; }
 
-    .section ul li {
-      font-size: 0.88rem;
-      line-height: 2;
-      color: rgba(245,240,234,0.7);
-      padding-left: 20px;
+    .legal-list {
+      list-style: none;
+      margin-bottom: 16px;
+    }
+    .legal-list li {
       position: relative;
+      padding-left: 20px;
+      font-size: 0.92rem;
+      line-height: 1.8;
+      color: rgba(245,240,234,0.72);
       margin-bottom: 8px;
     }
-
-    .section ul li::before {
-      content: '✦';
+    .legal-list li::before {
+      content: '—';
       position: absolute;
       left: 0;
       color: var(--gold);
-      font-size: 0.5rem;
-      top: 8px;
     }
 
-    .highlight-box {
-      padding: 28px 32px;
-      border: 1px solid rgba(201,168,76,0.2);
-      background: rgba(201,168,76,0.04);
-      margin: 24px 0;
-      position: relative;
-    }
-    .highlight-box::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold), transparent);
-    }
-    .highlight-box p {
-      margin: 0;
-      font-size: 0.85rem;
-      color: rgba(232,201,122,0.8) !important;
-      line-height: 1.9;
-    }
-
-    .contact-block {
-      padding: 40px;
-      border: 1px solid rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.02);
+    /* CONTACT */
+    .legal-contact {
+      margin-top: 44px;
+      padding-top: 44px;
+      border-top: 1px solid rgba(255,255,255,0.06);
       text-align: center;
     }
-    .contact-block h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-      font-weight: 400;
-      margin-bottom: 12px;
-      color: var(--white);
-    }
-    .contact-block p {
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-bottom: 20px;
-    }
-    .contact-email {
-      font-size: 0.85rem;
-      letter-spacing: 0.1em;
+    .contact-email-link {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
       color: var(--gold-light);
       text-decoration: none;
-      border-bottom: 1px solid rgba(201,168,76,0.3);
-      padding-bottom: 2px;
+      border-bottom: 1px solid rgba(201,168,76,0.35);
+      padding-bottom: 3px;
       transition: color 0.3s, border-color 0.3s;
     }
-    .contact-email:hover {
-      color: var(--white);
-      border-color: rgba(245,240,234,0.4);
-    }
+    .contact-email-link:visited { color: var(--gold-light); }
+    .contact-email-link:hover { color: var(--white); border-color: var(--gold-light); }
+    .contact-email-link:focus-visible { outline: 2px solid rgba(201,168,76,0.6); outline-offset: 3px; }
 
     /* FOOTER */
-    footer {
-      position: relative; z-index: 1;
-      padding: 40px 60px;
-      border-top: 1px solid rgba(255,255,255,0.04);
+    footer { padding: 48px 60px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .footer-top {
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 16px;
+      gap: 28px;
+      max-width: 1120px;
+      margin: 0 auto 32px;
     }
+    .footer-brand { flex: 1 1 240px; }
     .footer-logo {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       font-weight: 300;
-      letter-spacing: 0.2em;
-      color: var(--gold);
-    }
-    .footer-copy {
-      font-size: 0.72rem;
       letter-spacing: 0.1em;
-      color: rgba(154,143,160,0.4);
+      color: var(--gold);
+      margin-bottom: 10px;
+      display: block;
+    }
+    .footer-tagline {
+      font-size: 0.8rem;
+      color: rgba(245,240,234,0.55);
+      line-height: 1.7;
+      max-width: 320px;
+    }
+    .footer-nav { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 28px; }
+    .footer-contact { flex: 1 1 240px; text-align: right; font-size: 0.8rem; }
+    footer a,
+    footer a:visited {
+      color: rgba(245,240,234,0.6);
+      text-decoration: none;
+      transition: color 0.3s ease, opacity 0.3s ease;
+    }
+    footer a:hover,
+    footer a:focus {
+      color: var(--gold-light);
+      text-decoration: underline;
+      text-decoration-color: rgba(232,201,122,0.4);
+      text-underline-offset: 4px;
+    }
+    footer a:focus { outline: 1px solid rgba(201,168,76,0.5); outline-offset: 4px; }
+    .footer-bottom {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      color: rgba(245,240,234,0.4);
+      text-align: center;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 980px) {
+      .legal-layout { grid-template-columns: 1fr; gap: 8px; }
+      .legal-toc { display: none; }
     }
 
     @media (max-width: 768px) {
-      nav { padding: 24px; }
-      .page-header { padding: 140px 24px 60px; }
-      .content { padding: 60px 24px 80px; }
-      footer { padding: 32px 24px; }
+      nav { padding: 20px 24px; }
+      .nav-center { display: none; }
+      .nav-hamburger { display: flex; }
+      .mobile-menu { display: block; }
+
+      .legal-hero { padding: 130px 24px 40px; }
+      .legal-body { padding: 10px 24px 70px; }
+      .legal-section { scroll-margin-top: 90px; }
     }
   </style>
 </head>
@@ -298,196 +490,322 @@
 
   <!-- NAV -->
   <nav>
-    <a class="nav-logo" href="index.html">Eternus</a>
-    <a class="nav-back" href="index.html">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-      </svg>
-      Back to Eternus
+    <a class="nav-logo" href="index.html">
+      <img src="assets/logo-eternus-gold.png" alt="Eternus" style="height:22px; width:auto; display:block;" />
+      Eternus
     </a>
+    <div class="nav-center">
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="privacy-policy.html" aria-current="page">Privacy</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul>
+      <span class="btn btn-primary btn-nav btn-static" aria-disabled="true">Coming Soon</span>
+    </div>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </nav>
 
-  <!-- HEADER -->
-  <div class="page-header">
-    <span class="page-label">Legal</span>
-    <h1 class="page-title">Privacy <em>Policy</em></h1>
-    <p class="page-date">Last updated: May 2026</p>
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <ul class="mobile-menu-links">
+      <li><a href="index.html" class="mobile-link">Home</a></li>
+      <li><a href="about.html" class="mobile-link">About</a></li>
+      <li><a href="faq.html" class="mobile-link">FAQ</a></li>
+      <li><a href="privacy-policy.html" class="mobile-link" aria-current="page">Privacy</a></li>
+      <li><a href="support.html" class="mobile-link">Support</a></li>
+    </ul>
+    <div class="mobile-menu-cta" style="padding: 0 28px 28px;">
+      <span class="btn btn-primary btn-static" style="width:100%;" aria-disabled="true">Coming Soon</span>
+    </div>
   </div>
 
-  <!-- CONTENT -->
-  <div class="content">
+  <!-- HERO -->
+  <section class="legal-hero" id="top">
+    <p class="legal-eyebrow">Legal</p>
+    <h1 class="legal-title">Privacy, by design.</h1>
+    <p class="legal-intro">Eternus is built around personal memories, intentional sharing and clear access choices. This policy explains what information may be processed and how it is handled.</p>
+    <span class="legal-updated">Last updated: July 2026</span>
+  </section>
 
-    <div class="highlight-box">
-      <p>At Eternus, we handle some of the most personal data imaginable — your memories, recordings, stories and personal archives. We take this responsibility seriously and are fully committed to protecting your privacy at every step.</p>
-    </div>
+  <!-- BODY -->
+  <div class="legal-body">
+    <div class="legal-layout">
 
-    <!-- 1 -->
-    <div class="section">
-      <h2 class="section-title">1. Who We Are</h2>
-      <p>Eternus ("we", "us", or "our") is a private memory and legacy platform designed to preserve personal memories, recordings, stories and contextual archives — with trusted access over time. Users can store what matters most and choose, entirely on their own terms, who has access and when.</p>
-      <p>For any privacy-related questions, you can reach us at: <a class="contact-email" href="mailto:privacy@myeternusapp.com">privacy@myeternusapp.com</a></p>
-    </div>
+      <!-- TOC -->
+      <nav class="legal-toc" aria-label="Privacy policy sections">
+        <span class="legal-toc-label">On this page</span>
+        <ol>
+          <li><a href="#who-we-are">1. Who we are</a></li>
+          <li><a href="#information">2. Information we process</a></li>
+          <li><a href="#usage">3. How we use information</a></li>
+          <li><a href="#sharing">4. Sharing and access</a></li>
+          <li><a href="#ai">5. Talk to Eternus and AI</a></li>
+          <li><a href="#providers">6. Service providers</a></li>
+          <li><a href="#transfers">7. Data locations</a></li>
+          <li><a href="#security">8. Security</a></li>
+          <li><a href="#retention">9. Retention</a></li>
+          <li><a href="#deletion">10. Account deletion</a></li>
+          <li><a href="#rights">11. Your privacy rights</a></li>
+          <li><a href="#children">12. Children's privacy</a></li>
+          <li><a href="#cookies">13. Cookies</a></li>
+          <li><a href="#changes">14. Changes to this policy</a></li>
+        </ol>
+      </nav>
 
-    <!-- 2 -->
-    <div class="section">
-      <h2 class="section-title">2. Data We Collect</h2>
-      <p>We collect data in two ways — information you provide directly, and information generated through your use of the app.</p>
-      <p><strong style="color: var(--white); font-weight: 400;">Information you provide:</strong></p>
-      <ul>
-        <li>Name and email address (when joining the waiting list or creating an account)</li>
-        <li>Photos, videos, voice recordings and written memories you choose to upload</li>
-        <li>Account preferences and privacy settings</li>
-        <li>List of trusted contacts you designate to access your legacy</li>
-      </ul>
-      <p><strong style="color: var(--white); font-weight: 400;">Information generated automatically:</strong></p>
-      <ul>
-        <li>Device type and operating system</li>
-        <li>Usage patterns and app interaction data (used solely to improve the experience)</li>
-        <li>Date and time of uploads and account activity</li>
-      </ul>
-    </div>
+      <!-- CONTENT -->
+      <div class="legal-content">
 
-    <!-- 3 -->
-    <div class="section">
-      <h2 class="section-title">3. How We Use Your Data</h2>
-      <p>Your data is used exclusively to provide and improve the Eternus service. Specifically:</p>
-      <ul>
-        <li>To store and organise your personal memories securely</li>
-        <li>To enable memory continuity features — only with your explicit, prior consent</li>
-        <li>To manage access permissions for your designated trusted contacts</li>
-        <li>To send you important updates about the service (no marketing without consent)</li>
-        <li>To comply with legal obligations</li>
-      </ul>
-      <div class="highlight-box">
-        <p>We will never sell, rent or share your personal data with third parties for commercial or advertising purposes. Your memories remain your property — always. Eternus does not monetise, profile or commercialise your personal archives.</p>
+        <section class="legal-section" id="who-we-are">
+          <div class="legal-section-head">
+            <span class="legal-num">01</span>
+            <h2 class="legal-heading">Who we are</h2>
+          </div>
+          <p>Eternus is a private memory and legacy platform that helps people preserve personal Moments, reflect on meaningful experiences and share selected content with people they intentionally choose.</p>
+          <p>For privacy-related questions, contact: <a href="mailto:privacy@myeternusapp.com">privacy@myeternusapp.com</a></p>
+        </section>
+
+        <!-- CONFIRM before launch: exact data categories collected per feature/permission. -->
+        <section class="legal-section" id="information">
+          <div class="legal-section-head">
+            <span class="legal-num">02</span>
+            <h2 class="legal-heading">Information we may process</h2>
+          </div>
+          <p class="legal-subhead">Account information</p>
+          <ul class="legal-list">
+            <li>Name</li>
+            <li>Email address</li>
+            <li>Authentication identifiers</li>
+            <li>Profile information</li>
+            <li>Account preferences</li>
+          </ul>
+          <p class="legal-subhead">Content you choose to add</p>
+          <ul class="legal-list">
+            <li>Photographs</li>
+            <li>Written stories and captions</li>
+            <li>Dates and places</li>
+            <li>Voice or video content where supported</li>
+            <li>Visibility and sharing choices</li>
+            <li>Comments, reactions and connection information</li>
+          </ul>
+          <p class="legal-subhead">Technical and usage information</p>
+          <ul class="legal-list">
+            <li>Device and operating-system information</li>
+            <li>App version</li>
+            <li>Authentication and session information</li>
+            <li>Timestamps</li>
+            <li>Diagnostic, performance and security information</li>
+            <li>Feature interactions where collected</li>
+          </ul>
+          <p>The exact information processed depends on the features you use and the permissions you provide.</p>
+        </section>
+
+        <section class="legal-section" id="usage">
+          <div class="legal-section-head">
+            <span class="legal-num">03</span>
+            <h2 class="legal-heading">How we use information</h2>
+          </div>
+          <ul class="legal-list">
+            <li>To create and manage accounts</li>
+            <li>To store and display user-created Moments</li>
+            <li>To apply Private, Circle and Legacy access choices</li>
+            <li>To manage My Tree, invitations and connections</li>
+            <li>To provide Talk to Eternus and related reflection features</li>
+            <li>To maintain security, reliability and abuse prevention</li>
+            <li>To provide support and essential service communications</li>
+            <li>To comply with applicable legal obligations</li>
+            <li>To improve the product where permitted and appropriate</li>
+          </ul>
+          <p>The applicable legal basis may include performance of a contract, legitimate interests, consent or compliance with legal obligations, depending on the processing activity and applicable law.</p>
+        </section>
+
+        <section class="legal-section" id="sharing">
+          <div class="legal-section-head">
+            <span class="legal-num">04</span>
+            <h2 class="legal-heading">Sharing and access choices</h2>
+          </div>
+          <p>Eternus uses three primary access layers:</p>
+          <p><strong>Private</strong> — content visible only to the account owner.</p>
+          <p><strong>Circle</strong> — selected content shared with people chosen for present-day access.</p>
+          <p><strong>Legacy</strong> — content and access intentionally preserved for the future.</p>
+          <p>Legacy access may include Circle access shared with that person. Circle access alone does not include Legacy access.</p>
+          <p>Users can manage or revoke access through the controls available in the app.</p>
+        </section>
+
+        <!-- CONFIRM before launch: name a specific AI provider only if confirmed for production;
+             confirm actual prompt/context retention practices before stating them here. -->
+        <section class="legal-section" id="ai">
+          <div class="legal-section-head">
+            <span class="legal-num">05</span>
+            <h2 class="legal-heading">Talk to Eternus and AI</h2>
+          </div>
+          <p>Talk to Eternus uses guided AI-assisted reflection to help users explore memories, people, places and experiences.</p>
+          <p>Eternus does not claim to recreate human consciousness, replace a real person or simulate a deceased person.</p>
+          <p>Depending on the implementation, prompts and related context may be processed by service providers required to deliver the feature.</p>
+          <p>AI-related data handling, retention and provider details must reflect the actual production configuration before public launch.</p>
+        </section>
+
+        <!-- CONFIRM before launch: only name Firebase/Google if verified as current production infrastructure. -->
+        <section class="legal-section" id="providers">
+          <div class="legal-section-head">
+            <span class="legal-num">06</span>
+            <h2 class="legal-heading">Service providers</h2>
+          </div>
+          <p>Eternus relies on trusted service providers to operate parts of the service, including authentication, cloud storage, databases, hosting, communications and AI-related functionality where enabled.</p>
+          <p>These providers process information under their own contractual, security and privacy obligations.</p>
+          <p>The list of providers and processing locations may change as the product develops.</p>
+        </section>
+
+        <!-- CONFIRM before launch: real hosting regions and any transfer safeguards actually in place. -->
+        <section class="legal-section" id="transfers">
+          <div class="legal-section-head">
+            <span class="legal-num">07</span>
+            <h2 class="legal-heading">Data locations and international transfers</h2>
+          </div>
+          <p>Data may be processed in more than one country, depending on the services and infrastructure used.</p>
+          <p>Where personal data is transferred outside the European Economic Area, Eternus will rely on applicable legal safeguards where required.</p>
+        </section>
+
+        <!-- CONFIRM before launch: do not add AES-256, audit schedules or pen-test claims unless verified. -->
+        <section class="legal-section" id="security">
+          <div class="legal-section-head">
+            <span class="legal-num">08</span>
+            <h2 class="legal-heading">Security</h2>
+          </div>
+          <p>Eternus uses technical and organisational measures intended to protect personal information against unauthorised access, loss, misuse or alteration.</p>
+          <p>These measures may include authentication, access controls, secure transmission, platform security rules and restricted administrative access.</p>
+          <p>No online service can guarantee absolute security.</p>
+        </section>
+
+        <!-- CONFIRM before launch: real retention periods per data category. Do not use a fixed 10-year period. -->
+        <section class="legal-section" id="retention">
+          <div class="legal-section-head">
+            <span class="legal-num">09</span>
+            <h2 class="legal-heading">Retention</h2>
+          </div>
+          <p>Personal information is retained only for as long as reasonably necessary to provide the service, fulfil the purposes described in this policy, resolve disputes, maintain security and comply with legal obligations.</p>
+          <p>Retention periods may vary by data category, account status, feature and legal requirement.</p>
+          <p>Users may request account deletion through the available app controls or by contacting support.</p>
+        </section>
+
+        <section class="legal-section" id="deletion">
+          <div class="legal-section-head">
+            <span class="legal-num">10</span>
+            <h2 class="legal-heading">Account deletion</h2>
+          </div>
+          <p>When an account-deletion request is completed, associated personal information will be deleted or anonymised in accordance with the current technical process, applicable law and legitimate retention requirements.</p>
+          <p>Some limited information may be retained where necessary for security, fraud prevention, legal compliance, dispute resolution or backup-cycle completion.</p>
+        </section>
+
+        <!-- CONFIRM before launch: real response deadlines per applicable jurisdiction. -->
+        <section class="legal-section" id="rights">
+          <div class="legal-section-head">
+            <span class="legal-num">11</span>
+            <h2 class="legal-heading">Your privacy rights</h2>
+          </div>
+          <p>Depending on where you live and the applicable law, you may have rights including:</p>
+          <ul class="legal-list">
+            <li>Access</li>
+            <li>Rectification</li>
+            <li>Erasure</li>
+            <li>Restriction of processing</li>
+            <li>Data portability</li>
+            <li>Objection</li>
+            <li>Withdrawal of consent</li>
+            <li>Complaint to a competent supervisory authority</li>
+          </ul>
+          <p>To make a request, contact <a href="mailto:privacy@myeternusapp.com">privacy@myeternusapp.com</a>.</p>
+          <p>Eternus may need to verify your identity before completing a request. Legal rights may be subject to applicable conditions and exceptions. We will respond within the time required by applicable law.</p>
+        </section>
+
+        <section class="legal-section" id="children">
+          <div class="legal-section-head">
+            <span class="legal-num">12</span>
+            <h2 class="legal-heading">Children's privacy</h2>
+          </div>
+          <p>Eternus is not currently intended for children under 18.</p>
+          <p>If we learn that personal information has been provided by a child in circumstances where parental or guardian consent is legally required and has not been obtained, we will take appropriate steps in accordance with applicable law.</p>
+        </section>
+
+        <!-- CONFIRM before launch: describe only the technologies actually in use; confirm consent flow if any non-essential technology is added. -->
+        <section class="legal-section" id="cookies">
+          <div class="legal-section-head">
+            <span class="legal-num">13</span>
+            <h2 class="legal-heading">Cookies and website technologies</h2>
+          </div>
+          <p>The Eternus website may use technologies necessary for security, functionality and service operation.</p>
+          <p>Any analytics, preference or non-essential technologies should be described accurately and, where legally required, used only after appropriate consent.</p>
+        </section>
+
+        <section class="legal-section" id="changes">
+          <div class="legal-section-head">
+            <span class="legal-num">14</span>
+            <h2 class="legal-heading">Changes to this policy</h2>
+          </div>
+          <p>We may update this policy as Eternus develops or as legal and operational requirements change.</p>
+          <p>The updated date will appear at the top of the page. Where appropriate, users may also be notified through the app, website or email.</p>
+        </section>
+
+        <div class="legal-contact">
+          <h2 class="legal-heading" style="font-size: 1.6rem; margin-bottom: 10px;">Questions about privacy?</h2>
+          <p style="font-size:0.9rem; color:rgba(245,240,234,0.7);">Contact us at:</p>
+          <a class="contact-email-link" href="mailto:privacy@myeternusapp.com">privacy@myeternusapp.com</a>
+        </div>
+
       </div>
     </div>
-
-    <!-- 4 -->
-    <div class="section">
-      <h2 class="section-title">4. Legacy Data & Memory Archives</h2>
-      <p>Users may choose — entirely voluntarily — to enable memory continuity features, which allow trusted contacts to access stored memories, voice recordings, written archives and personal stories over time. This section explains how that data is handled.</p>
-      <ul>
-        <li>This feature is <strong style="color: var(--white); font-weight: 400;">opt-in only</strong> — it is never activated without your explicit consent</li>
-        <li>You may revoke this consent at any time</li>
-        <li>Access to your memory continuity archive is strictly limited to the trusted contacts you personally designate</li>
-        <li>Your memory continuity archive will never be used for commercial purposes, advertising or any purpose beyond personal connection</li>
-        <li>Designated contacts may request deactivation of memory continuity at any time</li>
-      </ul>
-      <p>We treat legacy archive data with the same — if not greater — level of care and respect as all other personal data.</p>
-    </div>
-
-    <!-- ETHICS CALLOUT -->
-    <div class="highlight-box" style="margin-bottom: 64px;">
-      <p><strong style="color: var(--white); font-weight: 400; display: block; margin-bottom: 10px;">Human Identity & Memory</strong>Eternus does not recreate human consciousness or simulate a real person. The platform preserves memories, recordings, stories and contextual archives intentionally shared by the user. Our goal is continuity of memory and trusted access — not imitation of human identity.</p>
-    </div>
-
-    <!-- 5 -->
-    <div class="section">
-      <h2 class="section-title">5. How AI Is Used</h2>
-      <p>Eternus may use AI to help organise and improve access to your stored memories. This includes:</p>
-      <ul>
-        <li>Organising memories into meaningful categories and chronologies</li>
-        <li>Connecting related moments and contextual archives</li>
-        <li>Improving search and memory navigation</li>
-        <li>Surfacing relevant memories based on dates, people or themes you define</li>
-      </ul>
-      <div class="highlight-box">
-        <p>AI within Eternus is a tool for organisation and access — not a mechanism to replace, simulate or recreate a human being. No AI feature within Eternus is designed to imply consciousness or represent a person's identity.</p>
-      </div>
-    </div>
-
-    <!-- 6 -->
-    <div class="section">
-      <h2 class="section-title">6. Controlled Legacy Access</h2>
-      <p>Legacy access within Eternus is always defined and controlled by the user. Specifically:</p>
-      <ul>
-        <li>You choose which contacts can access your legacy archive — no one is added without your instruction</li>
-        <li>You define access levels for each contact (read-only, shared, or full archive access)</li>
-        <li>You can change or revoke any legacy access permission at any time</li>
-        <li>Trusted contacts can only access what you have explicitly permitted</li>
-        <li>Some legacy features may be read-only by design to preserve the integrity of your archive</li>
-      </ul>
-      <p>We believe legacy access should feel considered and safe — not automatic, not assumed.</p>
-    </div>
-
-    <!-- 7 -->
-    <div class="section">
-      <h2 class="section-title">7. Data Storage & Security</h2>
-      <p>We are committed to keeping your data safe through industry-standard security practices:</p>
-      <ul>
-        <li>All data is encrypted in transit (TLS) and at rest (AES-256)</li>
-        <li>Access to personal data is strictly limited to authorised team members</li>
-        <li>Regular security audits and vulnerability assessments are conducted</li>
-        <li>Servers are hosted within the European Union, in compliance with GDPR</li>
-      </ul>
-      <p>In the event of a data breach that may affect your rights, we will notify you within 72 hours as required by law.</p>
-    </div>
-
-    <!-- 8 -->
-    <div class="section">
-      <h2 class="section-title">8. Your Rights (GDPR)</h2>
-      <p>If you are located in the European Union or European Economic Area, you have the following rights under the General Data Protection Regulation (GDPR):</p>
-      <ul>
-        <li><strong style="color: var(--white); font-weight: 400;">Right of Access</strong> — request a copy of the personal data we hold about you</li>
-        <li><strong style="color: var(--white); font-weight: 400;">Right to Rectification</strong> — correct inaccurate or incomplete data</li>
-        <li><strong style="color: var(--white); font-weight: 400;">Right to Erasure</strong> — request deletion of your personal data ("right to be forgotten")</li>
-        <li><strong style="color: var(--white); font-weight: 400;">Right to Restriction</strong> — limit how we process your data in certain circumstances</li>
-        <li><strong style="color: var(--white); font-weight: 400;">Right to Data Portability</strong> — receive your data in a structured, machine-readable format</li>
-        <li><strong style="color: var(--white); font-weight: 400;">Right to Object</strong> — object to processing based on legitimate interests</li>
-        <li><strong style="color: var(--white); font-weight: 400;">Right to Withdraw Consent</strong> — withdraw any consent given at any time</li>
-      </ul>
-      <p>To exercise any of these rights, contact us at <a class="contact-email" href="mailto:privacy@myeternusapp.com">privacy@myeternusapp.com</a>. We will respond within 30 days.</p>
-    </div>
-
-    <!-- 9 -->
-    <div class="section">
-      <h2 class="section-title">9. Data Retention</h2>
-      <p>We retain your personal data for as long as your account is active or as needed to provide the service. Specifically:</p>
-      <ul>
-        <li>Waiting list data (name and email) is retained until the service launches or until you request removal</li>
-        <li>Account data and memories are retained for the lifetime of your account</li>
-        <li>Legacy archive data is retained according to the instructions you set</li>
-        <li>If no instructions are set, legacy archive data will be retained for a maximum of 10 years after account inactivity is confirmed</li>
-      </ul>
-      <p>You may request deletion of your account and all associated data at any time by contacting us.</p>
-    </div>
-
-    <!-- 10 -->
-    <div class="section">
-      <h2 class="section-title">10. Cookies</h2>
-      <p>Our website uses only essential cookies necessary for basic functionality. We do not use tracking, advertising or analytics cookies without your explicit consent.</p>
-      <p>You may disable cookies in your browser settings at any time without affecting your use of the main service.</p>
-    </div>
-
-    <!-- 11 -->
-    <div class="section">
-      <h2 class="section-title">11. Children's Privacy</h2>
-      <p>Eternus is not intended for use by individuals under the age of 18. We do not knowingly collect personal data from minors. If we become aware that a minor has provided us with personal data, we will delete it immediately.</p>
-      <p>If you believe a minor has registered on our platform, please contact us immediately at <a class="contact-email" href="mailto:privacy@myeternusapp.com">privacy@myeternusapp.com</a>.</p>
-    </div>
-
-    <!-- 12 -->
-    <div class="section">
-      <h2 class="section-title">12. Changes to This Policy</h2>
-      <p>We may update this Privacy Policy from time to time to reflect changes in our practices or legal obligations. When we do, we will update the date at the top of this page and, where appropriate, notify you by email.</p>
-      <p>We encourage you to review this policy periodically to stay informed about how we protect your data.</p>
-    </div>
-
-    <!-- Contact -->
-    <div class="contact-block">
-      <h3>Questions about your privacy?</h3>
-      <p>We're here to help. Reach out to our privacy team directly.</p>
-      <a class="contact-email" href="mailto:privacy@myeternusapp.com">privacy@myeternusapp.com</a>
-    </div>
-
   </div>
 
   <!-- FOOTER -->
   <footer>
-    <span class="footer-logo">Eternus</span>
-    <span class="footer-copy">© 2026 Eternus. All rights reserved.</span>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-logo">Eternus</span>
+        <p class="footer-tagline">Preserve your moments. Build what remains.</p>
+      </div>
+      <ul class="footer-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="support.html">Support</a></li>
+      </ul>
+      <div class="footer-contact">
+        <a href="mailto:privacy@myeternusapp.com">privacy@myeternusapp.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> Eternus. All rights reserved.</span>
+    </div>
   </footer>
 
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const hamburger = document.getElementById('nav-hamburger');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      hamburger.addEventListener('click', function() {
+        const isOpen = mobileMenu.classList.toggle('open');
+        hamburger.classList.toggle('open', isOpen);
+        hamburger.setAttribute('aria-label', isOpen ? 'Close navigation' : 'Open navigation');
+        mobileMenu.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      });
+
+      document.querySelectorAll('.mobile-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+          mobileMenu.classList.remove('open');
+          hamburger.classList.remove('open');
+          hamburger.setAttribute('aria-label', 'Open navigation');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+        });
+      });
+    });
+  </script>
 </body>
 </html>
