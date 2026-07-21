@@ -57,6 +57,49 @@
     a { color: inherit; }
     img { max-width: 100%; }
 
+    /* MOBILE TAP HIGHLIGHT / FOCUS */
+    a,
+    button,
+    [role="button"],
+    input,
+    textarea,
+    select,
+    summary,
+    label,
+    .clickable,
+    .flip-card,
+    .feature-card,
+    .layer-card {
+      -webkit-tap-highlight-color: transparent;
+    }
+    a:focus:not(:focus-visible),
+    button:focus:not(:focus-visible),
+    [role="button"]:focus:not(:focus-visible),
+    input:focus:not(:focus-visible),
+    textarea:focus:not(:focus-visible),
+    select:focus:not(:focus-visible),
+    summary:focus:not(:focus-visible),
+    .clickable:focus:not(:focus-visible),
+    .flip-card:focus:not(:focus-visible),
+    .feature-card:focus:not(:focus-visible),
+    .layer-card:focus:not(:focus-visible) {
+      outline: none;
+    }
+    a:focus-visible,
+    button:focus-visible,
+    [role="button"]:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible,
+    summary:focus-visible,
+    .clickable:focus-visible,
+    .flip-card:focus-visible,
+    .feature-card:focus-visible,
+    .layer-card:focus-visible {
+      outline: 2px solid rgba(201,168,76,0.6);
+      outline-offset: 3px;
+    }
+
     /* NOISE TEXTURE OVERLAY */
     body::before {
       content: '';
