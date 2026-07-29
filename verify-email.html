@@ -1,0 +1,159 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Email verification · Eternus</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: #0d0a14;
+      color: #f5f1e8;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 560px;
+      padding: 48px 38px;
+      text-align: center;
+      background: #15111e;
+      border: 1px solid #3a3043;
+      border-radius: 18px;
+    }
+
+    .logo {
+      width: 90px;
+      height: auto;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      margin: 0;
+      color: #d4af37;
+      font-size: 25px;
+      font-weight: 500;
+      letter-spacing: 6px;
+    }
+
+    .line {
+      width: 48px;
+      height: 1px;
+      margin: 24px auto 34px;
+      background: #d4af37;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      font-weight: 400;
+    }
+
+    p {
+      margin: 0;
+      color: #b9b1c0;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 32px;
+      padding: 15px 30px;
+      color: #17121d;
+      background: #d4af37;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    .hidden { display: none; }
+  </style>
+</head>
+
+<body>
+  <main class="card">
+    <img
+      class="logo"
+      src="https://myeternusapp.com/assets/images/logo-eternus-gold.png"
+      alt="Eternus"
+    >
+
+    <p class="brand">ETERNUS</p>
+    <div class="line"></div>
+
+    <section id="loading">
+      <h1>Verifying your email…</h1>
+      <p>Please wait a moment.</p>
+    </section>
+
+    <section id="success" class="hidden">
+      <h1>Your email has been verified</h1>
+      <p>You can now return to the Eternus app and continue creating your account.</p>
+      <a class="button" href="https://myeternusapp.com">CONTINUE</a>
+    </section>
+
+    <section id="error" class="hidden">
+      <h1>We couldn't verify your email</h1>
+      <p id="error-message">The link may be invalid or may already have been used.</p>
+    </section>
+  </main>
+
+  <script type="module">
+    import { initializeApp } from
+      "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+
+    import { getAuth, applyActionCode } from
+      "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAHD5_AzYMss1_K2grsj-YLqu-AAHqnVIA",
+      authDomain: "eternus-af226.firebaseapp.com",
+      projectId: "eternus-af226",
+      storageBucket: "eternus-af226.firebasestorage.app",
+      messagingSenderId: "815262001287",
+      appId: "1:815262001287:web:a5e170fdd0fcbae0b1f022",
+      measurementId: "G-Y6L1HC0RLK"
+    };
+
+    const loading = document.getElementById("loading");
+    const success = document.getElementById("success");
+    const error = document.getElementById("error");
+
+    const show = (element) => {
+      loading.classList.add("hidden");
+      success.classList.add("hidden");
+      error.classList.add("hidden");
+      element.classList.remove("hidden");
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const mode = params.get("mode");
+    const actionCode = params.get("oobCode");
+
+    try {
+      if (mode !== "verifyEmail" || !actionCode) {
+        throw new Error("Invalid verification link.");
+      }
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      await applyActionCode(auth, actionCode);
+      show(success);
+    } catch (err) {
+      console.error(err);
+      show(error);
+    }
+  </script>
+</body>
+</html>
