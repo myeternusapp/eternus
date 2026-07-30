@@ -141,7 +141,9 @@
     const actionCode = params.get("oobCode");
 
     try {
-      if (mode !== "verifyEmail" || !actionCode) {
+      const supportedModes = ["verifyEmail", "verifyAndChangeEmail"];
+
+      if (!supportedModes.includes(mode) || !actionCode) {
         throw new Error("Invalid verification link.");
       }
 
