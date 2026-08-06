@@ -702,27 +702,141 @@
     .privacy-points li svg { flex-shrink: 0; margin-top: 3px; }
 
     /* FUTURE READINESS */
+    .future-readiness {
+      position: relative;
+      padding: 40px 60px 110px;
+      overflow: hidden;
+    }
+    .future-readiness::before {
+      content: '';
+      position: absolute;
+      inset: 4% 10% 0 10%;
+      background: radial-gradient(circle at center, rgba(232,201,122,0.08), transparent 68%);
+      pointer-events: none;
+    }
     .future-readiness .section-inner {
-      padding: 78px 60px;
-      border: 1px solid rgba(201,168,76,0.18);
-      border-radius: 28px;
-      background: linear-gradient(135deg, rgba(201,168,76,0.05), rgba(8,8,13,0.95));
-      box-shadow: 0 24px 60px rgba(0,0,0,0.22);
+      position: relative;
+      z-index: 1;
+      padding: 0;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+    .future-readiness-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: center;
+      gap: 48px;
+    }
+    .future-readiness-copy-block {
+      max-width: 560px;
     }
     .future-readiness .section-title {
-      max-width: 760px;
-      margin-bottom: 28px;
+      max-width: 620px;
+      margin: 0 0 24px;
+      text-align: left;
+      font-size: clamp(2rem, 3.4vw, 2.8rem);
     }
     .future-readiness-copy {
-      max-width: 760px;
-      margin: 0 auto;
       display: grid;
-      gap: 16px;
+      gap: 18px;
+      text-align: left;
+    }
+    .future-readiness-copy .section-sub {
+      margin: 0;
+      max-width: 100%;
+      color: rgba(245,240,234,0.82);
+      line-height: 1.95;
     }
     .future-readiness-highlight {
+      display: block;
       color: var(--gold);
       font-weight: 400;
+      margin: 10px 0 0;
     }
+    .future-readiness-art {
+      position: relative;
+      min-height: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 0;
+    }
+    .future-readiness-art::before {
+      content: '';
+      position: absolute;
+      inset: 18% 8% 14% 8%;
+      background: radial-gradient(circle at center, rgba(201,168,76,0.12), transparent 68%);
+      filter: blur(24px);
+      pointer-events: none;
+    }
+    .future-readiness-art::after {
+      content: '';
+      position: absolute;
+      top: 16%;
+      left: 4%;
+      width: 26%;
+      height: 18%;
+      border-radius: 999px;
+      background: rgba(201,168,76,0.08);
+      filter: blur(18px);
+      pointer-events: none;
+    }
+    .future-readiness-symbol {
+      position: relative;
+      width: min(420px, 100%);
+      max-width: 420px;
+      z-index: 2;
+      display: block;
+      margin: 0 auto;
+    }
+    .future-readiness-symbol img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .future-readiness-light {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(232,201,122,0.9);
+      box-shadow: 0 0 18px rgba(232,201,122,0.24);
+      pointer-events: none;
+    }
+    .future-readiness-light.small { width: 8px; height: 8px; }
+    .future-readiness-light.tiny { width: 5px; height: 5px; }
+    .future-readiness-star {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      pointer-events: none;
+    }
+    .future-readiness-star::before,
+    .future-readiness-star::after {
+      content: '';
+      position: absolute;
+      background: rgba(232,201,122,0.85);
+      border-radius: 999px;
+    }
+    .future-readiness-star::before {
+      left: 50%;
+      top: 0;
+      width: 2px;
+      height: 100%;
+      transform: translateX(-50%);
+    }
+    .future-readiness-star::after {
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      transform: translateY(-50%);
+    }
+    .future-readiness-star.one { top: 14%; right: 22%; }
+    .future-readiness-star.two { top: 36%; left: 18%; transform: scale(0.85); }
+    .future-readiness-star.three { bottom: 18%; right: 16%; transform: scale(0.9); }
+    .future-readiness-light.one { top: 18%; left: 12%; }
+    .future-readiness-light.two { top: 38%; right: 20%; }
+    .future-readiness-light.three { bottom: 16%; left: 22%; }
+    .future-readiness-light.four { top: 62%; right: 14%; width: 7px; height: 7px; }
 
     /* FINAL CTA */
     .cta-final { text-align: center; }
@@ -800,6 +914,16 @@
 
     /* RESPONSIVE */
     @media (max-width: 900px) {
+      .future-readiness-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+      .future-readiness-copy-block {
+        max-width: 640px;
+      }
+      .future-readiness-visual {
+        min-height: 320px;
+      }
       .hero-grid { grid-template-columns: 1fr; text-align: center; }
       .hero-desc { margin-left: auto; margin-right: auto; }
       .hero-ctas { justify-content: center; }
@@ -909,6 +1033,32 @@
               <img src="assets/eternus-home-real.jpg" alt="Screenshot of the Eternus app Home screen." loading="eager" />
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="future-readiness">
+    <div class="section-inner future-readiness-grid">
+      <div class="future-readiness-copy-block">
+        <h2 class="section-title">Built for today. Ready for tomorrow.</h2>
+        <div class="future-readiness-copy">
+          <p class="section-sub">Technology will change. The way we preserve and experience our stories will evolve with it.</p>
+          <p class="section-sub">Eternus is built as a living platform — continuously evolving to embrace new possibilities while keeping your memories, relationships and legacy at its core.</p>
+          <p class="section-sub"><span class="future-readiness-highlight">What you preserve today will not be limited by today’s technology.</span> It will become the foundation for richer and more meaningful ways to experience your story in the years ahead.</p>
+          <p class="section-sub">No expensive hardware. No inaccessible technology. Just a platform designed to evolve with you, your family and the future.</p>
+        </div>
+      </div>
+      <div class="future-readiness-art" aria-hidden="true">
+        <span class="future-readiness-light one"></span>
+        <span class="future-readiness-light two"></span>
+        <span class="future-readiness-light three"></span>
+        <span class="future-readiness-light four"></span>
+        <span class="future-readiness-star one"></span>
+        <span class="future-readiness-star two"></span>
+        <span class="future-readiness-star three"></span>
+        <div class="future-readiness-symbol">
+          <img src="assets/images/eternus-evolution-symbol.png" alt="Eternus evolution symbol" />
         </div>
       </div>
     </div>
@@ -1191,21 +1341,6 @@
           No public follower system
         </li>
       </ul>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- FUTURE READINESS -->
-  <section class="future-readiness">
-    <div class="section-inner">
-      <h2 class="section-title">Built for today. Ready for tomorrow.</h2>
-      <div class="future-readiness-copy">
-        <p class="section-sub">Technology will change. The way we preserve and experience our stories will evolve with it.</p>
-        <p class="section-sub">Eternus is built as a living platform — continuously evolving to embrace new possibilities while keeping your memories, relationships and legacy at its core.</p>
-        <p class="section-sub"><span class="future-readiness-highlight">What you preserve today will not be limited by today’s technology.</span> It will become the foundation for richer and more meaningful ways to experience your story in the years ahead.</p>
-        <p class="section-sub">No expensive hardware. No inaccessible technology. Just a platform designed to evolve with you, your family and the future.</p>
-      </div>
     </div>
   </section>
 
