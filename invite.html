@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>You're invited · Eternus</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: #0d0a14;
+      color: #f5f1e8;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 560px;
+      padding: 48px 38px;
+      text-align: center;
+      background: #15111e;
+      border: 1px solid #3a3043;
+      border-radius: 18px;
+    }
+
+    @media (max-width: 420px) {
+      .card {
+        padding: 36px 24px;
+      }
+    }
+
+    .logo {
+      width: 90px;
+      height: auto;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      margin: 0;
+      color: #d4af37;
+      font-size: 25px;
+      font-weight: 500;
+      letter-spacing: 6px;
+    }
+
+    .line {
+      width: 48px;
+      height: 1px;
+      margin: 24px auto 34px;
+      background: #d4af37;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 24px;
+      font-weight: 400;
+    }
+
+    p {
+      margin: 0;
+      color: #b9b1c0;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .note {
+      margin-top: 18px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #8f8798;
+    }
+
+    .avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 18px;
+      border: 1px solid #3a3043;
+    }
+
+    .inviter-name {
+      color: #d4af37;
+      font-weight: 600;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 32px;
+      padding: 15px 30px;
+      color: #17121d;
+      background: #d4af37;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    .hidden { display: none; }
+  </style>
+</head>
+
+<body>
+  <main class="card">
+    <img
+      class="logo"
+      src="https://myeternusapp.com/assets/images/logo-eternus-gold.png"
+      alt="Eternus"
+    >
+
+    <p class="brand">ETERNUS</p>
+    <div class="line"></div>
+
+    <section id="loading">
+      <h1>Loading your invitation…</h1>
+      <p>Please wait a moment.</p>
+    </section>
+
+    <section id="available" class="hidden">
+      <img id="inviter-photo" class="avatar hidden" alt="">
+      <h1><span id="inviter-name" class="inviter-name"></span> invited you to Eternus</h1>
+      <p>
+        This is an invitation to their <span id="invite-type"></span> on Eternus — a
+        private, invitation-only space for preserving memories and the people who
+        matter.
+      </p>
+      <p class="note">
+        This invitation will become available once you create an Eternus account
+        with the email address it was sent to, and open the app.
+      </p>
+      <a class="button" href="https://myeternusapp.com">CREATE YOUR ETERNUS ACCOUNT</a>
+      <p class="note">
+        Once you sign in to the Eternus app with the invited email, you can review
+        the invitation in Activity Center.
+      </p>
+    </section>
+
+    <section id="unavailable" class="hidden">
+      <h1>This invitation link isn't available</h1>
+      <p>
+        The link may be invalid, expired, or the invitation may no longer be
+        active. Please ask the person who invited you to send a new one.
+      </p>
+    </section>
+  </main>
+
+  <script type="module">
+    const RESOLVE_URL =
+      "https://us-central1-eternus-af226.cloudfunctions.net/resolveInvitationLandingInfo";
+
+    const loading = document.getElementById("loading");
+    const available = document.getElementById("available");
+    const unavailable = document.getElementById("unavailable");
+
+    const show = (element) => {
+      loading.classList.add("hidden");
+      available.classList.add("hidden");
+      unavailable.classList.add("hidden");
+      element.classList.remove("hidden");
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    const t = params.get("t");
+
+    const layersToLabel = (layers) => {
+      const list = Array.isArray(layers) ? layers.map(String) : [];
+      const hasCircle = list.includes("circle");
+      const hasLegacy = list.includes("legacy");
+      if (hasCircle && hasLegacy) return "Circle and Legacy";
+      if (hasLegacy) return "Legacy";
+      return "Circle";
+    };
+
+    async function run() {
+      if (!id || !t) {
+        show(unavailable);
+        return;
+      }
+
+      try {
+        const url = new URL(RESOLVE_URL);
+        url.searchParams.set("id", id);
+        url.searchParams.set("t", t);
+
+        const response = await fetch(url.toString(), { method: "GET" });
+        if (!response.ok) {
+          show(unavailable);
+          return;
+        }
+
+        const data = await response.json();
+        if (!data || data.available !== true) {
+          show(unavailable);
+          return;
+        }
+
+        // Server-returned values are rendered via textContent only — never
+        // innerHTML — and the id/t query values themselves are never
+        // rendered anywhere, only ever sent back to the resolver endpoint.
+        const nameEl = document.getElementById("inviter-name");
+        const typeEl = document.getElementById("invite-type");
+        const photoEl = document.getElementById("inviter-photo");
+
+        const displayName =
+          typeof data.inviterDisplayName === "string" &&
+          data.inviterDisplayName.trim()
+            ? data.inviterDisplayName.trim()
+            : "Someone";
+        nameEl.textContent = displayName;
+        typeEl.textContent = layersToLabel(data.layers);
+
+        if (
+          typeof data.inviterPhotoUrl === "string" &&
+          data.inviterPhotoUrl.trim()
+        ) {
+          photoEl.addEventListener("error", () => {
+            photoEl.classList.add("hidden");
+          });
+          photoEl.src = data.inviterPhotoUrl.trim();
+          photoEl.classList.remove("hidden");
+        }
+
+        show(available);
+      } catch (err) {
+        console.error(err);
+        show(unavailable);
+      }
+    }
+
+    run();
+  </script>
+</body>
+</html>
