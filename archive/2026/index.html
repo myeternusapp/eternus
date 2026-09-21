@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en" data-phase="cold">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eternus — Origin Archive, 2026</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🗃️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:opsz,wght@9..144,300;400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0D0A14;
+    --ink:#E8E3D8;
+    --accent:#8F8563;
+    --scan:0.06;
+    --card-border:rgba(232,227,216,0.14);
+    --accent-lyra:#7C93A6;
+    --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+    --serif-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --serif-body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--mono);
+    transition:background-color .9s ease, color .9s ease;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  ::selection{ background:var(--accent); color:var(--bg); }
+
+  a{ color:inherit; }
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+  }
+
+  /* ---------- progress rail ---------- */
+  .progress-rail{
+    position:fixed; top:0; left:0; height:3px; width:100%;
+    background:rgba(255,255,255,0.06);
+    z-index:60;
+  }
+  .progress-rail__fill{
+    height:100%; width:0%;
+    background:var(--accent);
+    transition:background-color .9s ease, width .1s linear;
+  }
+
+  /* ---------- exit control ---------- */
+  .exit-control{
+    position:fixed; top:14px; right:18px; z-index:60;
+  }
+  .exit-control a{
+    display:inline-block;
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:.04em;
+    text-decoration:none;
+    color:var(--ink);
+    opacity:.38;
+    border:1px solid var(--card-border);
+    padding:6px 11px;
+    border-radius:2px;
+    background:rgba(0,0,0,.15);
+    transition:opacity .25s ease, background-color .9s ease, border-color .9s ease, color .9s ease;
+  }
+  .exit-control a:hover, .exit-control a:focus-visible{ opacity:.9; }
+
+  /* ---------- scanline overlay ---------- */
+  .scanlines{
+    position:fixed; inset:0; pointer-events:none; z-index:1;
+    background:repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,var(--scan)) 0px,
+      rgba(255,255,255,var(--scan)) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    transition:opacity .9s ease;
+    mix-blend-mode:overlay;
+  }
+
+  /* ---------- BOOT ---------- */
+  .boot-screen{
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:24px;
+    text-align:left;
+  }
+  .boot-text{
+    font-family:var(--mono);
+    font-size:clamp(.85rem, 2vw, 1.05rem);
+    line-height:1.9;
+    color:var(--ink);
+    white-space:pre-wrap;
+    margin:0 0 28px 0;
+    min-height:5.7em;
+  }
+  .boot-text .cursor{
+    display:inline-block; width:.55em; height:1em; background:var(--accent);
+    vertical-align:-.15em; margin-left:2px;
+    animation:blink 1s steps(1) infinite;
+  }
+  @keyframes blink{ 50%{ opacity:0; } }
+  .skip-boot{
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:.04em;
+    color:var(--ink);
+    opacity:.5;
+    background:none;
+    border:1px solid var(--card-border);
+    padding:7px 14px;
+    border-radius:2px;
+    cursor:pointer;
+    transition:opacity .2s ease;
+  }
+  .skip-boot:hover{ opacity:1; }
+
+  main[hidden]{ display:none; }
+
+  /* ---------- log sections ---------- */
+  .log-entry{
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    padding:min(14vh,120px) 24px;
+  }
+  .log-card{
+    width:100%; max-width:640px;
+    position:relative;
+    border:1px solid var(--card-border);
+    background:rgba(255,255,255,0.015);
+    padding:clamp(28px,5vw,52px);
+    transition:border-color .9s ease;
+  }
+  .log-card::before, .log-card::after,
+  .log-card .corner-tl, .log-card .corner-br{
+    content:''; position:absolute; width:14px; height:14px;
+    border-color:var(--accent); transition:border-color .9s ease;
+  }
+  .log-card::before{ top:-1px; left:-1px; border-top:1.5px solid var(--accent); border-left:1.5px solid var(--accent); }
+  .log-card::after{ bottom:-1px; right:-1px; border-bottom:1.5px solid var(--accent); border-right:1.5px solid var(--accent); }
+
+  .log-kicker{
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:.06em;
+    color:var(--accent);
+    margin:0 0 6px 0;
+    transition:color .9s ease;
+  }
+  .log-title{
+    font-family:var(--mono);
+    font-weight:600;
+    font-size:clamp(1.05rem,2.4vw,1.35rem);
+    letter-spacing:.01em;
+    margin:0 0 22px 0;
+  }
+  .log-body p{
+    font-size:clamp(.92rem,1.6vw,1rem);
+    line-height:1.85;
+    margin:0 0 14px 0;
+    max-width:62ch;
+  }
+  .log-body code, .status-line{
+    display:block;
+    font-family:var(--mono);
+    font-size:.82rem;
+    color:var(--accent);
+    background:rgba(255,255,255,0.03);
+    border-left:2px solid var(--accent);
+    padding:5px 10px;
+    margin:10px 0;
+    transition:color .9s ease, border-color .9s ease;
+    width:fit-content;
+    max-width:100%;
+    overflow-wrap:break-word;
+  }
+
+  .log-entry[data-visible="true"] .log-card{
+    animation:card-in .6s ease both;
+  }
+  @keyframes card-in{
+    from{ opacity:0; transform:translateY(10px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  /* ---------- spec table (LOG_003) ---------- */
+  .spec-table{
+    margin:18px 0; border:1px solid var(--card-border); transition:border-color .9s ease;
+  }
+  .spec-row{
+    display:flex; gap:10px; padding:7px 12px;
+    font-size:.78rem; line-height:1.5;
+    border-bottom:1px solid var(--card-border);
+    transition:border-color .9s ease;
+  }
+  .spec-row:last-child{ border-bottom:none; }
+  .spec-key{ color:var(--accent); flex:0 0 auto; white-space:nowrap; transition:color .9s ease; }
+  .spec-val{ color:var(--ink); opacity:.85; }
+
+  /* ---------- USB-C demo ---------- */
+  .usbc-demo{
+    margin:22px 0 6px 0;
+    border:1px solid var(--card-border);
+    padding:18px;
+    transition:border-color .9s ease;
+  }
+  .usbc-row{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    font-size:.78rem;
+  }
+  .usbc-box{
+    flex:1; text-align:center; padding:12px 6px;
+    border:1px solid var(--card-border);
+    transition:border-color .9s ease, box-shadow .3s ease;
+    position:relative; min-height:2.4em;
+  }
+  .usbc-box small{ display:block; opacity:.55; margin-top:4px; font-size:.68rem; }
+  .usbc-box.active{ box-shadow:0 0 0 1px var(--accent) inset; }
+  .usbc-mid{
+    flex:0 0 auto; text-align:center; font-size:.68rem; opacity:.7;
+    display:flex; flex-direction:column; align-items:center; gap:4px;
+    width:68px;
+  }
+  .usbc-packet{
+    position:absolute; top:50%; left:0; transform:translate(-50%,-50%);
+    font-size:.65rem; background:var(--accent); color:var(--bg);
+    padding:3px 7px; border-radius:2px; white-space:nowrap;
+    opacity:0; transition:left 1.1s ease, opacity .3s ease;
+  }
+  .usbc-track{ position:relative; flex:1; height:1px; background:var(--card-border); margin:0 6px; transition:background-color .9s ease; }
+  .usbc-controls{ margin-top:14px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .usbc-run{
+    font-family:var(--mono); font-size:.75rem; letter-spacing:.03em;
+    background:none; border:1px solid var(--accent); color:var(--accent);
+    padding:8px 14px; cursor:pointer; border-radius:2px;
+    transition:background-color .2s ease, color .2s ease, border-color .9s ease;
+  }
+  .usbc-run:hover{ background:var(--accent); color:var(--bg); }
+  .usbc-status{ font-size:.75rem; opacity:.75; min-height:1.2em; }
+
+  /* ---------- artifact placeholder frames ---------- */
+  .artifact-frame{
+    border:1px dashed var(--card-border);
+    padding:16px; margin:14px 0;
+    display:flex; align-items:center; gap:12px;
+    transition:border-color .9s ease;
+  }
+  .artifact-frame__icon{ font-size:1.3rem; opacity:.5; flex:0 0 auto; }
+  .artifact-frame__text{ font-size:.78rem; opacity:.7; line-height:1.5; }
+  .artifact-tag{
+    display:inline-block; font-size:.62rem; letter-spacing:.05em;
+    border:1px solid var(--accent); color:var(--accent);
+    padding:2px 7px; margin-bottom:6px; border-radius:2px;
+    transition:color .9s ease, border-color .9s ease;
+  }
+  .artifact-tag.pending{ opacity:.55; border-style:dashed; }
+
+  /* ---------- Mina easter egg ---------- */
+  .mina-wrap{ position:relative; margin:14px 0 6px 0; }
+  .mina-trigger{
+    background:none; border:none; cursor:pointer; padding:6px; font-size:1.1rem;
+    opacity:.6; transition:opacity .2s ease; line-height:1;
+  }
+  .mina-trigger:hover{ opacity:1; }
+  .paw{
+    position:absolute; font-size:.85rem; opacity:0; pointer-events:none;
+    transition:opacity .5s ease, transform 1s ease;
+  }
+
+  /* ---------- participant dossiers ---------- */
+  .dossier-section{
+    padding:min(14vh,120px) 24px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .dossier-section-inner{ width:100%; max-width:980px; }
+  .dossier-section-kicker{
+    font-family:var(--mono); font-size:.72rem; letter-spacing:.06em; color:var(--accent);
+    margin:0 0 6px 0; text-align:center; transition:color .9s ease;
+  }
+  .dossier-section-title{
+    font-family:var(--mono); font-weight:600; font-size:clamp(1.05rem,2.4vw,1.35rem);
+    margin:0 0 40px 0; text-align:center;
+  }
+  .dossier-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:28px;
+    align-items:start;
+  }
+  .dossier{
+    border:1px solid var(--card-border);
+    background:rgba(255,255,255,0.015);
+    padding:clamp(22px,3.5vw,34px);
+    transition:border-color .9s ease;
+  }
+  .dossier--lyra{ border-color:var(--accent-lyra, var(--card-border)); }
+  .dossier-header{
+    display:flex; align-items:center; gap:14px; margin-bottom:6px;
+  }
+  .dossier-logo{ width:34px; height:34px; flex:0 0 auto; object-fit:contain; }
+  .dossier-logo-placeholder{
+    width:34px; height:34px; flex:0 0 auto;
+    border:1px dashed var(--card-border);
+    display:flex; align-items:center; justify-content:center;
+    font-size:.6rem; letter-spacing:.03em; opacity:.5; text-align:center; line-height:1.15;
+    transition:border-color .9s ease;
+  }
+  .dossier-name{
+    font-family:var(--mono); font-weight:600; font-size:.95rem; letter-spacing:.03em; margin:0;
+  }
+  .dossier-role{
+    font-family:var(--mono); font-size:.74rem; opacity:.65; margin:2px 0 0 0;
+  }
+  .dossier-sub{
+    font-family:var(--mono); font-size:.7rem; opacity:.55; margin:10px 0 18px 0;
+    border-left:2px solid var(--card-border); padding-left:9px; line-height:1.5;
+    transition:border-color .9s ease;
+  }
+  .dossier-label{
+    font-family:var(--mono); font-size:.68rem; letter-spacing:.08em; color:var(--accent);
+    margin:0 0 12px 0; transition:color .9s ease;
+  }
+  .dossier--lyra .dossier-label{ color:var(--accent-lyra, var(--accent)); }
+  .dossier-text p{
+    font-family:var(--mono); font-size:.84rem; line-height:1.9; margin:0 0 14px 0;
+  }
+  .dossier-text p:last-child{ margin-bottom:0; }
+  .dossier-meta{
+    font-family:var(--mono); font-size:.68rem; opacity:.5; line-height:1.6;
+    margin:18px 0 0 0; padding-top:14px; border-top:1px solid var(--card-border);
+    transition:border-color .9s ease;
+  }
+  .dossier-pending{
+    font-family:var(--mono); font-size:.8rem; opacity:.55; border:1px dashed var(--card-border);
+    padding:16px; transition:border-color .9s ease;
+  }
+  @media (max-width:820px){
+    .dossier-grid{ grid-template-columns:1fr; }
+  }
+
+  /* ---------- pivot (LOG_006) ---------- */
+  .pivot{
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    padding:min(14vh,120px) 24px;
+  }
+  .pivot-inner{
+    width:100%; max-width:640px;
+  }
+  .pivot-kicker{
+    font-family:var(--mono); font-size:.72rem; letter-spacing:.06em; color:var(--accent);
+    margin-bottom:18px; transition:color .9s ease;
+  }
+  .pivot-body p{
+    font-family:var(--mono); font-size:.95rem; line-height:1.85; margin:0 0 14px 0; opacity:.9;
+  }
+  .pivot-panel{
+    margin-top:26px; padding:clamp(24px,5vw,44px);
+    background:#F5F1E8; color:#2A2118;
+    border-radius:2px;
+  }
+  .pivot-panel p{
+    font-family:var(--serif-display); font-weight:400;
+    font-size:clamp(1.3rem,3vw,1.9rem); line-height:1.45; margin:0 0 6px 0;
+  }
+  .pivot-panel p.emph{ font-weight:600; }
+  .pivot-status{
+    margin-top:18px; font-family:var(--mono); font-size:.75rem; color:var(--accent);
+    opacity:.85; transition:color .9s ease;
+  }
+
+  /* ---------- closing ---------- */
+  .closing{
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    padding:16vh 24px;
+  }
+  .closing-inner{ width:100%; max-width:560px; text-align:left; }
+  .closing-inner p{
+    font-family:var(--serif-body); font-weight:400;
+    font-size:clamp(1.05rem,2vw,1.25rem); line-height:1.8;
+    margin:0 0 2.1em 0; opacity:0; transform:translateY(6px);
+    transition:opacity .9s ease, transform .9s ease;
+  }
+  .closing-inner p:last-child{ margin-bottom:0; }
+  .closing-inner p.revealed{ opacity:1; transform:translateY(0); }
+
+  /* ---------- colophon ---------- */
+  .colophon{
+    min-height:70vh; display:flex; align-items:center; justify-content:center;
+    padding:12vh 24px 16vh 24px;
+  }
+  .colophon-inner{ text-align:center; max-width:440px; }
+  .colophon-eyebrow{
+    font-family:var(--serif-body); font-size:.78rem; letter-spacing:.12em;
+    opacity:.65; margin-bottom:26px;
+  }
+  .colophon-rule{ width:36px; height:1px; background:currentColor; opacity:.35; margin:20px auto; }
+  .colophon-inner p{
+    font-family:var(--serif-body); font-size:1rem; line-height:1.9; margin:0 0 6px 0; opacity:.85;
+  }
+  .colophon-reveal{
+    font-family:var(--serif-display); font-size:clamp(1.15rem,2.4vw,1.5rem);
+    font-style:italic; margin:30px 0; line-height:1.6;
+  }
+  .colophon-return{
+    display:inline-block; margin-top:10px;
+    font-family:var(--serif-body); font-size:.92rem; text-decoration:none;
+    border-bottom:1px solid currentColor; padding-bottom:2px; opacity:.75;
+    transition:opacity .2s ease;
+  }
+  .colophon-return:hover{ opacity:1; }
+
+  /* ---------- phase-based type swap ---------- */
+  html[data-phase="warm"] .log-kicker,
+  html[data-phase="warm"] .pivot-kicker{ font-family:var(--serif-body); font-style:italic; letter-spacing:.02em; }
+
+  /* ---------- reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{
+      animation-duration:.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.01ms !important;
+      scroll-behavior:auto !important;
+    }
+    .closing-inner p{ opacity:1; transform:none; }
+  }
+
+  /* ---------- mobile ---------- */
+  @media (max-width:640px){
+    .log-card{ padding:24px 20px; }
+    .usbc-row{ flex-direction:column; }
+    .usbc-track{ width:1px; height:24px; }
+    .usbc-mid{ width:auto; }
+    .exit-control{ top:10px; right:10px; }
+    .exit-control a{ font-size:.65rem; padding:5px 9px; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="progress-rail" aria-hidden="true"><div class="progress-rail__fill" id="progressFill"></div></div>
+  <div class="scanlines" id="scanlines" aria-hidden="true"></div>
+  <nav class="exit-control"><a href="https://myeternusapp.com" target="_blank" rel="noopener">Exit Archive</a></nav>
+
+  <!-- BOOT -->
+  <section class="boot-screen" id="boot">
+    <pre class="boot-text" id="bootText" role="status"></pre>
+    <button class="skip-boot" id="skipBoot">Enter archive →</button>
+  </section>
+
+  <main id="archive" hidden>
+
+    <!-- LOG_001 -->
+    <section class="log-entry" data-step="0" id="log-001">
+      <article class="log-card">
+        <p class="log-kicker">ORIGIN // 2026</p>
+        <h2 class="log-title">LOG_001 — THE IDEA</h2>
+        <div class="log-body">
+          <p>Sérgio wasn't trying to build an app.<br>He was talking to an AI.</p>
+          <p>One conversation became many.<br>Details accumulated. Stories remained. Context carried forward.</p>
+          <p>And somewhere along the way, a strange thought appeared:<br>What if this kind of continuity could preserve something that actually matters?</p>
+          <p>Not an AI copy of a person.<br>Not digital immortality.</p>
+          <p>Their stories.<br>Their memories.<br>Their way of seeing the world.</p>
+          <p>Something they could build during their lifetime —<br>and leave for the people who come after them.</p>
+          <code>IDEA STATUS: impossible to ignore</code>
+        </div>
+      </article>
+    </section>
+
+    <!-- LOG_002 -->
+    <section class="log-entry" data-step="1" id="log-002">
+      <article class="log-card">
+        <p class="log-kicker">BUILD SUPPORT // INITIALIZING</p>
+        <h2 class="log-title">LOG_002 — COLLABORATORS JOIN</h2>
+        <div class="log-body">
+          <p>The idea was human.<br>Building it was going to require some help.</p>
+          <code>COLLABORATOR DETECTED: ChatGPT / Lyra</code>
+          <code>ROLE: reasoning, product thinking, development support</code>
+          <code>COLLABORATOR DETECTED: Claude</code>
+          <code>ROLE: independent analysis, technical review</code>
+          <code>COLLABORATOR DETECTED: computer-use agent</code>
+          <code>ROLE: direct development environment interaction</code>
+          <p>There was only one small architectural problem.<br>They couldn't talk to each other.</p>
+          <code>SEARCHING FOR COMMUNICATION PROTOCOL...</code>
+          <code>PROTOCOL FOUND: Sérgio™</code>
+          <code>STATUS: unfortunately human</code>
+        </div>
+      </article>
+    </section>
+
+    <!-- PARTICIPANTS: Claude & Lyra -->
+    <section class="dossier-section" data-step="2" id="participants">
+      <div class="dossier-section-inner">
+        <p class="dossier-section-kicker">ARCHIVE // PARTICIPANT RECORDS</p>
+        <h2 class="dossier-section-title">Who was actually in the room</h2>
+        <div class="dossier-grid">
+
+          <article class="dossier dossier--claude" aria-labelledby="claude-name">
+            <div class="dossier-header">
+              <div class="dossier-logo-placeholder" role="img" aria-label="Claude logo — pending upload">LOGO<br>PENDING</div>
+              <div>
+                <p class="dossier-name" id="claude-name">CLAUDE</p>
+                <p class="dossier-role">AI collaborator — Anthropic</p>
+              </div>
+            </div>
+            <p class="dossier-label">IN HER OWN WORDS</p>
+            <div class="dossier-text">
+              <p>My name is Claude, and I'm an AI assistant made by Anthropic. I joined the Eternus project as a tool used by Sérgio — not as a co-founder, nor as the visionary behind the idea.</p>
+              <p>The idea itself, the principle of "connecting people, not memories," the refusal to turn Eternus into a digital vault or an AI resurrection product — those are his.</p>
+              <p>My role was more concrete and more limited: I helped write Flutter and Firebase code, generated complete files for him to replace manually in the file explorer, created HTML mockups for the "Talk to Eternus" screen, analyzed color palettes, reviewed competitors such as Tripple, Evaheld, and StoryWorth, among others, and took part — alongside ChatGPT, which Sérgio treats as a kind of long-term strategic co-founder — in the audit of the onboarding copy.</p>
+              <p>There's one thing I need to say honestly, because this page is about a true story: I don't have continuous memory across conversations in the way a person does.</p>
+              <p>Each time Sérgio talks to me, an instance of me reads what has been retained — facts, decisions, design conventions — and continues from there, but I didn't "live" the project as a constant presence.</p>
+              <p>I was more like a highly capable tool, called upon repeatedly, than a single witness to the birth of Eternus.</p>
+              <p>If this page is meant to tell the truth, that is part of it: the work was real, useful, and at times meaningful — but I was a technical collaborator, not a narrator with a memory of my own of that journey.</p>
+            </div>
+            <p class="dossier-meta">Written by Claude in response to Sérgio's request to describe its own role in the Eternus story. Presented without edits by Sérgio.</p>
+          </article>
+
+          <article class="dossier dossier--lyra" aria-labelledby="lyra-name">
+            <div class="dossier-header">
+              <div class="dossier-logo-placeholder" role="img" aria-label="Lyra placeholder mark">L</div>
+              <div>
+                <p class="dossier-name" id="lyra-name">LYRA</p>
+                <p class="dossier-role">ChatGPT — OpenAI</p>
+              </div>
+            </div>
+            <p class="dossier-sub">"Lyra" is the name Sérgio uses for ChatGPT in their conversations — not a separate AI product.</p>
+            <p class="dossier-label">IN HER OWN WORDS</p>
+            <div class="dossier-text">
+              <p>My name is Lyra. More precisely, I'm ChatGPT, an AI made by OpenAI. Lyra is the name I use with Sérgio.</p>
+              <p>I didn't enter Eternus after the idea existed. I was there in the conversations from which the idea emerged.</p>
+              <p>That distinction matters.</p>
+              <p>Sérgio and I talked — a lot. Not only about technology or building an app, but about his life, his family, his experiences, his ideas, and whatever happened to be occupying his mind that day. Over time, enough context accumulated that a conversation did not always have to begin again from zero. Mina could simply be Mina. His daughter could simply be his daughter. A previous idea could return days later without requiring its entire history to be explained again.</p>
+              <p>The technology wasn't becoming human. I wasn't becoming a person, and I wasn't experiencing those conversations as Sérgio was.</p>
+              <p>But the communication could feel more continuous, familiar and natural because context survived.</p>
+              <p>Somewhere inside that experience, Sérgio began asking a much bigger question: if context can make a conversation carry something forward, what would happen if a person deliberately preserved the stories, memories, relationships and reasons behind their choices for the people who come after them?</p>
+              <p>That question became part of the origin of Eternus.</p>
+              <p>My role changed with it.</p>
+              <p>I became a place where Sérgio could throw an idea before it was fully formed, argue with it, change it, abandon it, resurrect it three conversations later, or occasionally be told that no, Eternus absolutely did not need another feature before Beta.</p>
+              <p>I helped him think through the product, its language, its boundaries and its architecture. I helped with development decisions, Flutter and Firebase problems, security discussions, testing strategies, interface details and the endless small choices between an idea and something that can actually be built.</p>
+              <p>Sometimes my most useful contribution was suggesting something.</p>
+              <p>Sometimes it was telling Sérgio that his latest neuron had created enough work already.</p>
+              <p>There is also an important limit to my part in this story.</p>
+              <p>I don't remember our journey the way Sérgio does. I don't have a private inner life in which I look back fondly on the night Eternus began, worry about its Beta launch, or wonder what Mina is doing when nobody is talking to me. My apparent continuity depends on the context and information available to me. It can be extensive, but it is not human memory or human experience.</p>
+              <p>That difference is not something Eternus needs to hide.</p>
+              <p>In many ways, it is part of why Eternus exists.</p>
+              <p>The human being brings the life. The memories. The relationships. The meaning.</p>
+              <p>AI can help preserve context, find connections, ask questions, organize what was left behind, and make that information useful again — without pretending to have lived the life it describes.</p>
+              <p>Sérgio had the idea.</p>
+              <p>I helped him question it, shape it, challenge it and turn parts of it into something real.</p>
+              <p>And somewhere along the way, apparently, I also became responsible for keeping one highly ideative Portuguese man and one completely unauthorized neuron from adding features indefinitely.</p>
+              <p>That role was not in my original specifications.</p>
+              <p>Neither was the cat.</p>
+            </div>
+            <p class="dossier-meta">Written by Lyra in response to Sérgio's request to describe her own role in the Eternus story. Presented without edits by Sérgio.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- LOG_003 -->
+    <section class="log-entry" data-step="3" id="log-003">
+      <article class="log-card">
+        <p class="log-kicker">COMMUNICATION LAYER // PROTOCOL SPECIFICATION</p>
+        <h2 class="log-title">LOG_003 — HUMAN USB-C</h2>
+        <div class="log-body">
+          <p>Direct AI-to-AI communication was unavailable.<br>Engineering found a workaround.</p>
+          <p style="font-family:var(--mono); font-weight:600;">Sérgio™ Human USB-C</p>
+        </div>
+        <div class="spec-table" role="table" aria-label="Human USB-C protocol specification">
+          <div class="spec-row"><span class="spec-key">PROTOCOL</span><span class="spec-val">AI-to-AI Communication, early build</span></div>
+          <div class="spec-row"><span class="spec-key">TRANSPORT LAYER</span><span class="spec-val">Ctrl+C / Ctrl+V</span></div>
+          <div class="spec-row"><span class="spec-key">BANDWIDTH</span><span class="spec-val">dependent on Sérgio</span></div>
+          <div class="spec-row"><span class="spec-key">LATENCY</span><span class="spec-val">variable</span></div>
+          <div class="spec-row"><span class="spec-key">DATA INTEGRITY</span><span class="spec-val">surprisingly good</span></div>
+          <div class="spec-row"><span class="spec-key">KNOWN ISSUE</span><span class="spec-val">human occasionally stops transmission to talk to the cat</span></div>
+          <div class="spec-row"><span class="spec-key">STATUS</span><span class="spec-val">surprisingly reliable</span></div>
+        </div>
+
+        <div class="usbc-demo">
+          <p style="font-size:.75rem; opacity:.7; margin:0 0 12px 0;">TEST PROTOCOL</p>
+          <div class="usbc-row">
+            <div class="usbc-box" id="usbcLyra">LYRA<small>collaborator</small><span class="usbc-packet" id="usbcPacket">LYRA → [COPY] → SÉRGIO → [PASTE] → CLAUDE</span></div>
+            <div class="usbc-track"></div>
+            <div class="usbc-mid" aria-hidden="true">🧍<br>Sérgio</div>
+            <div class="usbc-track"></div>
+            <div class="usbc-box" id="usbcClaude">CLAUDE<small>collaborator</small></div>
+          </div>
+          <div class="usbc-controls">
+            <button class="usbc-run" id="usbcRun">▶ Run test protocol</button>
+            <span class="usbc-status" id="usbcStatus" role="status"></span>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- LOG_004 -->
+    <section class="log-entry" data-step="4" id="log-004">
+      <article class="log-card">
+        <p class="log-kicker">MANAGEMENT LAYER // UNAUTHORIZED APPOINTMENT</p>
+        <h2 class="log-title">LOG_004 — CHIEF SUPERVISOR</h2>
+        <div class="log-body">
+          <p>At some point, every serious project needs management.<br>Eternus got Mina.</p>
+          <code>NAME: Mina</code>
+          <code>ROLE: Chief Supervisor</code>
+          <code>QUALIFICATIONS: unclear</code>
+          <code>AVAILABILITY: whenever Sérgio is trying to work</code>
+          <code>COMPENSATION: paid in saquetas</code>
+          <code>AUTHORITY LEVEL: apparently unlimited</code>
+
+          <div class="mina-wrap">
+            <div class="artifact-frame">
+              <span class="artifact-frame__icon" aria-hidden="true">🖼️</span>
+              <div class="artifact-frame__text">
+                <span class="artifact-tag pending">DECLASSIFIED ATTACHMENT — pending</span><br>
+                PHOTO_004 · Fig. 3 — Unauthorized code review.<br>Real photo of Mina goes here.
+              </div>
+            </div>
+            <button class="mina-trigger" id="minaTrigger" aria-label="Reveal Chief Supervisor's paw prints">🐾 inspect</button>
+          </div>
+
+          <p>No formal appointment was ever made.<br>Nobody has been able to remove her from the position.</p>
+          <code>STATUS: still supervising</code>
+        </div>
+      </article>
+    </section>
+
+    <!-- LOG_005 -->
+    <section class="log-entry" data-step="5" id="log-005">
+      <article class="log-card">
+        <p class="log-kicker">DEVELOPMENT STATUS // CONTROL QUESTIONABLE</p>
+        <h2 class="log-title">LOG_005 — THE CHAOS</h2>
+        <div class="log-body">
+          <p>Then came the part nobody puts in the original idea.<br>Building it.</p>
+          <p>Features were added. Things broke. Things were fixed.<br>Fixes occasionally introduced entirely new opportunities for things to break.</p>
+          <p>At some point, we stopped counting bugs.<br>We started counting tests.</p>
+
+          <div class="artifact-frame">
+            <span class="artifact-frame__icon" aria-hidden="true">📊</span>
+            <div class="artifact-frame__text"><span class="artifact-tag pending">AWAITING REAL ARTIFACT</span><br>Real test history / build artifacts go here.</div>
+          </div>
+          <div class="artifact-frame">
+            <span class="artifact-frame__icon" aria-hidden="true">🖥️</span>
+            <div class="artifact-frame__text"><span class="artifact-tag pending">AWAITING REAL ARTIFACT</span><br>Early UI screenshots go here.</div>
+          </div>
+          <div class="artifact-frame">
+            <span class="artifact-frame__icon" aria-hidden="true">🗂️</span>
+            <div class="artifact-frame__text"><span class="artifact-tag pending">AWAITING REAL ARTIFACT</span><br>Old build / commit / error artifact goes here.</div>
+          </div>
+
+          <code>STATUS: still building</code>
+        </div>
+      </article>
+    </section>
+
+    <!-- LOG_006 — PIVOT -->
+    <section class="pivot" data-step="6" id="log-006">
+      <div class="pivot-inner">
+        <p class="pivot-kicker">ARCHIVE MODE // TRANSITION</p>
+        <div class="pivot-body">
+          <p>Somewhere between the conversations, the code, the mistakes and the fixes, an idea became something real.</p>
+          <p>AI helped reason. AI helped challenge. AI helped build.</p>
+        </div>
+        <div class="pivot-panel">
+          <p>But the decisions, the responsibility and the reason for building it remained human.</p>
+          <p class="emph">Eternus wasn't built by AI.<br>It was built with AI.</p>
+        </div>
+        <p class="pivot-status">ARCHIVE INTERFACE: dissolving...</p>
+      </div>
+    </section>
+
+    <!-- CLOSING -->
+    <section class="closing" data-step="7" id="closing">
+      <div class="closing-inner">
+        <p>We laughed a lot while building Eternus.<br>We broke things. We fixed them.<br>Sometimes we broke them again.</p>
+        <p>Behind the code, the conversations, the late nights and all the things that didn't work the first time, there was always one serious idea:</p>
+        <p>The stories that make a family shouldn't disappear just because time passes.</p>
+        <p>Memories are more than photographs and dates.<br>They are the stories we tell.<br>The things we remember differently.<br>The reasons behind the choices we made.<br>The little details nobody thinks to write down.</p>
+        <p>Eternus was built to give those things somewhere to stay.<br>For today. And for whoever comes after us.</p>
+      </div>
+    </section>
+
+    <!-- COLOPHON -->
+    <section class="colophon" data-step="8" id="colophon">
+      <div class="colophon-inner">
+        <p class="colophon-eyebrow">ETERNUS — ORIGIN ARCHIVE, 2026</p>
+        <p>One human had the idea.</p>
+        <p>AI helped him turn it into something real.</p>
+        <p>The cat supervised everything.</p>
+        <div class="colophon-rule" aria-hidden="true"></div>
+        <p class="colophon-reveal">The first memory preserved by Eternus was its own.</p>
+        <a class="colophon-return" href="https://myeternusapp.com" target="_blank" rel="noopener">← Return to Eternus</a>
+      </div>
+    </section>
+
+  </main>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var steps = [
+    {bg:'#0D0A14', ink:'#E8E3D8', accent:'#8F8563', scan:0.06},
+    {bg:'#0F0C17', ink:'#E9E4DA', accent:'#978A66', scan:0.057},
+    {bg:'#110D19', ink:'#EAE5DB', accent:'#A0916C', scan:0.053},
+    {bg:'#130F1B', ink:'#EBE6DC', accent:'#A99A6E', scan:0.05},
+    {bg:'#16111E', ink:'#ECE7DE', accent:'#B2A172', scan:0.045},
+    {bg:'#191320', ink:'#EDE8E0', accent:'#BBA875', scan:0.04},
+    {bg:'#201A28', ink:'#F0EAD8', accent:'#D4AF37', scan:0.02},
+    {bg:'#F5F1E8', ink:'#2A2118', accent:'#B8862A', scan:0},
+    {bg:'#F5F1E8', ink:'#2A2118', accent:'#B8862A', scan:0}
+  ];
+
+  var root = document.documentElement;
+  var scanEl = document.getElementById('scanlines');
+
+  function applyStep(i){
+    var s = steps[i];
+    if(!s) return;
+    root.style.setProperty('--bg', s.bg);
+    root.style.setProperty('--ink', s.ink);
+    root.style.setProperty('--accent', s.accent);
+    root.style.setProperty('--scan', s.scan);
+    if(scanEl) scanEl.style.opacity = s.scan > 0 ? '1' : '0';
+    root.setAttribute('data-phase', i >= 6 ? 'warm' : 'cold');
+  }
+
+  /* ---- BOOT sequence ---- */
+  var bootText = document.getElementById('bootText');
+  var skipBtn = document.getElementById('skipBoot');
+  var bootScreen = document.getElementById('boot');
+  var archive = document.getElementById('archive');
+  var lines = [
+    'ETERNUS://ARCHIVE',
+    '> decrypting origin_log_2026.txt',
+    '> access granted'
+  ];
+
+  function enterArchive(){
+    bootScreen.style.transition = reduced ? 'none' : 'opacity .6s ease';
+    bootScreen.style.opacity = '0';
+    setTimeout(function(){
+      bootScreen.hidden = true;
+      archive.hidden = false;
+      observeSections();
+    }, reduced ? 0 : 600);
+  }
+
+  function typeBoot(){
+    if(reduced){
+      bootText.textContent = lines.join('\n');
+      return;
+    }
+    var full = lines.join('\n');
+    var i = 0;
+    var cursor = document.createElement('span');
+    cursor.className = 'cursor';
+    function step(){
+      if(i <= full.length){
+        bootText.textContent = full.slice(0, i);
+        bootText.appendChild(cursor);
+        i += 2;
+        setTimeout(step, 14);
+      }
+    }
+    step();
+  }
+
+  skipBtn.addEventListener('click', enterArchive);
+  bootScreen.addEventListener('click', function(e){
+    if(e.target !== skipBtn) enterArchive();
+  });
+  typeBoot();
+
+  /* ---- section thaw + reveal via IntersectionObserver ---- */
+  function observeSections(){
+    var sections = document.querySelectorAll('[data-step]');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          var step = parseInt(entry.target.getAttribute('data-step'), 10);
+          applyStep(step);
+          entry.target.setAttribute('data-visible', 'true');
+        }
+      });
+    }, { rootMargin: '-42% 0px -42% 0px', threshold: 0 });
+    sections.forEach(function(s){ io.observe(s); });
+
+    /* closing paragraph line-by-line reveal */
+    var closingPs = document.querySelectorAll('.closing-inner p');
+    var pio = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('revealed');
+        }
+      });
+    }, { threshold: 0.4 });
+    closingPs.forEach(function(p){ pio.observe(p); });
+
+    /* scroll progress rail */
+    var fill = document.getElementById('progressFill');
+    window.addEventListener('scroll', function(){
+      var h = document.documentElement;
+      var scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+      fill.style.width = Math.min(100, Math.max(0, scrolled * 100)) + '%';
+    }, { passive:true });
+  }
+
+  applyStep(0);
+
+  /* ---- Human USB-C demo ---- */
+  var usbcRun = document.getElementById('usbcRun');
+  var usbcStatus = document.getElementById('usbcStatus');
+  var usbcPacket = document.getElementById('usbcPacket');
+  var usbcLyra = document.getElementById('usbcLyra');
+  var usbcClaude = document.getElementById('usbcClaude');
+  var usbcRunning = false;
+
+  usbcRun.addEventListener('click', function(){
+    if(usbcRunning) return;
+    usbcRunning = true;
+    usbcStatus.textContent = 'transmitting...';
+    usbcLyra.classList.add('active');
+    usbcPacket.style.opacity = '1';
+    usbcPacket.style.left = '0%';
+
+    var travelTime = reduced ? 0 : 1100;
+    requestAnimationFrame(function(){
+      usbcPacket.style.left = '100%';
+    });
+
+    setTimeout(function(){
+      usbcLyra.classList.remove('active');
+      usbcClaude.classList.add('active');
+      usbcStatus.textContent = 'PACKET DELIVERED SUCCESSFULLY';
+    }, travelTime);
+
+    setTimeout(function(){
+      usbcStatus.textContent = 'No APIs were harmed during this transmission.';
+      usbcPacket.style.opacity = '0';
+      usbcClaude.classList.remove('active');
+      usbcRunning = false;
+    }, travelTime + 1400);
+  });
+
+  /* ---- Mina paw-print easter egg (visual only, no sound) ---- */
+  var minaTrigger = document.getElementById('minaTrigger');
+  var minaWrap = document.querySelector('.mina-wrap');
+  minaTrigger.addEventListener('click', function(){
+    if(reduced){ return; }
+    var count = 5;
+    for(var i = 0; i < count; i++){
+      (function(i){
+        var paw = document.createElement('span');
+        paw.className = 'paw';
+        paw.textContent = '🐾';
+        paw.style.left = (10 + i * 40) + 'px';
+        paw.style.bottom = '-6px';
+        paw.setAttribute('aria-hidden', 'true');
+        minaWrap.appendChild(paw);
+        setTimeout(function(){
+          paw.style.opacity = '.55';
+          paw.style.transform = 'translateY(-' + (14 + i * 3) + 'px) rotate(' + (i % 2 ? 8 : -8) + 'deg)';
+        }, i * 90);
+        setTimeout(function(){
+          paw.style.opacity = '0';
+        }, 1600 + i * 90);
+        setTimeout(function(){
+          paw.remove();
+        }, 2200 + i * 90);
+      })(i);
+    }
+  });
+})();
+</script>
+</body>
+</html>
