@@ -30,6 +30,7 @@
   <title>FAQ — Eternus</title>
   <link rel="icon" type="image/png" href="assets/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet"/>
+  <script>document.documentElement.classList.add('js');</script>
   <style>
     :root {
       --black: #06060a;
@@ -540,6 +541,223 @@
       .footer-brand, .footer-contact { flex: none; text-align: center; }
       footer { padding: 40px 24px; }
     }
+
+    /* =========================================================
+       FAQ — index + gold thread prototype (layout only)
+       ========================================================= */
+    .faq-layout {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 56px;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 60px 40px;
+    }
+    .faq-content .section-inner { max-width: none; padding: 64px 0 56px; }
+    .faq-category { scroll-margin-top: 110px; }
+    .faq-category:not(:first-child) { margin-top: 0; }
+
+    /* index (desktop): vertical list sitting on the thread */
+    .faq-index { position: sticky; top: 120px; align-self: start; padding-top: 70px; }
+    .faq-index nav { position: relative; display: block; padding: 0; background: none; backdrop-filter: none; }
+    .faq-index .faq-nav-scroll { padding: 0; overflow: visible; max-width: none; margin: 0; }
+    .faq-index .faq-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+      justify-content: flex-start;
+      list-style: none;
+    }
+    .faq-index .faq-nav a,
+    .faq-index .faq-nav a:visited {
+      position: relative;
+      display: block;
+      padding: 9px 0 9px 28px;
+      border: 0;
+      border-radius: 0;
+      background: none;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(168,157,174,0.75);
+      white-space: normal;
+      line-height: 1.5;
+      transition: color 0.4s ease;
+    }
+    .faq-index .faq-nav a::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 50%;
+      width: 11px; height: 11px;
+      margin-top: -5.5px;
+      border-radius: 50%;
+      background: var(--black);
+      border: 1px solid rgba(201,168,76,0.4);
+      transition: background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease, transform 0.5s ease;
+    }
+    .faq-index .faq-nav a:hover { color: var(--white); background: none; border-color: transparent; }
+    .faq-index .faq-nav a:focus-visible { outline: 2px solid rgba(201,168,76,0.6); outline-offset: 4px; background: none; }
+    .faq-index .faq-nav a.is-past { color: rgba(232,201,122,0.6); }
+    .faq-index .faq-nav a.is-past::before { background: rgba(201,168,76,0.7); border-color: rgba(201,168,76,0.7); transform: scale(0.8); }
+    .faq-index .faq-nav a.is-active { color: var(--gold-light); }
+    .faq-index .faq-nav a.is-active::before {
+      background: var(--gold-light);
+      border-color: var(--gold-light);
+      box-shadow: 0 0 0 5px rgba(201,168,76,0.1), 0 0 14px rgba(201,168,76,0.45);
+    }
+    .faq-index-track {
+      position: absolute;
+      left: 5px;
+      top: var(--track-top, 0px);
+      height: var(--track-h, 0px);
+      width: 1px;
+      background: rgba(201,168,76,0.16);
+    }
+    .faq-index-fill {
+      position: absolute;
+      top: 0; left: 0;
+      width: 1px;
+      height: var(--fill, 0px);
+      background: linear-gradient(to bottom, rgba(201,168,76,0.6), var(--gold-light));
+      box-shadow: 0 0 8px rgba(201,168,76,0.35);
+      transition: height 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .faq-progress { display: none; }
+
+    /* questions: hairline rows instead of boxes */
+    .faq-list { margin-top: 32px; border-top: 1px solid rgba(201,168,76,0.12); }
+    .faq-item {
+      background: none;
+      border: 0;
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+      border-radius: 0;
+      margin-bottom: 0;
+    }
+    .faq-item:hover { border-color: rgba(201,168,76,0.12); }
+    .faq-question-btn {
+      padding: 20px 0;
+      font-size: 1.28rem;
+      color: rgba(245,240,234,0.85);
+      transition: color 0.35s ease;
+    }
+    .faq-question-btn:focus-visible { outline-offset: 2px; border-radius: 6px; }
+    .faq-item.open .faq-question-btn { color: var(--gold-light); }
+    .faq-chevron {
+      width: 26px; height: 26px;
+      padding: 6px;
+      box-sizing: border-box;
+      border: 1px solid rgba(201,168,76,0.35);
+      border-radius: 50%;
+      color: var(--gold-light);
+      transition: transform 0.4s ease, border-color 0.4s ease;
+    }
+    .faq-question-btn:hover .faq-chevron { border-color: rgba(201,168,76,0.7); }
+    .faq-item.open .faq-chevron { border-color: rgba(232,201,122,0.8); }
+    .faq-answer-wrap { transition: grid-template-rows 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
+    .faq-answer { padding: 0 48px 24px 0; font-size: 0.93rem; }
+    .faq-item:not(.open) .faq-answer-inner-clip { visibility: hidden; transition: visibility 0s linear 0.45s; }
+
+    /* gentle entrance of each category, once */
+    html.js .faq-category .section-inner { opacity: 0; transform: translateY(14px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    html.js .faq-category.is-in .section-inner { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html.js .faq-category .section-inner { opacity: 1; transform: none; transition: none; }
+      .faq-index-fill, .faq-progress-fill, .faq-index .faq-nav a, .faq-index .faq-nav a::before,
+      .faq-question-btn, .faq-chevron { transition: none !important; }
+    }
+
+    /* tablet & mobile: index becomes a sticky bar with a horizontal thread */
+    @media (max-width: 1000px) {
+      .faq-layout { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0; }
+      .faq-index { min-width: 0; }
+      .faq-content { padding: 0 60px; }
+      .faq-index {
+        position: sticky;
+        top: 86px;
+        z-index: 50;
+        padding-top: 0;
+        background: rgba(6,6,10,0.88);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+      }
+      .faq-index-track { display: none; }
+      .faq-index .faq-nav-scroll { overflow-x: auto; padding: 14px 24px 12px; scrollbar-width: none; }
+      .faq-index .faq-nav-scroll::-webkit-scrollbar { display: none; }
+      .faq-index .faq-nav { flex-direction: row; gap: 22px; }
+      .faq-index .faq-nav li { flex-shrink: 0; }
+      .faq-index .faq-nav a, .faq-index .faq-nav a:visited { padding: 6px 0; white-space: nowrap; }
+      .faq-index .faq-nav a::before { display: none; }
+      .faq-progress {
+        display: block;
+        position: absolute;
+        left: 0; right: 0; bottom: -1px;
+        height: 1px;
+      }
+      .faq-progress-fill {
+        display: block;
+        height: 1px;
+        width: var(--progress, 0%);
+        background: linear-gradient(to right, rgba(201,168,76,0.6), var(--gold-light));
+        box-shadow: 0 0 8px rgba(201,168,76,0.4);
+      }
+      .faq-category { scroll-margin-top: 140px; }
+    }
+    @media (max-width: 768px) {
+      .faq-index { top: 65px; }
+      .faq-content { padding: 0 24px; }
+      .faq-content .section-inner { padding: 48px 0 40px; }
+      .faq-question-btn { font-size: 1.15rem; }
+      .faq-answer { padding-right: 8px; }
+      .faq-category { scroll-margin-top: 118px; }
+    }
+
+    /* Readability pass: left index only */
+    .faq-index .faq-nav { gap: 10px; }
+    .faq-index .faq-nav a,
+    .faq-index .faq-nav a:visited {
+      padding-left: 30px;
+      font-size: 0.76rem;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: rgba(245,240,234,0.86);
+    }
+    .faq-index .faq-nav a:hover { color: var(--white); }
+    .faq-index .faq-nav a::before {
+      width: 13px; height: 13px;
+      margin-top: -6.5px;
+      left: -1px;
+      border: 1.5px solid rgba(232,201,122,0.85);
+      background: var(--black);
+    }
+    .faq-index .faq-nav a:hover::before { border-color: var(--gold-light); background: rgba(201,168,76,0.18); }
+    .faq-index .faq-nav a.is-past { color: rgba(232,201,122,0.9); }
+    .faq-index .faq-nav a.is-past::before { background: var(--gold); border-color: var(--gold); transform: none; }
+    .faq-index .faq-nav a.is-active { color: var(--gold-light); }
+    .faq-index .faq-nav a.is-active::before {
+      background: var(--gold-light);
+      border-color: var(--gold-light);
+      transform: scale(1.15);
+      box-shadow: 0 0 0 5px rgba(201,168,76,0.14), 0 0 16px rgba(201,168,76,0.5);
+    }
+    .faq-index-track { background: rgba(201,168,76,0.4); }
+    @media (max-width: 1000px) {
+      .faq-index .faq-nav a, .faq-index .faq-nav a:visited { padding-left: 0; font-size: 0.72rem; }
+    }
+    /* Expand controls: clearly visible */
+    .faq-chevron {
+      width: 32px; height: 32px;
+      padding: 7px;
+      border: 1.5px solid rgba(232,201,122,0.85);
+      color: var(--gold-light);
+      stroke-width: 2.2;
+      background: rgba(201,168,76,0.08);
+    }
+    .faq-question-btn:hover .faq-chevron { border-color: var(--gold-light); background: rgba(201,168,76,0.18); }
+    .faq-item.open .faq-chevron { background: var(--gold-light); border-color: var(--gold-light); color: var(--black); }
   </style>
 </head>
 <body>
@@ -593,11 +811,13 @@
     </div>
   </section>
 
-  <!-- CATEGORY NAV -->
-  <div class="faq-nav-wrap">
-    <nav aria-label="FAQ categories">
-      <div class="faq-nav-scroll">
-        <ul class="faq-nav">
+  <!-- FAQ: index + gold thread (desktop sidebar / mobile sticky bar) -->
+  <div class="faq-layout" id="faq-layout">
+    <aside class="faq-index">
+      <nav aria-label="FAQ categories">
+        <div class="faq-index-track" aria-hidden="true"><span class="faq-index-fill"></span></div>
+        <div class="faq-nav-scroll">
+          <ul class="faq-nav">
           <li><a href="#about-eternus">About Eternus</a></li>
           <li><a href="#memories">Memories &amp; Moments</a></li>
           <li><a href="#layers">Private, Circle &amp; Legacy</a></li>
@@ -606,10 +826,11 @@
           <li><a href="#privacy">Privacy &amp; Control</a></li>
           <li><a href="#beta">Private Beta</a></li>
         </ul>
-      </div>
-    </nav>
-  </div>
-
+        </div>
+        <div class="faq-progress" aria-hidden="true"><span class="faq-progress-fill"></span></div>
+      </nav>
+    </aside>
+    <div class="faq-content">
   <!-- ABOUT ETERNUS -->
   <section class="faq-category" id="about-eternus">
     <div class="section-inner">
@@ -662,7 +883,6 @@
     </div>
   </section>
 
-  <div class="divider"></div>
 
   <!-- MEMORIES & MOMENTS -->
   <section class="faq-category" id="memories">
@@ -715,7 +935,6 @@
     </div>
   </section>
 
-  <div class="divider"></div>
 
   <!-- PRIVATE, CIRCLE & LEGACY -->
   <section class="faq-category" id="layers">
@@ -793,7 +1012,6 @@
     </div>
   </section>
 
-  <div class="divider"></div>
 
   <!-- TALK TO ETERNUS -->
   <section class="faq-category" id="talk">
@@ -859,7 +1077,6 @@
     </div>
   </section>
 
-  <div class="divider"></div>
 
   <!-- MY TREE & CONNECTIONS -->
   <section class="faq-category" id="mytree">
@@ -923,7 +1140,6 @@
     </div>
   </section>
 
-  <div class="divider"></div>
 
   <!-- PRIVACY & CONTROL -->
   <section class="faq-category" id="privacy">
@@ -1002,7 +1218,6 @@
     </div>
   </section>
 
-  <div class="divider"></div>
 
   <!-- PRIVATE BETA -->
   <section class="faq-category" id="beta">
@@ -1080,7 +1295,9 @@
     </div>
   </section>
 
-  <div class="divider"></div>
+
+    </div>
+  </div>
 
   <!-- CONTACT -->
   <section id="contact">
@@ -1157,6 +1374,72 @@
         });
       });
     });
+  
+    /* FAQ — scroll-synced index, gold thread and category entrance */
+    (function() {
+      var layout = document.getElementById('faq-layout');
+      if (!layout) return;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var cats = Array.prototype.slice.call(document.querySelectorAll('.faq-category'));
+      var links = Array.prototype.slice.call(document.querySelectorAll('.faq-index .faq-nav a'));
+      var nav = document.querySelector('.faq-index nav');
+      var scroller = document.querySelector('.faq-index .faq-nav-scroll');
+      var desktop = window.matchMedia('(min-width: 1001px)');
+      var last = -1;
+
+      function geometry() {
+        if (!desktop.matches || !links.length) return;
+        var nr = nav.getBoundingClientRect();
+        var first = links[0].getBoundingClientRect(), end = links[links.length - 1].getBoundingClientRect();
+        var top = first.top + first.height / 2 - nr.top;
+        nav.style.setProperty('--track-top', top + 'px');
+        nav.style.setProperty('--track-h', (end.top + end.height / 2 - nr.top - top) + 'px');
+      }
+      function update() {
+        var line = window.innerHeight * 0.3, active = 0;
+        cats.forEach(function(c, i) { if (c.getBoundingClientRect().top <= line) active = i; });
+        if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) active = cats.length - 1;
+        links.forEach(function(a, i) {
+          a.classList.toggle('is-active', i === active);
+          a.classList.toggle('is-past', i < active);
+          if (i === active) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
+        });
+        // desktop: thread fills to the active node
+        if (desktop.matches) {
+          var nr = nav.getBoundingClientRect(), ar = links[active].getBoundingClientRect();
+          var top = parseFloat(getComputedStyle(nav).getPropertyValue('--track-top')) || 0;
+          nav.style.setProperty('--fill', Math.max(0, ar.top + ar.height / 2 - nr.top - top) + 'px');
+        } else {
+          // mobile: horizontal thread = reading progress through the questions
+          var lr = layout.getBoundingClientRect();
+          var p = Math.max(0, Math.min(1, (line - lr.top) / Math.max(1, lr.height - window.innerHeight * 0.7)));
+          nav.style.setProperty('--progress', (p * 100).toFixed(1) + '%');
+          if (active !== last) {
+            var a = links[active], sr = scroller.getBoundingClientRect(), r = a.getBoundingClientRect();
+            if (r.left < sr.left + 16 || r.right > sr.right - 16) {
+              scroller.scrollTo({ left: scroller.scrollLeft + (r.left - sr.left) - 24, behavior: reduce ? 'auto' : 'smooth' });
+            }
+          }
+        }
+        last = active;
+      }
+      var ticking = false;
+      window.addEventListener('scroll', function() {
+        if (!ticking) { ticking = true; requestAnimationFrame(function() { update(); ticking = false; }); }
+      }, { passive: true });
+      window.addEventListener('resize', function() { geometry(); update(); });
+      geometry(); update();
+
+      // category entrance, once
+      if (reduce || !('IntersectionObserver' in window)) {
+        cats.forEach(function(c) { c.classList.add('is-in'); });
+      } else {
+        var io = new IntersectionObserver(function(entries) {
+          entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+        }, { rootMargin: '0px 0px -10% 0px' });
+        cats.forEach(function(c) { io.observe(c); });
+      }
+    })();
   </script>
 </body>
 </html>
