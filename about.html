@@ -30,6 +30,7 @@
   <title>About — Eternus</title>
   <link rel="icon" type="image/png" href="assets/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet"/>
+  <script>document.documentElement.classList.add('js');</script>
   <style>
     :root {
       --black: #06060a;
@@ -550,6 +551,289 @@
       .footer-brand, .footer-contact { flex: none; text-align: center; }
       footer { padding: 40px 24px; }
     }
+
+    /* =========================================================
+       ABOUT — narrative thread prototype
+       ========================================================= */
+    .story {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px 60px 40px;
+      --thread-x: 60px;
+    }
+    .story-track {
+      position: absolute;
+      top: 0; bottom: 0;
+      left: var(--thread-x);
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.16) 60px, rgba(201,168,76,0.16) calc(100% - 60px), transparent);
+    }
+    .story-fill {
+      position: absolute;
+      top: 0; left: 0;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, rgba(201,168,76,0.7) 60px, var(--gold-light));
+      box-shadow: 0 0 8px rgba(201,168,76,0.35);
+    }
+    html.js .story-fill { height: var(--fill, 0px); }
+    .story-section {
+      position: relative;
+      padding: 88px 0 88px 72px;
+    }
+    .story-node {
+      position: absolute;
+      left: -5px;
+      top: 92px;
+      width: 11px; height: 11px;
+      border-radius: 50%;
+      background: var(--black);
+      border: 1px solid rgba(201,168,76,0.4);
+      transition: background 0.6s ease, border-color 0.6s ease, box-shadow 0.6s ease;
+    }
+    .story-node.is-lit, html:not(.js) .story-node {
+      background: var(--gold-light);
+      border-color: var(--gold-light);
+      box-shadow: 0 0 0 5px rgba(201,168,76,0.1), 0 0 16px rgba(201,168,76,0.4);
+    }
+    .story-node-end { top: auto; bottom: 88px; }
+    .story-section .section-title { max-width: 720px; }
+    .story-prose { max-width: 640px; margin-top: 8px; }
+    .story-prose p {
+      font-size: 0.98rem;
+      line-height: 1.95;
+      color: rgba(245,240,234,0.74);
+      margin-bottom: 18px;
+    }
+    .story-continue { margin-top: 72px; }
+    .story-quote {
+      margin-top: 36px;
+      max-width: 620px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.45rem;
+      line-height: 1.5;
+      color: var(--gold-light);
+    }
+    .story-section .section-note { text-align: left; margin-left: 0; }
+    .story-section.cta-final { text-align: left; }
+    .story-section.cta-final .section-title { margin-left: 0; margin-right: 0; }
+    .story-contact { margin-top: 64px; }
+    .story-contact .section-sub { margin-bottom: 22px; }
+
+    /* scroll reveal (only when JS runs and motion is allowed) */
+    html.js .reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    html.js .reveal.is-in { opacity: 1; transform: none; }
+
+    /* ---- Layers: concentric rings + light tabs ---- */
+    .lx {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      gap: 48px;
+      align-items: center;
+      margin-top: 40px;
+      max-width: 760px;
+    }
+    .lx-rings { width: 220px; height: 220px; overflow: visible; }
+    .lx-ring {
+      fill: rgba(201,168,76,0);
+      stroke: rgba(201,168,76,0.22);
+      stroke-width: 1;
+      stroke-dasharray: 2 4;
+      transition: stroke 0.6s ease, fill 0.6s ease;
+    }
+    .lx-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 8.5px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-anchor: middle;
+      fill: rgba(168,157,174,0.55);
+      transition: fill 0.6s ease;
+    }
+    .lx-rings[data-state="private"] .lx-ring-private,
+    .lx-rings[data-state="circle"] .lx-ring-private,
+    .lx-rings[data-state="circle"] .lx-ring-circle,
+    .lx-rings[data-state="legacy"] .lx-ring {
+      stroke: var(--gold-light);
+      stroke-dasharray: none;
+      fill: rgba(201,168,76,0.05);
+    }
+    .lx-rings[data-state="private"] .lx-label-private,
+    .lx-rings[data-state="circle"] .lx-label-private,
+    .lx-rings[data-state="circle"] .lx-label-circle,
+    .lx-rings[data-state="legacy"] .lx-label { fill: var(--gold-light); }
+    .lx-rings[data-state="legacy"] .lx-ring-legacy { transition-delay: 0.15s; }
+    .lx-tabs { display: flex; gap: 28px; flex-wrap: wrap; }
+    .lx-tab {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0 10px;
+      background: none;
+      border: 0;
+      border-bottom: 1px solid transparent;
+      color: rgba(245,240,234,0.55);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.35rem;
+      cursor: pointer;
+      transition: color 0.4s ease, border-color 0.4s ease;
+    }
+    .lx-tab-icon { display: inline-flex; opacity: 0.5; transition: opacity 0.4s ease; }
+    .lx-tab-icon svg { width: 18px; height: 18px; }
+    .lx-tab:hover { color: rgba(245,240,234,0.85); }
+    .lx-tab[aria-selected="true"] { color: var(--gold-light); border-bottom-color: var(--gold-light); }
+    .lx-tab[aria-selected="true"] .lx-tab-icon { opacity: 1; }
+    .lx-tab:focus-visible { outline: 2px solid rgba(201,168,76,0.6); outline-offset: 4px; }
+    .lx-panel { margin-top: 18px; min-height: 3.6em; border-radius: 6px; }
+    .lx-panel:focus-visible { outline: 2px solid rgba(201,168,76,0.5); outline-offset: 6px; }
+    .lx-text, .mx-text {
+      font-size: 0.98rem;
+      line-height: 1.85;
+      color: rgba(245,240,234,0.74);
+      animation: storyFade 0.5s ease;
+    }
+
+    /* ---- More than storage: very light names, sliding hairline ---- */
+    .mx { margin-top: 40px; max-width: 820px; }
+    .mx-list {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 28px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+    }
+    .mx-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 6px 0;
+      background: none;
+      border: 0;
+      color: rgba(245,240,234,0.5);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.18rem;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: color 0.4s ease;
+    }
+    .mx-icon { display: inline-flex; opacity: 0.45; transition: opacity 0.4s ease; }
+    .mx-item:hover { color: rgba(245,240,234,0.85); }
+    .mx-item[aria-selected="true"] { color: var(--white); }
+    .mx-item[aria-selected="true"] .mx-icon { opacity: 1; }
+    .mx-item:focus-visible { outline: 2px solid rgba(201,168,76,0.6); outline-offset: 4px; }
+    .mx-indicator {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 1px;
+      width: 0;
+      background: var(--gold-light);
+      box-shadow: 0 0 8px rgba(232,201,122,0.5);
+      transition: left 0.5s cubic-bezier(0.22, 1, 0.36, 1), top 0.5s cubic-bezier(0.22, 1, 0.36, 1), width 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .mx-panel { margin-top: 22px; min-height: 3.6em; border-radius: 6px; }
+    .mx-panel:focus-visible { outline: 2px solid rgba(201,168,76,0.5); outline-offset: 6px; }
+
+    /* ---- Different: items appear with a hairline drawn under each ---- */
+    .dx-list { margin: 36px 0 0; max-width: 680px; }
+    .dx-list li { position: relative; padding-bottom: 12px; }
+    .dx-list li::after {
+      content: '';
+      position: absolute;
+      left: 30px; right: 0; bottom: 0;
+      height: 1px;
+      background: linear-gradient(to right, rgba(201,168,76,0.35), transparent);
+      transform-origin: left;
+    }
+    html.js .dx-list li.reveal::after { transform: scaleX(0); transition: transform 0.9s ease 0.2s; }
+    html.js .dx-list li.reveal.is-in::after { transform: none; }
+    .dx-list li:nth-child(2) { transition-delay: 0.1s; }
+    .dx-list li:nth-child(3) { transition-delay: 0.2s; }
+    .dx-list li:nth-child(4) { transition-delay: 0.3s; }
+
+    /* ---- Values: accordion ---- */
+    .vx { margin-top: 32px; max-width: 680px; border-top: 1px solid rgba(201,168,76,0.12); }
+    .vx-row { border-bottom: 1px solid rgba(201,168,76,0.12); }
+    .vx-heading { margin: 0; font: inherit; }
+    .vx-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 20px 0;
+      background: none;
+      border: 0;
+      color: rgba(245,240,234,0.7);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      text-align: left;
+      cursor: pointer;
+      transition: color 0.4s ease;
+    }
+    .vx-toggle:hover { color: var(--white); }
+    .vx-row.is-open .vx-toggle { color: var(--gold-light); }
+    .vx-toggle:focus-visible { outline: 2px solid rgba(201,168,76,0.6); outline-offset: 2px; }
+    .vx-cue {
+      position: relative;
+      flex-shrink: 0;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.35);
+      transition: border-color 0.4s ease, transform 0.5s ease;
+    }
+    .vx-cue::before, .vx-cue::after {
+      content: '';
+      position: absolute;
+      left: 50%; top: 50%;
+      width: 9px; height: 1px;
+      background: var(--gold-light);
+      transform: translate(-50%, -50%);
+      transition: transform 0.5s ease, opacity 0.4s ease;
+    }
+    .vx-cue::after { transform: translate(-50%, -50%) rotate(90deg); }
+    .vx-row.is-open .vx-cue { border-color: rgba(232,201,122,0.8); transform: rotate(180deg); }
+    .vx-row.is-open .vx-cue::after { transform: translate(-50%, -50%) rotate(0deg); opacity: 0; }
+    .vx-panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .vx-row.is-open .vx-panel { grid-template-rows: 1fr; }
+    .vx-panel-inner { overflow: hidden; min-height: 0; }
+    .vx-panel .card-text { padding: 0 40px 22px 0; margin: 0; }
+    .vx-row:not(.is-open) .vx-panel-inner { visibility: hidden; transition: visibility 0s linear 0.5s; }
+
+    @keyframes storyFade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      html.js .reveal { opacity: 1; transform: none; transition: none; }
+      html.js .dx-list li.reveal::after { transform: none; transition: none; }
+      .story-node, .lx-ring, .lx-label, .lx-tab, .mx-item, .mx-indicator,
+      .vx-panel, .vx-cue, .vx-cue::before, .vx-cue::after { transition: none !important; }
+      .lx-text, .mx-text { animation: none; }
+    }
+
+    @media (max-width: 900px) {
+      .lx { grid-template-columns: 1fr; gap: 28px; }
+      .lx-rings { width: 180px; height: 180px; }
+    }
+    @media (max-width: 768px) {
+      .story { padding: 10px 24px 20px; --thread-x: 24px; }
+      .story-section { padding: 60px 0 60px 30px; }
+      .story-node { top: 64px; }
+      .story-node-end { bottom: 60px; }
+      .story-continue { margin-top: 56px; }
+      .story-quote { font-size: 1.25rem; }
+      .lx-tabs { gap: 20px; }
+      .lx-tab { font-size: 1.2rem; }
+      .mx-list { flex-direction: column; gap: 2px; border-bottom: 0; padding-bottom: 0; padding-left: 14px; border-left: 1px solid rgba(201,168,76,0.12); }
+      .mx-indicator { left: -1px !important; width: 1px !important; height: var(--mx-h, 0px); }
+      .vx-toggle { font-size: 1.25rem; }
+    }
   </style>
 </head>
 <body>
@@ -607,222 +891,190 @@
     </div>
   </section>
 
-  <div class="divider"></div>
+  <!-- STORY: one continuous gold thread through the page -->
+  <main class="story" id="story">
+    <div class="story-track" aria-hidden="true"><span class="story-fill"></span></div>
 
-  <!-- THE IDEA -->
-  <section id="idea">
-    <div class="section-inner">
-      <div class="idea-grid">
-        <div>
-          <span class="section-label">The idea</span>
-          <h2 class="section-title">Some moments deserve more than storage.</h2>
-        </div>
-        <div class="idea-body">
-          <p>Most of us have voice notes we rarely revisit, family photographs spread across different devices, and meaningful stories buried in old conversations.</p>
-          <p>Moments can feel ordinary when they happen and become deeply important later.</p>
-          <p>Eternus was created to give those moments context, connection and a place designed around trust.</p>
-        </div>
+    <!-- THE IDEA + WHY ETERNUS EXISTS -->
+    <section class="story-section" id="idea">
+      <span class="story-node" aria-hidden="true"></span>
+      <span class="section-label">The idea</span>
+      <h2 class="section-title">Some moments deserve more than storage.</h2>
+      <div class="story-prose">
+        <p class="reveal">Most of us have voice notes we rarely revisit, family photographs spread across different devices, and meaningful stories buried in old conversations.</p>
+        <p class="reveal">Moments can feel ordinary when they happen and become deeply important later.</p>
+        <p class="reveal">Eternus was created to give those moments context, connection and a place designed around trust.</p>
       </div>
-    </div>
-  </section>
+      <div class="story-continue" id="why">
+        <span class="section-label">Why Eternus exists</span>
+        <h2 class="section-title">Built for life as it is lived.</h2>
+        <div class="story-prose">
+          <p class="reveal">Eternus helps people preserve memories in their own words, images and voice — and share them only with the people they intentionally choose.</p>
+          <p class="reveal">It is designed for everyday moments, family stories, personal reflections, meaningful relationships and the legacy a person chooses to build over time.</p>
+        </div>
+        <p class="story-quote reveal">"Your memories remain yours. Sharing is always intentional."</p>
+      </div>
+    </section>
 
-  <div class="divider"></div>
-
-  <!-- WHY ETERNUS EXISTS -->
-  <section id="why">
-    <div class="section-inner center">
-      <span class="section-label">Why Eternus exists</span>
-      <h2 class="section-title">Built for life as it is lived.</h2>
-      <p class="section-sub center">Eternus helps people preserve memories in their own words, images and voice — and share them only with the people they intentionally choose.</p>
-      <p class="section-sub center" style="margin-top: 18px;">It is designed for everyday moments, family stories, personal reflections, meaningful relationships and the legacy a person chooses to build over time.</p>
-      <p class="section-note center">"Your memories remain yours. Sharing is always intentional."</p>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- HOW ETERNUS WORKS -->
-  <section id="layers">
-    <div class="section-inner center">
+    <!-- HOW ETERNUS IS ORGANISED -->
+    <section class="story-section" id="layers">
+      <span class="story-node" aria-hidden="true"></span>
       <span class="section-label">How Eternus is organised</span>
-      <h2 class="section-title">Three layers. One clear choice: <em>yours.</em></h2>
-      <div class="cards-grid-3">
-        <div class="about-card">
-          <div class="card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold-light)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-              <circle cx="12" cy="7" r="4"/>
-            </svg>
+      <h2 class="section-title" id="layers-title">Three layers. One clear choice: <em>yours.</em></h2>
+      <div class="lx">
+        <svg class="lx-rings" viewBox="0 0 200 200" aria-hidden="true" data-state="private">
+          <circle class="lx-ring lx-ring-legacy" cx="100" cy="100" r="88" />
+          <circle class="lx-ring lx-ring-circle" cx="100" cy="100" r="60" />
+          <circle class="lx-ring lx-ring-private" cx="100" cy="100" r="31" />
+          <text class="lx-label lx-label-private" x="100" y="104">Private</text>
+          <text class="lx-label lx-label-circle" x="100" y="53">Circle</text>
+          <text class="lx-label lx-label-legacy" x="100" y="24">Legacy</text>
+        </svg>
+        <div class="lx-side">
+          <div class="lx-tabs" role="tablist" aria-labelledby="layers-title">
+              <button type="button" class="lx-tab" role="tab" id="lx-tab-private" data-layer="private" aria-selected="true" aria-controls="lx-panel" tabindex="0">
+                <span class="lx-tab-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold-light)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"> <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/> <circle cx="12" cy="7" r="4"/> </svg></span><span class="lx-tab-name">Private</span>
+              </button>
+              <button type="button" class="lx-tab" role="tab" id="lx-tab-circle" data-layer="circle" aria-selected="false" aria-controls="lx-panel" tabindex="-1">
+                <span class="lx-tab-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold-light)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"> <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/> <circle cx="9" cy="7" r="4"/> <path d="M23 21v-2a4 4 0 0 0-3-3.87"/> <path d="M16 3.13a4 4 0 0 1 0 7.75"/> </svg></span><span class="lx-tab-name">Circle</span>
+              </button>
+              <button type="button" class="lx-tab" role="tab" id="lx-tab-legacy" data-layer="legacy" aria-selected="false" aria-controls="lx-panel" tabindex="-1">
+                <span class="lx-tab-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold-light)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"> <path d="M12 2c-1.5 3-5 5-5 9a5 5 0 0 0 10 0c0-4-3.5-6-5-9z"/> <path d="M12 15v7"/> <path d="M8 22h8"/> </svg></span><span class="lx-tab-name">Legacy</span>
+              </button>
           </div>
-          <h3 class="card-name">Private</h3>
-          <p class="card-text">Your personal space for memories that remain entirely yours.</p>
-        </div>
-        <div class="about-card">
-          <div class="card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold-light)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-              <circle cx="9" cy="7" r="4"/>
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-            </svg>
+          <div class="lx-panel" id="lx-panel" role="tabpanel" aria-labelledby="lx-tab-private" tabindex="0">
+              <p class="lx-text" data-layer="private">Your personal space for memories that remain entirely yours.</p>
+              <p class="lx-text" data-layer="circle" hidden>Selected moments shared with the people you trust today.</p>
+              <p class="lx-text" data-layer="legacy" hidden>Memories, stories and access intentionally preserved for the future.</p>
           </div>
-          <h3 class="card-name">Circle</h3>
-          <p class="card-text">Selected moments shared with the people you trust today.</p>
-        </div>
-        <div class="about-card">
-          <div class="card-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold-light)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 2c-1.5 3-5 5-5 9a5 5 0 0 0 10 0c0-4-3.5-6-5-9z"/>
-              <path d="M12 15v7"/>
-              <path d="M8 22h8"/>
-            </svg>
-          </div>
-          <h3 class="card-name">Legacy</h3>
-          <p class="card-text">Memories, stories and access intentionally preserved for the future.</p>
         </div>
       </div>
-      <p class="section-note center">Legacy includes Circle access. Circle access alone does not include Legacy.</p>
-    </div>
-  </section>
+      <p class="section-note">Legacy includes Circle access. Circle access alone does not include Legacy.</p>
+    </section>
 
-  <div class="divider"></div>
-
-  <!-- MORE THAN STORAGE -->
-  <section id="more">
-    <div class="section-inner center">
+    <!-- MORE THAN STORAGE -->
+    <section class="story-section" id="more">
+      <span class="story-node" aria-hidden="true"></span>
       <span class="section-label">More than storage</span>
-      <h2 class="section-title">Eternus gives memories meaning through <em>context.</em></h2>
-      <div class="cards-grid-2">
-        <div class="about-card">
-          <span class="card-icon card-icon-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="url(#a1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <defs><linearGradient id="a1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6b3fa0"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient></defs>
-              <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
-              <circle cx="12" cy="13" r="3"/>
-            </svg>
-          </span>
-          <h3 class="card-name white">Capture your Moments</h3>
-          <p class="card-text">Preserve photographs, videos, stories, dates and places together.</p>
+      <h2 class="section-title" id="more-title">Eternus gives memories meaning through <em>context.</em></h2>
+      <div class="mx">
+        <div class="mx-list" role="tablist" aria-labelledby="more-title">
+            <button type="button" class="mx-item" role="tab" id="mx-tab-0" aria-selected="true" aria-controls="mx-panel" tabindex="0">
+              <span class="mx-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="url(#a1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"> <defs><linearGradient id="a1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6b3fa0"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient></defs> <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/> <circle cx="12" cy="13" r="3"/> </svg></span><span class="mx-name">Capture your Moments</span>
+            </button>
+            <button type="button" class="mx-item" role="tab" id="mx-tab-1" aria-selected="false" aria-controls="mx-panel" tabindex="-1">
+              <span class="mx-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="url(#a2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"> <defs><linearGradient id="a2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6b3fa0"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient></defs> <path d="M18.178 8c5.096 0 5.096 8 0 8-5.095 0-7.133-8-12.229-8-5.096 0-5.096 8 0 8 5.096 0 7.133-8 12.229-8z"/> </svg></span><span class="mx-name">Talk to Eternus</span>
+            </button>
+            <button type="button" class="mx-item" role="tab" id="mx-tab-2" aria-selected="false" aria-controls="mx-panel" tabindex="-1">
+              <span class="mx-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="url(#a3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"> <defs><linearGradient id="a3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6b3fa0"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient></defs> <circle cx="9" cy="8" r="3.2"/> <circle cx="17" cy="9" r="2.6"/> <path d="M3.5 20v-1.2A4.8 4.8 0 0 1 8.3 14h1.4a4.8 4.8 0 0 1 4.8 4.8V20"/> <path d="M15.5 14.3a4.2 4.2 0 0 1 5 4.1V20"/> </svg></span><span class="mx-name">Connect your people</span>
+            </button>
+            <button type="button" class="mx-item" role="tab" id="mx-tab-3" aria-selected="false" aria-controls="mx-panel" tabindex="-1">
+              <span class="mx-icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="url(#a4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"> <defs><linearGradient id="a4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6b3fa0"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient></defs> <path d="M12 2c-1.5 3-5 5-5 9a5 5 0 0 0 10 0c0-4-3.5-6-5-9z"/> <path d="M12 15v7"/> <path d="M8 22h8"/> </svg></span><span class="mx-name">Build your Legacy</span>
+            </button>
+          <span class="mx-indicator" aria-hidden="true"></span>
         </div>
-        <div class="about-card">
-          <span class="card-icon card-icon-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="url(#a2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <defs><linearGradient id="a2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6b3fa0"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient></defs>
-              <path d="M18.178 8c5.096 0 5.096 8 0 8-5.095 0-7.133-8-12.229-8-5.096 0-5.096 8 0 8 5.096 0 7.133-8 12.229-8z"/>
-            </svg>
-          </span>
-          <h3 class="card-name white">Talk to Eternus</h3>
-          <p class="card-text">Use guided reflection to explore experiences and uncover stories worth preserving.</p>
-        </div>
-        <div class="about-card">
-          <span class="card-icon card-icon-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="url(#a3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <defs><linearGradient id="a3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6b3fa0"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient></defs>
-              <circle cx="9" cy="8" r="3.2"/>
-              <circle cx="17" cy="9" r="2.6"/>
-              <path d="M3.5 20v-1.2A4.8 4.8 0 0 1 8.3 14h1.4a4.8 4.8 0 0 1 4.8 4.8V20"/>
-              <path d="M15.5 14.3a4.2 4.2 0 0 1 5 4.1V20"/>
-            </svg>
-          </span>
-          <h3 class="card-name white">Connect your people</h3>
-          <p class="card-text">Invite family, close friends and meaningful connections with intentional access.</p>
-        </div>
-        <div class="about-card">
-          <span class="card-icon card-icon-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="url(#a4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <defs><linearGradient id="a4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#6b3fa0"/><stop offset="100%" style="stop-color:#c9a84c"/></linearGradient></defs>
-              <path d="M12 2c-1.5 3-5 5-5 9a5 5 0 0 0 10 0c0-4-3.5-6-5-9z"/>
-              <path d="M12 15v7"/>
-              <path d="M8 22h8"/>
-            </svg>
-          </span>
-          <h3 class="card-name white">Build your Legacy</h3>
-          <p class="card-text">Choose what matters, who becomes part of it and what they can access.</p>
+        <div class="mx-panel" id="mx-panel" role="tabpanel" aria-labelledby="mx-tab-0" tabindex="0">
+            <p class="mx-text" data-i="0">Preserve photographs, videos, stories, dates and places together.</p>
+            <p class="mx-text" data-i="1" hidden>Use guided reflection to explore experiences and uncover stories worth preserving.</p>
+            <p class="mx-text" data-i="2" hidden>Invite family, close friends and meaningful connections with intentional access.</p>
+            <p class="mx-text" data-i="3" hidden>Choose what matters, who becomes part of it and what they can access.</p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <div class="divider"></div>
-
-  <!-- WHAT MAKES ETERNUS DIFFERENT -->
-  <section id="different">
-    <div class="section-inner center">
+    <!-- WHAT MAKES ETERNUS DIFFERENT -->
+    <section class="story-section" id="different">
+      <span class="story-node" aria-hidden="true"></span>
       <span class="section-label">What makes Eternus different</span>
       <h2 class="section-title">Private by design.<br>Human by <em>nature.</em></h2>
-      <ul class="point-list">
-        <li>
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M1 21v-2a4 4 0 0 1 4-4h8"/><line x1="17" y1="8" x2="23" y2="14"/><line x1="23" y1="8" x2="17" y2="14"/></svg>
-          No public follower system
-        </li>
-        <li>
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M12 20l-3-3M12 20l3-3"/><path d="M5 10a7 7 0 0 1 14 0"/><circle cx="12" cy="10" r="1"/></svg>
-          No public performance or popularity metrics
-        </li>
-        <li>
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.9" y1="4.9" x2="19.1" y2="19.1"/></svg>
-          No advertising
-        </li>
-        <li>
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          No automatic sharing
-        </li>
+      <ul class="point-list dx-list">
+          <li class="reveal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M1 21v-2a4 4 0 0 1 4-4h8"/><line x1="17" y1="8" x2="23" y2="14"/><line x1="23" y1="8" x2="17" y2="14"/></svg>
+            No public follower system
+          </li>
+          <li class="reveal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20v-6M12 20l-3-3M12 20l3-3"/><path d="M5 10a7 7 0 0 1 14 0"/><circle cx="12" cy="10" r="1"/></svg>
+            No public performance or popularity metrics
+          </li>
+          <li class="reveal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.9" y1="4.9" x2="19.1" y2="19.1"/></svg>
+            No advertising
+          </li>
+          <li class="reveal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            No automatic sharing
+          </li>
       </ul>
-      <p class="section-note center">There is no public feed designed for attention, reach or performance. Private interactions such as likes and comments may exist inside trusted Circle and Legacy relationships.</p>
-    </div>
-  </section>
+      <p class="section-note">There is no public feed designed for attention, reach or performance. Private interactions such as likes and comments may exist inside trusted Circle and Legacy relationships.</p>
+    </section>
 
-  <div class="divider"></div>
-
-  <!-- OUR VALUES -->
-  <section id="values">
-    <div class="section-inner center">
+    <!-- OUR VALUES -->
+    <section class="story-section" id="values">
+      <span class="story-node" aria-hidden="true"></span>
       <span class="section-label">Our values</span>
       <h2 class="section-title">What guides <em>how we build.</em></h2>
-      <div class="cards-grid-2">
-        <div class="about-card">
-          <h3 class="card-name white">Human First</h3>
-          <p class="card-text">Technology should support real relationships, not replace them.</p>
-        </div>
-        <div class="about-card">
-          <h3 class="card-name white">Privacy by Design</h3>
-          <p class="card-text">Access begins private and changes only through clear, intentional choices.</p>
-        </div>
-        <div class="about-card">
-          <h3 class="card-name white">Trust through Control</h3>
-          <p class="card-text">You decide what is preserved, where it belongs and who can access it.</p>
-        </div>
-        <div class="about-card">
-          <h3 class="card-name white">Emotional Integrity</h3>
-          <p class="card-text">Eternus treats personal memories, relationships and life stories with care and respect.</p>
-        </div>
+      <div class="vx">
+          <div class="vx-row is-open">
+            <h3 class="vx-heading">
+              <button type="button" class="vx-toggle" id="vx-btn-0" aria-expanded="true" aria-controls="vx-panel-0">
+                <span class="vx-name">Human First</span><span class="vx-cue" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="vx-panel" id="vx-panel-0" role="region" aria-labelledby="vx-btn-0">
+              <div class="vx-panel-inner"><p class="card-text">Technology should support real relationships, not replace them.</p></div>
+            </div>
+          </div>
+          <div class="vx-row">
+            <h3 class="vx-heading">
+              <button type="button" class="vx-toggle" id="vx-btn-1" aria-expanded="false" aria-controls="vx-panel-1">
+                <span class="vx-name">Privacy by Design</span><span class="vx-cue" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="vx-panel" id="vx-panel-1" role="region" aria-labelledby="vx-btn-1">
+              <div class="vx-panel-inner"><p class="card-text">Access begins private and changes only through clear, intentional choices.</p></div>
+            </div>
+          </div>
+          <div class="vx-row">
+            <h3 class="vx-heading">
+              <button type="button" class="vx-toggle" id="vx-btn-2" aria-expanded="false" aria-controls="vx-panel-2">
+                <span class="vx-name">Trust through Control</span><span class="vx-cue" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="vx-panel" id="vx-panel-2" role="region" aria-labelledby="vx-btn-2">
+              <div class="vx-panel-inner"><p class="card-text">You decide what is preserved, where it belongs and who can access it.</p></div>
+            </div>
+          </div>
+          <div class="vx-row">
+            <h3 class="vx-heading">
+              <button type="button" class="vx-toggle" id="vx-btn-3" aria-expanded="false" aria-controls="vx-panel-3">
+                <span class="vx-name">Emotional Integrity</span><span class="vx-cue" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="vx-panel" id="vx-panel-3" role="region" aria-labelledby="vx-btn-3">
+              <div class="vx-panel-inner"><p class="card-text">Eternus treats personal memories, relationships and life stories with care and respect.</p></div>
+            </div>
+          </div>
       </div>
-      <p class="section-note center">Eternus is being built without advertising and around strict access boundaries.</p>
-    </div>
-  </section>
+      <p class="section-note">Eternus is being built without advertising and around strict access boundaries.</p>
+    </section>
 
-  <div class="divider"></div>
-
-  <!-- PRIVATE BETA -->
-  <section class="cta-final">
-    <div class="section-inner center">
+    <!-- PRIVATE BETA + CONTACT -->
+    <section class="story-section cta-final" id="beta">
+      <span class="story-node" aria-hidden="true"></span>
       <span class="section-label">Private beta</span>
       <h2 class="section-title">Currently in <em>private beta.</em></h2>
-      <p class="section-sub center">We are refining Eternus with a small group of invited testers before a wider release.</p>
-      <p class="section-sub center" style="margin-top: 14px;">The goal is not to launch quickly. It is to build something people can trust.</p>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- FINAL CONTACT -->
-  <section id="contact">
-    <div class="section-inner center">
-      <h2 class="section-title">Want to know <em>more?</em></h2>
-      <p class="section-sub center">Questions, ideas and thoughtful feedback are always welcome.</p>
-      <a class="contact-email-link" href="mailto:hello@myeternusapp.com">hello@myeternusapp.com</a>
-    </div>
-  </section>
+      <div class="story-prose">
+        <p class="reveal">We are refining Eternus with a small group of invited testers before a wider release.</p>
+        <p class="reveal">The goal is not to launch quickly. It is to build something people can trust.</p>
+      </div>
+      <div class="story-contact" id="contact">
+        <h2 class="section-title">Want to know <em>more?</em></h2>
+        <p class="section-sub">Questions, ideas and thoughtful feedback are always welcome.</p>
+        <a class="contact-email-link" href="mailto:hello@myeternusapp.com">hello@myeternusapp.com</a>
+      </div>
+      <span class="story-node story-node-end" aria-hidden="true"></span>
+    </section>
+  </main>
 
   <!-- FOOTER -->
   <footer>
@@ -869,6 +1121,131 @@
         });
       });
     });
+  
+    /* About — narrative thread, reveals and selectors */
+    (function() {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var story = document.getElementById('story');
+      if (!story) return;
+      var nodes = Array.prototype.slice.call(story.querySelectorAll('.story-node'));
+      var reveals = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+
+      // gold thread fill + nodes
+      function update() {
+        var r = story.getBoundingClientRect();
+        var line = window.innerHeight * 0.62;
+        var atEnd = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+        if (atEnd) line = window.innerHeight;
+        var fill = atEnd ? r.height : Math.max(0, Math.min(r.height, line - r.top));
+        story.style.setProperty('--fill', fill + 'px');
+        nodes.forEach(function(n) { n.classList.toggle('is-lit', n.getBoundingClientRect().top < line); });
+      }
+      if (reduce) {
+        story.style.setProperty('--fill', '100%');
+        nodes.forEach(function(n) { n.classList.add('is-lit'); });
+      } else {
+        var ticking = false;
+        window.addEventListener('scroll', function() {
+          if (!ticking) { ticking = true; requestAnimationFrame(function() { update(); ticking = false; }); }
+        }, { passive: true });
+        window.addEventListener('resize', update);
+        update();
+      }
+
+      // reveal once
+      if (reduce || !('IntersectionObserver' in window)) {
+        reveals.forEach(function(el) { el.classList.add('is-in'); });
+      } else {
+        var io = new IntersectionObserver(function(entries) {
+          entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+        }, { rootMargin: '0px 0px -12% 0px' });
+        reveals.forEach(function(el) { io.observe(el); });
+      }
+
+      // generic tablist (arrows / Home / End, automatic activation)
+      function tablist(tabs, onSelect) {
+        function select(i, focus) {
+          tabs.forEach(function(t, j) {
+            t.setAttribute('aria-selected', i === j ? 'true' : 'false');
+            t.setAttribute('tabindex', i === j ? '0' : '-1');
+          });
+          onSelect(i);
+          if (focus) tabs[i].focus();
+        }
+        tabs.forEach(function(t, i) {
+          t.addEventListener('click', function() { select(i, false); });
+          t.addEventListener('keydown', function(e) {
+            var n = null, last = tabs.length - 1;
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') n = i === last ? 0 : i + 1;
+            else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') n = i === 0 ? last : i - 1;
+            else if (e.key === 'Home') n = 0;
+            else if (e.key === 'End') n = last;
+            if (n !== null) { e.preventDefault(); select(n, true); }
+          });
+        });
+        select(0, false);
+      }
+
+      // layers
+      var lxTabs = Array.prototype.slice.call(document.querySelectorAll('.lx-tab'));
+      if (lxTabs.length) {
+        var rings = document.querySelector('.lx-rings');
+        var lxPanel = document.getElementById('lx-panel');
+        var lxTexts = document.querySelectorAll('.lx-text');
+        tablist(lxTabs, function(i) {
+          var layer = lxTabs[i].getAttribute('data-layer');
+          rings.setAttribute('data-state', layer);
+          lxPanel.setAttribute('aria-labelledby', lxTabs[i].id);
+          lxTexts.forEach(function(p) { p.hidden = p.getAttribute('data-layer') !== layer; });
+        });
+      }
+
+      // more than storage
+      var mxTabs = Array.prototype.slice.call(document.querySelectorAll('.mx-item'));
+      if (mxTabs.length) {
+        var list = document.querySelector('.mx-list');
+        var ind = document.querySelector('.mx-indicator');
+        var mxPanel = document.getElementById('mx-panel');
+        var mxTexts = document.querySelectorAll('.mx-text');
+        var current = 0;
+        function place() {
+          var t = mxTabs[current], lr = list.getBoundingClientRect(), r = t.getBoundingClientRect();
+          if (window.matchMedia('(max-width: 768px)').matches) {
+            ind.style.left = ''; ind.style.width = '';
+            ind.style.top = (r.top - lr.top) + 'px';
+            ind.style.setProperty('--mx-h', r.height + 'px');
+          } else {
+            ind.style.left = (r.left - lr.left) + 'px';
+            ind.style.width = r.width + 'px';
+            ind.style.top = (r.bottom - lr.top + 2) + 'px';
+          }
+        }
+        tablist(mxTabs, function(i) {
+          current = i;
+          mxPanel.setAttribute('aria-labelledby', mxTabs[i].id);
+          mxTexts.forEach(function(p, j) { p.hidden = j !== i; });
+          place();
+        });
+        window.addEventListener('resize', place);
+      }
+
+      // values accordion (one open at a time)
+      var rows = Array.prototype.slice.call(document.querySelectorAll('.vx-row'));
+      rows.forEach(function(row) {
+        var btn = row.querySelector('.vx-toggle');
+        btn.addEventListener('click', function() {
+          var open = !row.classList.contains('is-open');
+          rows.forEach(function(r) {
+            r.classList.remove('is-open');
+            r.querySelector('.vx-toggle').setAttribute('aria-expanded', 'false');
+          });
+          if (open) { row.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true'); }
+        });
+        row.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && row.classList.contains('is-open')) { btn.click(); btn.focus(); }
+        });
+      });
+    })();
   </script>
 </body>
 </html>
