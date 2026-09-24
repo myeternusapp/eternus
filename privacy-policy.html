@@ -524,6 +524,239 @@
       .legal-body { padding: 10px 24px 70px; }
       .legal-section { scroll-margin-top: 90px; }
     }
+
+    /* =========================================================
+       PRIVACY POLICY — UX / layout / accessibility / print pass
+       ========================================================= */
+
+    /* 1. Desktop TOC: one quiet gold rail, filled to the current section */
+    .legal-toc { position: sticky; }
+    .legal-toc ol { position: relative; }
+    .legal-toc-rail {
+      position: absolute;
+      left: 0;
+      top: var(--rail-top, 44px);
+      height: var(--rail-h, 0px);
+      width: 1px;
+      background: rgba(201,168,76,0.18);
+    }
+    .legal-toc-rail span {
+      position: absolute;
+      top: 0; left: 0;
+      width: 1px;
+      height: var(--rail-fill, 0px);
+      background: linear-gradient(to bottom, rgba(201,168,76,0.5), var(--gold-light));
+      transition: height 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .legal-toc a,
+    .legal-toc a:visited { border-left: 0; padding-left: 16px; color: rgba(245,240,234,0.62); }
+    .legal-toc a.is-read { color: rgba(245,240,234,0.8); }
+    .legal-toc a.is-current { color: var(--gold-light); }
+    .legal-toc a:hover { color: var(--white); border-left-color: transparent; }
+    .legal-toc a:focus-visible { outline: 2px solid rgba(201,168,76,0.6); outline-offset: 2px; border-left-color: transparent; }
+
+    /* 1b. Tablet/mobile: current-section bar */
+    .legal-jump { display: none; }
+    @media (max-width: 980px) {
+      .legal-jump {
+        display: block;
+        position: sticky;
+        top: 86px;
+        z-index: 40;
+        margin: 0 -60px 24px;
+        background: rgba(6,6,10,0.9);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+      }
+      .legal-jump-btn {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        width: 100%;
+        padding: 14px 60px;
+        background: none;
+        border: 0;
+        color: var(--gold-light);
+        font-family: 'Jost', sans-serif;
+        font-size: 0.8rem;
+        letter-spacing: 0.08em;
+        text-align: left;
+        cursor: pointer;
+      }
+      .legal-jump-btn:focus-visible { outline: 2px solid rgba(201,168,76,0.6); outline-offset: -4px; }
+      .legal-jump-cue {
+        width: 8px; height: 8px;
+        border-right: 1.5px solid var(--gold-light);
+        border-bottom: 1.5px solid var(--gold-light);
+        transform: rotate(45deg) translateY(-2px);
+        transition: transform 0.3s ease;
+        flex-shrink: 0;
+      }
+      .legal-jump-btn[aria-expanded="true"] .legal-jump-cue { transform: rotate(-135deg) translateY(-2px); }
+      .legal-jump-panel { padding: 4px 60px 16px; max-height: calc(100vh - 150px); overflow-y: auto; overscroll-behavior: contain; }
+      .legal-jump:has(.legal-jump-btn[aria-expanded="true"]) { background: rgba(6,6,10,0.98); box-shadow: 0 24px 40px -12px rgba(0,0,0,0.8); }
+      .legal-jump-list { list-style: none; }
+      .legal-jump-list a, .legal-jump-list a:visited {
+        display: block;
+        padding: 10px 0;
+        font-size: 0.9rem;
+        color: rgba(245,240,234,0.8);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+      }
+      .legal-jump-list a.is-current { color: var(--gold-light); }
+      .legal-jump-list a:focus-visible { outline: 2px solid rgba(201,168,76,0.6); outline-offset: 2px; }
+      .legal-jump-progress { position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; }
+      .legal-jump-progress span {
+        display: block;
+        height: 1px;
+        width: var(--progress, 0%);
+        background: linear-gradient(to right, rgba(201,168,76,0.5), var(--gold-light));
+      }
+      .legal-section { scroll-margin-top: 150px; }
+    }
+    @media (max-width: 768px) {
+      .legal-jump { top: 65px; margin: 0 -24px 20px; }
+      .legal-jump-btn { padding: 14px 24px; }
+      .legal-jump-panel { padding: 4px 24px 16px; }
+      .legal-section { scroll-margin-top: 128px; }
+    }
+
+    /* 3a. Section 02: three groups side by side */
+    .legal-groups { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; margin-top: 8px; }
+    .legal-group .legal-subhead { margin-top: 0; min-height: 2.6em; }
+    .legal-group .legal-list li { font-size: 0.88rem; }
+    @media (max-width: 1100px) {
+      .legal-groups { grid-template-columns: 1fr; gap: 6px; }
+      .legal-group .legal-subhead { min-height: 0; margin-top: 18px; }
+    }
+
+    /* 3b. Section 04: rings beside the layer definitions */
+    .legal-layers {
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr);
+      gap: 32px;
+      align-items: center;
+      margin: 8px 0 16px;
+    }
+    .legal-rings { width: 150px; height: 150px; overflow: visible; }
+    .lr {
+      fill: rgba(201,168,76,0);
+      stroke: rgba(201,168,76,0.3);
+      stroke-width: 1;
+      transition: stroke 0.4s ease, fill 0.4s ease;
+    }
+    .lr-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-anchor: middle;
+      fill: rgba(168,157,174,0.7);
+      transition: fill 0.4s ease;
+    }
+    .legal-rings[data-state="private"] .lr-private,
+    .legal-rings[data-state="circle"] .lr-private,
+    .legal-rings[data-state="circle"] .lr-circle,
+    .legal-rings[data-state="legacy"] .lr { stroke: var(--gold-light); fill: rgba(201,168,76,0.05); }
+    .legal-rings[data-state="private"] .lr-label-private,
+    .legal-rings[data-state="circle"] .lr-label-private,
+    .legal-rings[data-state="circle"] .lr-label-circle,
+    .legal-rings[data-state="legacy"] .lr-label { fill: var(--gold-light); }
+    .legal-layer { cursor: default; border-radius: 6px; transition: color 0.3s ease; }
+    .legal-section p.legal-layer:hover, .legal-section p.legal-layer.is-on { color: var(--white); }
+    @media (max-width: 600px) {
+      .legal-layers { grid-template-columns: 1fr; gap: 16px; }
+      .legal-rings { width: 130px; height: 130px; }
+    }
+
+    /* 3c. Section 11: rights as a compact grid */
+    .legal-list-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; }
+    .legal-list-grid li {
+      padding: 10px 0 10px 0;
+      margin: 0;
+      border-top: 1px solid rgba(201,168,76,0.2);
+    }
+    .legal-list-grid li::before { content: none; }
+    @media (max-width: 600px) { .legal-list-grid { grid-template-columns: 1fr; } }
+
+    /* 5. Copy-link control on each section heading */
+    .legal-section-head { position: relative; }
+    .legal-anchor {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px; height: 30px;
+      margin-left: 4px;
+      align-self: center;
+      border-radius: 50%;
+      color: var(--gold-light);
+      opacity: 0;
+      text-decoration: none;
+      transition: opacity 0.25s ease, background 0.25s ease;
+    }
+    .legal-section .legal-anchor { text-decoration: none; }
+    .legal-section-head:hover .legal-anchor,
+    .legal-anchor:focus,
+    .legal-anchor:focus-visible,
+    .legal-anchor.is-copied { opacity: 1; }
+    .legal-anchor:hover { background: rgba(201,168,76,0.12); }
+    .legal-anchor:focus-visible { outline: 2px solid rgba(201,168,76,0.6); outline-offset: 2px; }
+    .legal-anchor .i-check { display: none; }
+    .legal-anchor.is-copied .i-link { display: none; }
+    .legal-anchor.is-copied .i-check { display: inline; }
+    @media (hover: none) { .legal-anchor { opacity: 0.55; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .legal-toc-rail span, .legal-jump-cue, .lr, .lr-label, .legal-anchor { transition: none !important; }
+    }
+
+    /* Readability pass: index (same treatment as the FAQ index) */
+    .legal-toc-label { color: var(--gold-light); font-size: 0.7rem; }
+    .legal-toc ol { gap: 2px; }
+    .legal-toc a,
+    .legal-toc a:visited {
+      font-size: 0.86rem;
+      font-weight: 400;
+      color: rgba(245,240,234,0.86);
+    }
+    .legal-toc a.is-read { color: rgba(232,201,122,0.9); }
+    .legal-toc a.is-current { color: var(--gold-light); }
+    .legal-toc a:hover { color: var(--white); }
+    .legal-toc-rail { background: rgba(201,168,76,0.4); }
+    @media (max-width: 980px) {
+      .legal-jump-btn { font-weight: 400; }
+      .legal-jump-list a, .legal-jump-list a:visited { color: rgba(245,240,234,0.9); font-weight: 400; }
+    }
+    /* diagram labels and rings in section 04 */
+    .lr { stroke: rgba(232,201,122,0.55); }
+    .lr-label { fill: rgba(245,240,234,0.75); }
+
+    /* 6. Print / Save as PDF: legal text only */
+    @media print {
+      @page { margin: 18mm 16mm; }
+      html, body { background: #fff !important; color: #111 !important; }
+      body::before, .glow-orb, nav:not(.legal-toc), .mobile-menu, footer,
+      .legal-toc, .legal-jump, .legal-anchor, .legal-rings { display: none !important; }
+      .legal-hero { padding: 0 0 12px !important; min-height: 0 !important; text-align: left !important; }
+      .legal-eyebrow, .legal-num, .legal-subhead { color: #555 !important; }
+      .legal-title, .legal-heading { color: #111 !important; }
+      .legal-intro, .legal-updated, .legal-section p, .legal-list li { color: #222 !important; }
+      .legal-body { padding: 0 !important; max-width: none !important; }
+      .legal-layout { display: block !important; }
+      .legal-content { max-width: none !important; }
+      .legal-section { border-top: 1px solid #ccc !important; margin-top: 18px !important; padding-top: 14px !important; }
+      .legal-section-head { break-after: avoid; page-break-after: avoid; }
+      .legal-list li, .legal-section p { break-inside: avoid; }
+      .legal-list li::before { color: #555 !important; }
+      .legal-list-grid li { border-top-color: #ddd !important; }
+      .legal-groups { grid-template-columns: repeat(3, 1fr) !important; }
+      .legal-layers { display: block !important; }
+      .legal-section a, .contact-email-link { color: #111 !important; text-decoration: underline !important; border: 0 !important; }
+      .legal-contact { text-align: left !important; }
+    }
   </style>
 </head>
 <body>
@@ -573,16 +806,44 @@
     <p class="legal-eyebrow">Legal</p>
     <h1 class="legal-title">Privacy, by design.</h1>
     <p class="legal-intro">Eternus is built around personal memories, intentional sharing and clear access choices. This policy explains what information may be processed and how it is handled.</p>
+    <!-- REVIEW before public launch: update the "Last updated" date. -->
     <span class="legal-updated">Last updated: July 2026</span>
   </section>
 
   <!-- BODY -->
   <div class="legal-body">
+    <!-- Current-section bar (tablet/mobile) -->
+    <div class="legal-jump" id="legal-jump">
+      <button type="button" class="legal-jump-btn" aria-expanded="false" aria-controls="legal-jump-panel">
+        <span class="legal-jump-current">On this page</span>
+        <span class="legal-jump-cue" aria-hidden="true"></span>
+      </button>
+      <div class="legal-jump-panel" id="legal-jump-panel" hidden>
+        <ol class="legal-jump-list">
+          <li><a href="#who-we-are">1. Who we are</a></li>
+          <li><a href="#information">2. Information we process</a></li>
+          <li><a href="#usage">3. How we use information</a></li>
+          <li><a href="#sharing">4. Sharing and access</a></li>
+          <li><a href="#ai">5. Talk to Eternus and AI</a></li>
+          <li><a href="#providers">6. Service providers</a></li>
+          <li><a href="#transfers">7. Data locations</a></li>
+          <li><a href="#security">8. Security</a></li>
+          <li><a href="#retention">9. Retention</a></li>
+          <li><a href="#deletion">10. Account deletion</a></li>
+          <li><a href="#rights">11. Your privacy rights</a></li>
+          <li><a href="#children">12. Children's privacy</a></li>
+          <li><a href="#cookies">13. Cookies</a></li>
+          <li><a href="#changes">14. Changes to this policy</a></li>
+        </ol>
+      </div>
+      <div class="legal-jump-progress" aria-hidden="true"><span></span></div>
+    </div>
     <div class="legal-layout">
 
       <!-- TOC -->
       <nav class="legal-toc" aria-label="Privacy policy sections">
         <span class="legal-toc-label">On this page</span>
+        <div class="legal-toc-rail" aria-hidden="true"><span></span></div>
         <ol>
           <li><a href="#who-we-are">1. Who we are</a></li>
           <li><a href="#information">2. Information we process</a></li>
@@ -608,6 +869,7 @@
           <div class="legal-section-head">
             <span class="legal-num">01</span>
             <h2 class="legal-heading">Who we are</h2>
+            <a class="legal-anchor" href="#who-we-are" aria-label="Copy link to this section"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
           <p>Eternus is a private memory and legacy platform that helps people preserve personal Moments, reflect on meaningful experiences and share selected content with people they intentionally choose.</p>
           <p>For privacy-related questions, contact: <a href="mailto:privacy@myeternusapp.com">privacy@myeternusapp.com</a></p>
@@ -618,8 +880,11 @@
           <div class="legal-section-head">
             <span class="legal-num">02</span>
             <h2 class="legal-heading">Information we may process</h2>
+            <a class="legal-anchor" href="#information" aria-label="Copy link to this section"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
-          <p class="legal-subhead">Account information</p>
+          <div class="legal-groups">
+            <div class="legal-group">
+              <p class="legal-subhead">Account information</p>
           <ul class="legal-list">
             <li>Name</li>
             <li>Email address</li>
@@ -627,7 +892,9 @@
             <li>Profile information</li>
             <li>Account preferences</li>
           </ul>
-          <p class="legal-subhead">Content you choose to add</p>
+            </div>
+            <div class="legal-group">
+              <p class="legal-subhead">Content you choose to add</p>
           <ul class="legal-list">
             <li>Photographs</li>
             <li>Written stories and captions</li>
@@ -636,7 +903,9 @@
             <li>Visibility and sharing choices</li>
             <li>Comments, reactions and connection information</li>
           </ul>
-          <p class="legal-subhead">Technical and usage information</p>
+            </div>
+            <div class="legal-group">
+              <p class="legal-subhead">Technical and usage information</p>
           <ul class="legal-list">
             <li>Device and operating-system information</li>
             <li>App version</li>
@@ -645,6 +914,8 @@
             <li>Diagnostic, performance and security information</li>
             <li>Feature interactions where collected</li>
           </ul>
+            </div>
+          </div>
           <p>The exact information processed depends on the features you use and the permissions you provide.</p>
         </section>
 
@@ -652,6 +923,7 @@
           <div class="legal-section-head">
             <span class="legal-num">03</span>
             <h2 class="legal-heading">How we use information</h2>
+            <a class="legal-anchor" href="#usage" aria-label="Copy link to this section"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
           <ul class="legal-list">
             <li>To create and manage accounts</li>
@@ -671,11 +943,24 @@
           <div class="legal-section-head">
             <span class="legal-num">04</span>
             <h2 class="legal-heading">Sharing and access choices</h2>
+            <a class="legal-anchor" href="#sharing" aria-label="Copy link to this section"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
           <p>Eternus uses three primary access layers:</p>
-          <p><strong>Private</strong> — content visible only to the account owner.</p>
-          <p><strong>Circle</strong> — selected content shared with people chosen for present-day access.</p>
-          <p><strong>Legacy</strong> — content and access intentionally preserved for the future.</p>
+          <div class="legal-layers">
+            <svg class="legal-rings" viewBox="0 0 200 200" aria-hidden="true" focusable="false" data-state="">
+              <circle class="lr lr-legacy" cx="100" cy="100" r="88" />
+              <circle class="lr lr-circle" cx="100" cy="100" r="60" />
+              <circle class="lr lr-private" cx="100" cy="100" r="31" />
+              <text class="lr-label lr-label-private" x="100" y="104">Private</text>
+              <text class="lr-label lr-label-circle" x="100" y="53">Circle</text>
+              <text class="lr-label lr-label-legacy" x="100" y="24">Legacy</text>
+            </svg>
+            <div class="legal-layer-text">
+              <p class="legal-layer" data-layer="private"><strong>Private</strong> — content visible only to the account owner.</p>
+              <p class="legal-layer" data-layer="circle"><strong>Circle</strong> — selected content shared with people chosen for present-day access.</p>
+              <p class="legal-layer" data-layer="legacy"><strong>Legacy</strong> — content and access intentionally preserved for the future.</p>
+            </div>
+          </div>
           <p>Legacy access may include Circle access shared with that person. Circle access alone does not include Legacy access.</p>
           <p>Users can manage or revoke access through the controls available in the app.</p>
         </section>
@@ -686,10 +971,12 @@
           <div class="legal-section-head">
             <span class="legal-num">05</span>
             <h2 class="legal-heading">Talk to Eternus and AI</h2>
+            <a class="legal-anchor" href="#ai" aria-label="Copy link to this section"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
           <p>Talk to Eternus uses guided AI-assisted reflection to help users explore memories, people, places and experiences.</p>
           <p>Eternus does not claim to recreate human consciousness, replace a real person or simulate a deceased person.</p>
           <p>Depending on the implementation, prompts and related context may be processed by service providers required to deliver the feature.</p>
+          <!-- REVIEW before public launch: the sentence below reads as an internal drafting note. -->
           <p>AI-related data handling, retention and provider details must reflect the actual production configuration before public launch.</p>
         </section>
 
@@ -698,6 +985,7 @@
           <div class="legal-section-head">
             <span class="legal-num">06</span>
             <h2 class="legal-heading">Service providers</h2>
+            <a class="legal-anchor" href="#providers" aria-label="Copy link to this section"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
           <p>Eternus relies on trusted service providers to operate parts of the service, including authentication, cloud storage, databases, hosting, communications and AI-related functionality where enabled.</p>
           <p>These providers process information under their own contractual, security and privacy obligations.</p>
@@ -709,6 +997,7 @@
           <div class="legal-section-head">
             <span class="legal-num">07</span>
             <h2 class="legal-heading">Data locations and international transfers</h2>
+            <a class="legal-anchor" href="#transfers" aria-label="Copy link to this section"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
           <p>Data may be processed in more than one country, depending on the services and infrastructure used.</p>
           <p>Where personal data is transferred outside the European Economic Area, Eternus will rely on applicable legal safeguards where required.</p>
@@ -719,6 +1008,7 @@
           <div class="legal-section-head">
             <span class="legal-num">08</span>
             <h2 class="legal-heading">Security</h2>
+            <a class="legal-anchor" href="#security" aria-label="Copy link to this section"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
           <p>Eternus uses technical and organisational measures intended to protect personal information against unauthorised access, loss, misuse or alteration.</p>
           <p>These measures may include authentication, access controls, secure transmission, platform security rules and restricted administrative access.</p>
@@ -730,6 +1020,7 @@
           <div class="legal-section-head">
             <span class="legal-num">09</span>
             <h2 class="legal-heading">Retention</h2>
+            <a class="legal-anchor" href="#retention" aria-label="Copy link to this section"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
           <p>Personal information is retained only for as long as reasonably necessary to provide the service, fulfil the purposes described in this policy, resolve disputes, maintain security and comply with legal obligations.</p>
           <p>Retention periods may vary by data category, account status, feature and legal requirement.</p>
@@ -740,6 +1031,7 @@
           <div class="legal-section-head">
             <span class="legal-num">10</span>
             <h2 class="legal-heading">Account deletion</h2>
+            <a class="legal-anchor" href="#deletion" aria-label="Copy link to this section"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
           <p>When an account-deletion request is completed, associated personal information will be deleted or anonymised in accordance with the current technical process, applicable law and legitimate retention requirements.</p>
           <p>Some limited information may be retained where necessary for security, fraud prevention, legal compliance, dispute resolution or backup-cycle completion.</p>
@@ -750,9 +1042,10 @@
           <div class="legal-section-head">
             <span class="legal-num">11</span>
             <h2 class="legal-heading">Your privacy rights</h2>
+            <a class="legal-anchor" href="#rights" aria-label="Copy link to this section"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
           <p>Depending on where you live and the applicable law, you may have rights including:</p>
-          <ul class="legal-list">
+          <ul class="legal-list legal-list-grid">
             <li>Access</li>
             <li>Rectification</li>
             <li>Erasure</li>
@@ -770,6 +1063,7 @@
           <div class="legal-section-head">
             <span class="legal-num">12</span>
             <h2 class="legal-heading">Children's privacy</h2>
+            <a class="legal-anchor" href="#children" aria-label="Copy link to this section"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
           <p>Eternus is not currently intended for children under 18.</p>
           <p>If we learn that personal information has been provided by a child in circumstances where parental or guardian consent is legally required and has not been obtained, we will take appropriate steps in accordance with applicable law.</p>
@@ -780,6 +1074,7 @@
           <div class="legal-section-head">
             <span class="legal-num">13</span>
             <h2 class="legal-heading">Cookies and website technologies</h2>
+            <a class="legal-anchor" href="#cookies" aria-label="Copy link to this section"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
           <p>The Eternus website may use technologies necessary for security, functionality and service operation.</p>
           <p>Any analytics, preference or non-essential technologies should be described accurately and, where legally required, used only after appropriate consent.</p>
@@ -789,6 +1084,7 @@
           <div class="legal-section-head">
             <span class="legal-num">14</span>
             <h2 class="legal-heading">Changes to this policy</h2>
+            <a class="legal-anchor" href="#changes" aria-label="Copy link to this section"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
           <p>We may update this policy as Eternus develops or as legal and operational requirements change.</p>
           <p>The updated date will appear at the top of the page. Where appropriate, users may also be notified through the app, website or email.</p>
@@ -849,6 +1145,115 @@
         });
       });
     });
+  
+    /* Privacy policy — current section, rail, jump bar, layer rings, copy links */
+    (function() {
+      var sections = Array.prototype.slice.call(document.querySelectorAll('.legal-section'));
+      if (!sections.length) return;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var tocLinks = Array.prototype.slice.call(document.querySelectorAll('.legal-toc ol a'));
+      var jumpLinks = Array.prototype.slice.call(document.querySelectorAll('.legal-jump-list a'));
+      var toc = document.querySelector('.legal-toc');
+      var ol = toc && toc.querySelector('ol');
+      var rail = toc && toc.querySelector('.legal-toc-rail');
+      var jump = document.getElementById('legal-jump');
+      var jumpBtn = jump && jump.querySelector('.legal-jump-btn');
+      var jumpPanel = document.getElementById('legal-jump-panel');
+      var jumpCurrent = jump && jump.querySelector('.legal-jump-current');
+      var content = document.querySelector('.legal-content');
+      var defaultLabel = jumpCurrent ? jumpCurrent.textContent : '';
+
+      function railGeometry() {
+        if (!rail || !tocLinks.length) return;
+        var tr = toc.getBoundingClientRect();
+        var f = tocLinks[0].getBoundingClientRect(), l = tocLinks[tocLinks.length - 1].getBoundingClientRect();
+        var top = f.top - tr.top + 6, bottom = l.bottom - tr.top - 6;
+        toc.style.setProperty('--rail-top', top + 'px');
+        toc.style.setProperty('--rail-h', Math.max(0, bottom - top) + 'px');
+      }
+      function update() {
+        var line = window.innerHeight * 0.3, current = -1;
+        sections.forEach(function(sec, i) { if (sec.getBoundingClientRect().top <= line) current = i; });
+        if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2) current = sections.length - 1;
+        [tocLinks, jumpLinks].forEach(function(list) {
+          list.forEach(function(a, i) {
+            a.classList.toggle('is-current', i === current);
+            a.classList.toggle('is-read', i < current);
+            if (i === current) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
+          });
+        });
+        if (rail && tocLinks.length) {
+          var fill = 0;
+          if (current >= 0) {
+            var tr = toc.getBoundingClientRect(), ar = tocLinks[current].getBoundingClientRect();
+            var top = parseFloat(getComputedStyle(toc).getPropertyValue('--rail-top')) || 0;
+            fill = ar.top + ar.height / 2 - tr.top - top;
+          }
+          toc.style.setProperty('--rail-fill', Math.max(0, fill) + 'px');
+        }
+        if (jump) {
+          jumpCurrent.textContent = current >= 0 ? jumpLinks[current].textContent : defaultLabel;
+          var cr = content.getBoundingClientRect();
+          var p = Math.max(0, Math.min(1, (line - cr.top) / Math.max(1, cr.height - window.innerHeight * 0.6)));
+          jump.style.setProperty('--progress', (p * 100).toFixed(1) + '%');
+        }
+      }
+      var ticking = false;
+      window.addEventListener('scroll', function() {
+        if (!ticking) { ticking = true; requestAnimationFrame(function() { update(); ticking = false; }); }
+      }, { passive: true });
+      window.addEventListener('resize', function() { railGeometry(); update(); });
+      railGeometry(); update();
+
+      // jump bar (tablet/mobile)
+      if (jumpBtn) {
+        function setOpen(open) {
+          jumpBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+          jumpPanel.hidden = !open;
+        }
+        jumpBtn.addEventListener('click', function() { setOpen(jumpPanel.hidden); });
+        jumpLinks.forEach(function(a) { a.addEventListener('click', function() { setOpen(false); }); });
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && !jumpPanel.hidden) { setOpen(false); jumpBtn.focus(); }
+        });
+        document.addEventListener('click', function(e) {
+          if (!jumpPanel.hidden && !jump.contains(e.target)) setOpen(false);
+        });
+      }
+
+      // section 04 rings follow the definition being read or pointed at
+      var rings = document.querySelector('.legal-rings');
+      var layerPs = Array.prototype.slice.call(document.querySelectorAll('.legal-layer'));
+      if (rings) {
+        layerPs.forEach(function(p) {
+          function on() {
+            rings.setAttribute('data-state', p.getAttribute('data-layer'));
+            layerPs.forEach(function(q) { q.classList.toggle('is-on', q === p); });
+          }
+          p.addEventListener('mouseenter', on);
+          p.addEventListener('click', on);
+        });
+        document.querySelector('.legal-layers').addEventListener('mouseleave', function() {
+          rings.setAttribute('data-state', '');
+          layerPs.forEach(function(q) { q.classList.remove('is-on'); });
+        });
+      }
+
+      // copy link to a section (still a normal link if the clipboard is unavailable)
+      document.querySelectorAll('.legal-anchor').forEach(function(a) {
+        a.addEventListener('click', function(e) {
+          var url = location.href.split('#')[0] + a.getAttribute('href');
+          if (navigator.clipboard && window.isSecureContext) {
+            e.preventDefault();
+            navigator.clipboard.writeText(url).then(function() {
+              history.replaceState(null, '', a.getAttribute('href'));
+              a.classList.add('is-copied');
+              setTimeout(function() { a.classList.remove('is-copied'); }, 1600);
+            });
+          }
+        });
+      });
+    })();
   </script>
 </body>
 </html>
