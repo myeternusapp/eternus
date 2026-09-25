@@ -110,10 +110,12 @@
   .cover-inner .cover-fade:nth-child(6){ transition-delay:.56s; }
   .boot-screen > .cover-enter{ transition-delay:.76s; }
   .cover-logo-frame{
-    width:clamp(120px,20vw,190px); margin-bottom:8px;
+    width:250px; max-width:100%; margin-bottom:8px; overflow:hidden;
     display:flex; align-items:center; justify-content:center;
   }
-  .cover-logo-frame img{ display:block; width:100%; height:auto; }
+  /* Official PNG: visible artwork spans x=97..601 of 686px; hide its empty side margins. */
+  .cover-logo-frame img{ display:block; width:136.111111%; max-width:none; flex-shrink:0; height:auto; transform:translateX(-0.874636%); }
+  @media (max-width:640px){ .cover-logo-frame{ width:210px; } }
   .cover-wordmark{
     font-family:var(--mono); font-size:.8rem; letter-spacing:.08em; color:var(--accent);
     transition:color .9s ease;
@@ -976,7 +978,7 @@
   <!-- BOOT -->
   <section class="boot-screen" id="boot">
     <div class="cover-inner">
-      <div class="cover-logo-frame cover-fade"><img class="eternus-logo-img" alt="Eternus logo"></div>
+      <div class="cover-logo-frame cover-fade"><img src="../../assets/logo-eternus-gold.png" alt="Eternus logo" width="686" height="339"></div>
       <p class="cover-wordmark cover-fade">ETERNUS // ORIGIN ARCHIVE</p>
       <p class="cover-year cover-fade">2026</p>
       <p class="cover-tagline cover-fade">The Human, the AIs &amp; the Cat</p>
