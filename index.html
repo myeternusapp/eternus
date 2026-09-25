@@ -513,6 +513,12 @@
       display: flex; flex-direction: column; align-items: center; gap: 10px;
       position: relative; z-index: 2;
     }
+    .tree-root { text-decoration: none; cursor: pointer; }
+    .tree-root:focus-visible .tree-avatar {
+      border-color: rgba(232,201,122,0.9);
+      box-shadow: 0 0 0 4px rgba(201,168,76,0.1), 0 0 22px rgba(201,168,76,0.3);
+    }
+    .tree-root:focus-visible .tree-name { color: var(--gold-light); }
     .tree-avatar {
       box-sizing: border-box;
       width: 62px; height: 62px;
@@ -1540,10 +1546,12 @@
         background: var(--gold-light);
         box-shadow: 0 0 8px rgba(232,201,122,0.5);
       }
+      .tree-visual.is-complete .tree-root:hover .tree-avatar,
       .tree-visual.is-complete .tree-node.is-person:hover .tree-avatar {
         border-color: rgba(232,201,122,0.9);
         box-shadow: 0 0 0 4px rgba(201,168,76,0.1), 0 0 22px rgba(201,168,76,0.3);
       }
+      .tree-visual.is-complete .tree-root:hover .tree-name,
       .tree-visual.is-complete .tree-node.is-person:hover .tree-name { color: var(--gold-light); }
       /* Invite someone: a quiet acknowledgement only, no action implied */
       .tree-visual.is-complete .tree-node:last-of-type:hover .tree-avatar-invite { border-color: rgba(232,201,122,0.7); color: var(--gold-light); }
@@ -1984,12 +1992,12 @@
           <h2 class="section-title">Your legacy.<br><em>Your people.</em></h2>
           <p class="section-sub">My Tree brings together the people you have intentionally included in your Legacy — while every person keeps control of their own memories and story.</p>
         </div>
-        <div class="tree-visual" role="img" aria-label="A diagram showing you at the centre, connected to people you have included in your Legacy, plus an option to invite someone new.">
-          <div class="tree-root">
+        <div class="tree-visual" role="group" aria-label="A diagram showing you at the centre, connected to people you have included in your Legacy, plus an option to invite someone new.">
+          <a class="tree-root" href="/archive/2026/" aria-label="You — Origin Archive">
             <div class="tree-avatar tree-avatar-root"><img class="tree-photo" src="assets/You.webp" alt="You" /></div>
             <span class="tree-name">You</span>
             <span class="tree-role">Owner</span>
-          </div>
+          </a>
           <div class="tree-connector"></div>
           <div class="tree-branch">
             <div class="tree-node">
