@@ -834,6 +834,13 @@
       .mx-indicator { left: -1px !important; width: 1px !important; height: var(--mx-h, 0px); }
       .vx-toggle { font-size: 1.25rem; }
     }
+    /* Sign In / Sign Up need more room than the old single button: use the hamburger menu up to 960px */
+    @media (max-width: 960px) {
+      nav { padding: 20px 24px; }
+      .nav-center { display: none; }
+      .nav-hamburger { display: flex; }
+      .mobile-menu { display: block; }
+    }
   </style>
 </head>
 <body>
@@ -855,7 +862,10 @@
         <li><a href="privacy-policy.html">Privacy</a></li>
         <li><a href="support.html">Support</a></li>
       </ul>
-      <span class="btn btn-primary btn-nav btn-static" aria-disabled="true">Coming Soon</span>
+      <div class="nav-auth" style="display:flex; align-items:center; gap:12px;">
+        <a class="btn btn-secondary btn-nav" href="https://app.myeternusapp.com/?screen=signin">Sign In</a>
+        <a class="btn btn-primary btn-nav" href="https://app.myeternusapp.com/?screen=signup">Sign Up</a>
+      </div>
     </div>
     <button class="nav-hamburger" id="nav-hamburger" aria-label="Open navigation">
       <span></span>
@@ -874,7 +884,8 @@
       <li><a href="support.html" class="mobile-link">Support</a></li>
     </ul>
     <div class="mobile-menu-cta" style="padding: 0 28px 28px;">
-      <span class="btn btn-primary btn-static" style="width:100%;" aria-disabled="true">Coming Soon</span>
+      <a class="btn btn-secondary" style="width:100%;" href="https://app.myeternusapp.com/?screen=signin">Sign In</a>
+      <a class="btn btn-primary" style="width:100%; margin-top:12px;" href="https://app.myeternusapp.com/?screen=signup">Sign Up</a>
     </div>
   </div>
 
