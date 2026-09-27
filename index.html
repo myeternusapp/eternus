@@ -746,6 +746,32 @@
       outline: 1px solid rgba(201,168,76,0.5);
       outline-offset: 4px;
     }
+    .footer-socials {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .footer-socials a,
+    .footer-socials a:visited {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      color: var(--gold);
+    }
+    .footer-socials a:hover,
+    .footer-socials a:focus-visible {
+      color: var(--gold-light);
+      text-decoration: none;
+    }
+    .footer-socials a:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
+    }
+    .footer-socials svg { display: block; width: 20px; height: 20px; }
     .footer-bottom {
       max-width: 1120px;
       margin: 0 auto;
@@ -2098,6 +2124,17 @@
       </div>
     </div>
     <div class="footer-bottom">
+      <div class="footer-socials" role="group" aria-label="Eternus social media">
+        <a href="https://www.facebook.com/myeternusapp" target="_blank" rel="noopener noreferrer" aria-label="Eternus on Facebook (opens in a new tab)">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M13.5 22v-9h3l.5-3.5h-3.5V7.25c0-1 .3-1.75 1.75-1.75H17V2.25A22 22 0 0 0 14.5 2C12 2 10 3.5 10 6.5v3H7V13h3v9z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/eternusapp/" target="_blank" rel="noopener noreferrer" aria-label="Eternus on Instagram (opens in a new tab)">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/myeternusapp" target="_blank" rel="noopener noreferrer" aria-label="Eternus on LinkedIn (opens in a new tab)">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M5.37 24H.4V7.98h4.97zM2.88 5.8A2.9 2.9 0 1 1 2.9 0a2.9 2.9 0 0 1-.02 5.8zM24 24h-4.97v-7.8c0-1.86-.04-4.25-2.59-4.25-2.59 0-2.99 2.02-2.99 4.12V24H8.48V7.98h4.77v2.19h.07c.66-1.26 2.29-2.59 4.71-2.59 5.04 0 5.97 3.32 5.97 7.63z"/></svg>
+        </a>
+      </div>
       <span>&copy; <span id="year"></span> Eternus. All rights reserved.</span>
     </div>
   </footer>
