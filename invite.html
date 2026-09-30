@@ -133,15 +133,24 @@
         private, invitation-only space for preserving memories and the people who
         matter.
       </p>
-      <p class="note">
-        This invitation will become available once you create an Eternus account
-        with the email address it was sent to, and open the app.
-      </p>
-      <a class="button" href="https://myeternusapp.com">CREATE YOUR ETERNUS ACCOUNT</a>
-      <p class="note">
-        Once you sign in to the Eternus app with the invited email, you can review
-        the invitation in Activity Center.
-      </p>
+      <div id="new-account">
+        <p class="note">
+          This invitation will become available once you create an Eternus account
+          with the email address it was sent to, and open the app.
+        </p>
+        <a class="button" href="https://myeternusapp.com">CREATE YOUR ETERNUS ACCOUNT</a>
+        <p class="note">
+          Once you sign in to the Eternus app with the invited email, you can review
+          the invitation in Activity Center.
+        </p>
+      </div>
+      <div id="existing-account" class="hidden">
+        <p class="note">
+          This invitation is already waiting for you in Eternus. Open the Eternus
+          app and sign in with the email address it was sent to, then review the
+          invitation in Activity Center.
+        </p>
+      </div>
     </section>
 
     <section id="unavailable" class="hidden">
@@ -228,6 +237,13 @@
           });
           photoEl.src = data.inviterPhotoUrl.trim();
           photoEl.classList.remove("hidden");
+        }
+
+        // Only an explicit true switches to the sign-in guidance; anything else
+        // (including an older resolver without the field) keeps the new-account flow.
+        if (data.recipientHasAccount === true) {
+          document.getElementById("new-account").classList.add("hidden");
+          document.getElementById("existing-account").classList.remove("hidden");
         }
 
         show(available);
