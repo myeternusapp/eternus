@@ -835,12 +835,27 @@
       .mx-indicator { left: -1px !important; width: 1px !important; height: var(--mx-h, 0px); }
       .vx-toggle { font-size: 1.25rem; }
     }
-    /* Sign In / Sign Up need more room than the old single button: use the hamburger menu up to 960px */
+    /* Up to 960px: the site links move into the hamburger menu; Sign In / Sign Up stay in the header,
+       compact and fluid (sizes scale with the viewport) so logo, buttons and hamburger fit down to 320px */
     @media (max-width: 960px) {
-      nav { padding: 20px 24px; }
-      .nav-center { display: none; }
-      .nav-hamburger { display: flex; }
+      nav { padding: 20px clamp(12px, 4.5vw, 24px); }
+      .nav-center { display: flex; margin: -6px 0 -6px auto; } /* buttons overhang the row: header height unchanged */
+      .nav-logo { flex-shrink: 0; gap: clamp(6px, 2.6vw, 10px); font-size: clamp(1.05rem, 5.4vw, 1.3rem); } /* full size from ~385px up */
+      .nav-links { display: none; }
+      .nav-auth { gap: clamp(6px, 2vw, 12px) !important; }
+      .nav-auth .btn-nav {
+        padding: 9px clamp(9px, 3.2vw, 20px);
+        font-size: clamp(0.62rem, 2.8vw, 0.7rem);
+        letter-spacing: 0.18em;
+        white-space: nowrap;
+      }
+      .nav-hamburger { display: flex; margin-left: clamp(8px, 3vw, 18px); }
       .mobile-menu { display: block; }
+    }
+    /* Small phones (e.g. 320-380px): tighter lettering and a slightly smaller wordmark so nothing touches */
+    @media (max-width: 380px) {
+      .nav-logo { gap: 6px; font-size: 1rem; }
+      .nav-auth .btn-nav { letter-spacing: 0.1em; }
     }
   </style>
 </head>
@@ -884,10 +899,6 @@
       <li><a href="privacy-policy.html" class="mobile-link">Privacy</a></li>
       <li><a href="support.html" class="mobile-link">Support</a></li>
     </ul>
-    <div class="mobile-menu-cta" style="padding: 0 28px 28px;">
-      <a class="btn btn-secondary" style="width:100%;" href="https://app.myeternusapp.com/?screen=signin">Sign In</a>
-      <a class="btn btn-primary" style="width:100%; margin-top:12px;" href="https://app.myeternusapp.com/?screen=signup">Sign Up</a>
-    </div>
   </div>
 
   <!-- HERO -->
