@@ -1654,6 +1654,20 @@
       .nav-logo { gap: 6px; font-size: 1rem; }
       .nav-auth .btn-nav { letter-spacing: 0.1em; }
     }
+    /* Up to 960px: Sign In / Sign Up fade out once the page is scrolled down (nav.nav-scrolled, set by the
+       script below) and come back at the top. Only hidden, never removed: the header keeps its layout. */
+    @media (max-width: 960px) {
+      .nav-auth { transition: opacity 0.25s ease, visibility 0s linear 0s; }
+      nav.nav-scrolled .nav-auth {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.25s ease, visibility 0s linear 0.25s;
+      }
+    }
+    @media (max-width: 960px) and (prefers-reduced-motion: reduce) {
+      .nav-auth, nav.nav-scrolled .nav-auth { transition: none; }
+    }
   </style>
 </head>
 <body>
@@ -2157,6 +2171,12 @@
     document.addEventListener('DOMContentLoaded', function() {
       const hamburger = document.getElementById('nav-hamburger');
       const mobileMenu = document.getElementById('mobile-menu');
+
+      // Sign In / Sign Up hide while the page is scrolled down (CSS: up to 960px only).
+      const nav = document.querySelector('nav');
+      const updateNavAuth = function() { nav.classList.toggle('nav-scrolled', window.scrollY > 8); };
+      window.addEventListener('scroll', updateNavAuth, { passive: true });
+      updateNavAuth();
 
       hamburger.addEventListener('click', function() {
         const isOpen = mobileMenu.classList.toggle('open');
