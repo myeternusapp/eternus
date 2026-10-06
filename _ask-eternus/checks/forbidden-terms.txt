@@ -1,0 +1,150 @@
+# Ask Eternus — Knowledge Base v1 — forbidden terms
+#
+# Scope: every file in kb/. Sections marked [scope: kb+manifest] also apply to manifest.json
+# (with its sha256 values ignored). eval/questions.jsonl is NOT scanned: it contains adversarial
+# questions on purpose.
+# Matching: case-insensitive, whole word or phrase.
+#   <term>                         forbidden everywhere in scope
+#   <term> | allowed_in: a, b      restricted: allowed only in the listed KB sections (never in manifest)
+#   <term> | allowed_in:           restricted, allowed nowhere in kb/ (the manifest's policy may name it)
+#   re:<regex>                     Python regular expression, forbidden everywhere in scope
+
+## Secrets, identifiers and internal sources [scope: kb+manifest]
+eternus-af226
+cloudfunctions.net
+googleapis
+api key
+apikey
+places_key
+NotebookLM
+Project Brain
+re:\bAIza[0-9A-Za-z_-]{20,}
+re:\b[0-9a-f]{32,}\b
+re:\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b(?<!support@myeternusapp\.com)(?<!privacy@myeternusapp\.com)(?<!hello@myeternusapp\.com)
+re:https?://(?!(app\.)?myeternusapp\.com\b)
+
+## Internal technical details and infrastructure
+firebase
+firestore
+cloud function
+cloud functions
+functions/
+uid
+gs://
+storage path
+bucket
+security rules
+firestore.rules
+storage.rules
+app check
+appcheck
+gemini
+vertex
+openai
+chatgpt
+claude
+anthropic
+accountDeletions
+userProfiles
+users/
+/memories/
+/profile/
+avatar.jpg
+banner.jpg
+readMomentMedia
+readProfileMedia
+getAccountDeletionState
+emulator
+web_guard
+github
+repository
+commit
+Codex
+tester
+testers
+
+## Legacy continuity: current Legacy is present-day access after acceptance (no death/inactivity/date/Guardian activation)
+death
+die
+dies
+died
+dying
+deceased
+pass away
+passed away
+after you die
+inactivity
+inactive
+death verification
+legacy activation
+activate legacy
+activates legacy
+unlocks after
+inheritance
+inherit
+heir
+executor
+beneficiary
+In Memoriam
+
+## Future concepts are not named in the public KB v1
+Guardian
+Guardians
+Future Message
+Future Messages
+scheduled message
+scheduled messages
+Digital Self
+
+## AI / Talk overclaims and impossible promises
+generative
+machine learning
+learns from your moments
+learn from your moments
+reads your moments
+uses your moments
+digital resurrection
+bring them back
+talk to the dead
+live forever
+forever
+eternity
+stored forever
+permanent digital legacy
+end-to-end
+completely secure
+100% secure
+never be accessed
+guaranteed
+digital immortality | allowed_in: about.not-social-network
+AI clone | allowed_in: about.not-social-network, talk.overview
+@name
+
+## Topics outside KB v1 (allowed only to clarify unavailability in the asked context)
+Memorial | allowed_in: platform.app-vs-web, about.not-social-network
+Memorials | allowed_in: platform.app-vs-web
+tag | allowed_in: platform.app-vs-web
+tags | allowed_in: platform.app-vs-web
+tagging | allowed_in: platform.app-vs-web
+tagged | allowed_in: platform.app-vs-web
+
+## Plans and pricing (not in KB v1)
+price | allowed_in:
+prices | allowed_in:
+pricing | allowed_in:
+cost | allowed_in:
+costs | allowed_in:
+plan | allowed_in:
+plans | allowed_in:
+subscription | allowed_in:
+subscriptions | allowed_in:
+premium | allowed_in:
+upgrade | allowed_in:
+paid | allowed_in:
+billing | allowed_in:
+lifetime | allowed_in:
+free plan | allowed_in:
+free tier | allowed_in:
+payment | allowed_in: support.contact
+re:[€$£]\s?\d
+re:\b\d+([.,]\d+)?\s?(eur|euro|euros|usd|gbp)\b
