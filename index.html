@@ -29,7 +29,11 @@
   <meta name="twitter:image" content="https://myeternusapp.com/assets/og-image-gold.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Eternus — Preserve your moments. Build what remains.</title>
-  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="icon" href="favicon.ico" sizes="48x48" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -686,6 +690,8 @@
     /* FINAL CTA */
     .cta-final { text-align: center; }
     .cta-final .section-title { max-width: 780px; margin-left: auto; margin-right: auto; }
+    .cta-ask { margin-top: 40px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+    .cta-ask-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.35rem; color: var(--gold-light); }
 
     /* FOOTER */
     footer {
@@ -1721,7 +1727,7 @@
         <h1 class="hero-title">Preserve your moments.<br><em>Build what remains.</em></h1>
         <p class="hero-desc">Eternus is a private space for your memories, the people who matter, and the legacy you choose to leave behind.</p>
         <div class="hero-ctas">
-          <a href="#layers" class="btn btn-primary">Discover Eternus</a>
+          <a href="#future-readiness" class="btn btn-primary">Discover Eternus</a>
           <a href="about.html" class="btn btn-secondary">Learn More</a>
         </div>
       </div>
@@ -2129,6 +2135,10 @@
       <span class="section-label">Private beta</span>
       <h2 class="section-title">Eternus is currently<br>in <em>private beta.</em></h2>
       <p class="section-sub center">We are refining the experience with a small group of invited testers before a wider release.</p>
+      <div class="cta-ask">
+        <p class="cta-ask-text">Still have a question?</p>
+        <a class="btn btn-secondary" href="support.html#ask-eternus">Ask Eternus</a>
+      </div>
     </div>
   </section>
 
