@@ -2,7 +2,7 @@
 id: moments.media
 title: "Photos, video and voice in Moments"
 status: current
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-07
 applies_to: [app, web]
 related: [moments.create, moments.edit-delete, privacy.protection]
 ---
@@ -11,7 +11,7 @@ related: [moments.create, moments.edit-delete, privacy.protection]
 
 **Photos** — you can add several photos to a Moment, in the app and on Eternus Web. Photos can be opened larger.
 
-**Video (app only)** — choose a video from your device or record one with the camera. Eternus tries to create a thumbnail for it.
+**Video (app only)** — choose a video from your device or record one with the camera. Eternus tries to create a thumbnail for it. Adding video on Eternus Web is planned, but it isn't available yet and no release date has been set.
 
 **Voice (app only)** — record a voice recording of up to five minutes while preparing a Moment, and listen to it before saving. Recordings aren't transcribed automatically.
 

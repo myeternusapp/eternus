@@ -123,10 +123,6 @@ AI clone | allowed_in: about.not-social-network, talk.overview
 ## Topics outside KB v1 (allowed only to clarify unavailability in the asked context)
 Memorial | allowed_in: platform.app-vs-web, about.not-social-network
 Memorials | allowed_in: platform.app-vs-web
-tag | allowed_in: platform.app-vs-web
-tags | allowed_in: platform.app-vs-web
-tagging | allowed_in: platform.app-vs-web
-tagged | allowed_in: platform.app-vs-web
 
 ## Plans and pricing (not in KB v1)
 price | allowed_in:

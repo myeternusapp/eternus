@@ -796,6 +796,79 @@
     @media (max-width: 960px) and (prefers-reduced-motion: reduce) {
       .nav-auth, nav.nav-scrolled .nav-auth { transition: none; }
     }
+
+    /* =========================================================
+       ASK ETERNUS — instant answers from Eternus's help information
+       ========================================================= */
+    .ask-form, .ask-result, .ask .safety-note { max-width: 720px; }
+    .ask-form { margin: 36px auto 0; text-align: left; }
+    .ask-label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+    }
+    .ask-input {
+      display: block;
+      width: 100%;
+      min-height: 112px;
+      resize: vertical;
+      padding: 16px 18px;
+      border: 1px solid rgba(201,168,76,0.32);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.03);
+      color: var(--white);
+      font-family: 'Jost', sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.7;
+      transition: border-color 0.3s ease;
+    }
+    .ask-input::placeholder { color: rgba(245,240,234,0.45); }
+    .ask-input:hover { border-color: rgba(201,168,76,0.5); }
+    .ask-input:focus-visible { outline: 2px solid rgba(201,168,76,0.6); outline-offset: 2px; border-color: var(--gold-light); }
+    .ask-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 14px; }
+    .ask-count { font-size: 0.8rem; color: rgba(245,240,234,0.6); font-variant-numeric: tabular-nums; }
+    .ask-count.is-over { color: var(--gold-light); }
+    .ask-form .btn[disabled] { opacity: 0.55; cursor: default; transform: none; box-shadow: none; }
+    .ask-status { min-height: 1.6em; max-width: 720px; margin: 18px auto 0; font-size: 0.9rem; line-height: 1.6; color: rgba(245,240,234,0.78); text-align: center; }
+    .ask-result {
+      margin: 18px auto 0;
+      padding: 24px 26px;
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 14px;
+      background: rgba(45,27,78,0.22);
+      text-align: left;
+    }
+    .ask-result[hidden] { display: none; }
+    .ask-result-label { display: block; margin-bottom: 12px; font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); }
+    .ask-answer p, .ask-answer li { font-size: 1rem; line-height: 1.85; font-weight: 400; color: rgba(245,240,234,0.92); overflow-wrap: anywhere; }
+    .ask-answer p + p, .ask-answer ul + p, .ask-answer p + ul { margin-top: 10px; }
+    .ask-answer ul { padding-left: 1.2em; }
+    .ask-answer .ask-sources { margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(201,168,76,0.18); }
+    .ask-answer .ask-sources-label { font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); line-height: 1.6; }
+    .ask-answer .ask-sources ul { list-style: none; padding: 0; margin-top: 8px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .ask-answer .ask-sources li {
+      font-size: 0.85rem;
+      line-height: 1.5;
+      padding: 4px 12px;
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 999px;
+      color: rgba(245,240,234,0.85);
+    }
+    .ask .safety-note a, .ask .safety-note a:visited { color: var(--gold-light); text-decoration: none; border-bottom: 1px solid rgba(232,201,122,0.4); }
+    .ask .safety-note a:hover { color: var(--white); border-color: var(--gold-light); }
+    .ask .safety-note a:focus-visible { outline: 2px solid rgba(201,168,76,0.6); outline-offset: 3px; }
+    html:not(.js) .ask-form, html:not(.js) .ask-status, html:not(.js) .ask-result { display: none; }
+    html.js .ask-nojs { display: none; }
+    @media (max-width: 480px) {
+      .ask-row { flex-direction: column; align-items: stretch; gap: 12px; }
+      .ask-row .btn { justify-content: center; }
+      .ask-count { text-align: right; }
+      .ask-result { padding: 20px 18px; }
+    }
   </style>
 </head>
 <body>
@@ -847,6 +920,35 @@
       <h1 class="support-title">How can we help?</h1>
       <p class="support-intro">Questions, technical issues and thoughtful feedback all help us improve Eternus.</p>
       <p class="support-intro-sub">Start with the FAQ or contact us directly when you need more help.</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ASK ETERNUS -->
+  <section class="ask" id="ask-eternus" aria-labelledby="ask-title">
+    <div class="section-inner center">
+      <span class="section-label">Ask Eternus</span>
+      <h2 class="section-title" id="ask-title">Ask a quick <em>question.</em></h2>
+      <p class="section-sub center">Get an instant answer about how Eternus works, from Eternus's help information. No account or sign-in needed.</p>
+      <form class="ask-form" id="ask-form" novalidate>
+        <label class="ask-label" for="ask-question">Your question</label>
+        <textarea class="ask-input" id="ask-question" name="question" rows="3" maxlength="1000" autocomplete="off" aria-describedby="ask-count ask-note" placeholder="For example: What's the difference between Circle and Legacy?"></textarea>
+        <div class="ask-row">
+          <span class="ask-count" id="ask-count">0 / 500</span>
+          <button type="submit" class="btn btn-primary" id="ask-submit">Ask</button>
+        </div>
+      </form>
+      <p class="ask-status" id="ask-status" role="status" aria-live="polite"></p>
+      <div class="ask-result" id="ask-result" hidden>
+        <span class="ask-result-label">Ask Eternus</span>
+        <div class="ask-answer" id="ask-answer" aria-live="polite"></div>
+      </div>
+      <div class="safety-note" id="ask-note">
+        <p>Ask Eternus is an AI assistant. It answers from Eternus's help information, can't see or change your account, and may not cover everything.</p>
+        <p><strong>Never share</strong> passwords, verification codes or personal details. For anything else, <a href="#contact-reasons">contact our support team</a>. <a href="privacy-policy.html#ask-eternus">How your question is handled</a>.</p>
+      </div>
+      <p class="section-sub center ask-nojs">Ask Eternus needs JavaScript. You can still email <a class="card-link" href="mailto:support@myeternusapp.com">support@myeternusapp.com</a>.</p>
     </div>
   </section>
 
@@ -1165,6 +1267,98 @@
         }
       }
     })();
+  </script>
+
+  <!-- Ask Eternus: the client (Firebase SDK + reCAPTCHA Enterprise App Check) loads only when a
+       visitor starts using the form. Public identifiers only; no secrets. -->
+  <script type="module">
+    const CONFIG = {
+      firebase: {
+        apiKey: 'AIzaSyCLaHBsqhVkp32OfcRK53nwLc6JyDyqiY8',
+        authDomain: 'eternus-ask.firebaseapp.com',
+        projectId: 'eternus-ask',
+        appId: '1:537409497593:web:dfdf98c7376dce8d433528',
+      },
+      recaptchaSiteKey: '6LdWDeItAAAAAKFI8wtJMzndnjLvOmeSrMi8iUOl',
+    };
+    const MAX = 500;
+    const FALLBACK = "Something went wrong and Ask Eternus couldn't answer. Please try again later, or email support@myeternusapp.com.";
+
+    const form = document.getElementById('ask-form');
+    const input = document.getElementById('ask-question');
+    const button = document.getElementById('ask-submit');
+    const count = document.getElementById('ask-count');
+    const status = document.getElementById('ask-status');
+    const result = document.getElementById('ask-result');
+    const answer = document.getElementById('ask-answer');
+    const length = (s) => [...s.trim()].length;
+    let client = null;
+    let busy = false;
+    let coolUntil = 0;
+
+    function load() {
+      client ??= import('./assets/js/ask-eternus.js').then((m) => ({ m, api: m.initAskEternus(CONFIG) }));
+      client.catch(() => { client = null; });
+      return client;
+    }
+    function updateCount() {
+      const n = length(input.value);
+      count.textContent = n + ' / ' + MAX;
+      count.classList.toggle('is-over', n > MAX);
+    }
+    function setBusy(on) {
+      busy = on;
+      form.setAttribute('aria-busy', on ? 'true' : 'false');
+      button.disabled = on || Date.now() < coolUntil;
+    }
+    function cooldown(seconds) {
+      coolUntil = Date.now() + seconds * 1000;
+      button.disabled = true;
+      const minutes = Math.round(seconds / 60);
+      status.textContent = 'You can ask again in about ' + (seconds < 90 ? seconds + ' seconds.' : minutes + ' minutes.');
+      setTimeout(() => { if (Date.now() >= coolUntil && !busy) { button.disabled = false; status.textContent = ''; } }, seconds * 1000 + 50);
+    }
+    function show(render) {
+      result.hidden = false;
+      render();
+    }
+
+    input.addEventListener('focus', () => { load().catch(() => {}); }, { once: true });
+    input.addEventListener('input', updateCount);
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); form.requestSubmit(); }
+    });
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (busy || Date.now() < coolUntil) return;
+      const question = input.value.trim();
+      const n = length(question);
+      if (!n) { status.textContent = 'Please type a question first.'; input.focus(); return; }
+      if (n > MAX) { status.textContent = 'Please keep your question to ' + MAX + ' characters or fewer.'; input.focus(); return; }
+
+      setBusy(true);
+      status.textContent = 'Looking for an answer…';
+      try {
+        const { m, api } = await load();
+        const res = await api.ask(question);
+        show(() => m.renderAnswer(answer, res, { sources: 'Based on', fallback: FALLBACK }));
+        status.textContent = '';
+        if (res && res.kind === 'rate_limited' && Number.isFinite(res.retryAfterSeconds) && res.retryAfterSeconds > 0) {
+          cooldown(Math.min(Math.ceil(res.retryAfterSeconds), 3600));
+        }
+      } catch {
+        show(() => {
+          const p = document.createElement('p');
+          p.textContent = FALLBACK;
+          answer.replaceChildren(p);
+          answer.removeAttribute('lang');
+        });
+        status.textContent = '';
+      } finally {
+        setBusy(false);
+      }
+    });
+    updateCount();
   </script>
 </body>
 </html>

@@ -1,0 +1,10 @@
+rules_version = '2';
+// Ask Eternus Firestore is server-side only (Admin SDK: rate-limit counters, config/askEternus).
+// No browser or client SDK may read or write anything.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

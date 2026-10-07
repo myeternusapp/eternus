@@ -2,7 +2,7 @@
 id: platform.app-vs-web
 title: "What can I do on Eternus Web?"
 status: current
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-07
 applies_to: [app, web]
 related: [about.devices, moments.create, profile.edit]
 ---
@@ -27,6 +27,8 @@ related: [about.devices, moments.create, profile.edit]
 - Talk;
 - Memorials;
 - the Legacy Profile details beyond Edit Profile, most Settings, data export and starting account deletion.
+
+Adding video on Eternus Web is planned, but it isn't available yet and no release date has been set. Until then, you can add video in the Eternus app.
 
 Eternus Web itself explains: *"On Eternus Web you can view and edit your profile details, explore your Digital Tree and create Moments. For features not yet available on Web, use the Eternus app."*
 
