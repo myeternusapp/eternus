@@ -10,7 +10,7 @@
 // The English pages at the site root remain the hand-edited source of truth. See _i18n/README.md.
 
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join, posix, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { extract, normalize, tagSignature } from './lib/extract.mjs';
 import { splice } from './lib/html.mjs';
@@ -31,6 +31,14 @@ const lf = (s) => s.replace(/\r\n/g, '\n');
 export const read = (rel) => lf(readFileSync(join(ROOT, rel), 'utf8'));
 const usesCrlf = (rel) => existsSync(join(ROOT, rel)) && readFileSync(join(ROOT, rel), 'utf8').includes('\r\n');
 const pageByFile = new Map(config.pages.map((p) => [p.file, p]));
+/** Locale file name for a page: `id` from config, else the file name without .html. */
+export const pageId = (file) => pageByFile.get(file)?.id ?? file.replace(/\.html$/, '');
+/**
+ * Secret pages (the Origin Archive) are translated but stay undiscoverable except through their
+ * in-site entry point: no sitemap entry, no hreflang, no injected selector, and the English source
+ * is never modified by the build.
+ */
+export const isSecret = (file) => pageByFile.get(file)?.secret === true;
 
 export const isPublished = (locale, file) => locale === SOURCE || (config.publish[locale] ?? []).includes(file);
 export const outputFile = (locale, file) => (locale === SOURCE ? file : `${config.locales[locale].dir}/${file}`);
@@ -59,7 +67,7 @@ export function loadTranslations(locale) {
 }
 
 function lookup(files, file, key) {
-  const page = files[file.replace(/\.html$/, '')] ?? {};
+  const page = files[pageId(file)] ?? {};
   const v = Object.hasOwn(page, key) ? page[key] : files._shared?.[key];
   return typeof v === 'string' && v.trim() ? v : null;
 }
@@ -69,7 +77,7 @@ export function validateTranslation(unit, value) {
   const problems = [];
   if (PLACEHOLDER.test(value)) problems.push('looks like placeholder text');
   if (unit.kind === 'text' && tagSignature(unit.key) !== tagSignature(value)) problems.push('markup differs from the English source');
-  if (unit.kind === 'attr' && /<[a-z/]/i.test(value)) problems.push('markup is not allowed in an attribute');
+  if ((unit.kind === 'attr' || unit.kind === 'script') && /<[a-z/]/i.test(value)) problems.push(`markup is not allowed in ${unit.kind === 'attr' ? 'an attribute' : 'a script string'}`);
   const vars = (s) => (s.match(VARS) ?? []).sort().join(',');
   if (vars(unit.key) !== vars(value)) problems.push('{placeholders} differ from the English source');
   if (value === unit.key && /\p{L}{4,}/u.test(value) && !config.sameAsSource.includes(value)) problems.push('identical to the English source');
@@ -161,26 +169,85 @@ function replaceOnce(html, re, fn, what, file) {
   return html.replace(re, fn);
 }
 
-/** Relative URLs in a page served from /<dir>/: assets go up one level; pages stay local if translated. */
-function rewriteUrls(html, locale) {
+const pageByPath = new Map(config.pages.map((p) => [p.path, p.file]));
+
+/** A site URL (https://origin/… or /…) for a page that exists in `locale` points at that version. */
+function localizeSiteUrl(url, locale) {
+  const absolute = url === config.origin || url.startsWith(`${config.origin}/`);
+  if (!absolute && !/^\/(?!\/)/.test(url)) return url;
+  const rest = absolute ? url.slice(config.origin.length) || '/' : url;
+  const [, path, tail] = /^([^?#]*)(.*)$/.exec(rest);
+  const file = pageByPath.get(path === '/index.html' ? '/' : path);
+  if (!file || locale === SOURCE || !isPublished(locale, file)) return url;
+  return (absolute ? config.origin : '') + `/${config.locales[locale].dir}${pageByFile.get(file).path}` + tail;
+}
+
+/**
+ * URLs in a page generated at <dir>/<file>: relative URLs are re-resolved from the new location
+ * (pages stay in the same language when translated, else fall back to English), and site URLs to
+ * translated pages are localised. Script bodies and data: URIs are never touched, except the
+ * relative `import('./…')` of a module.
+ */
+function rewriteUrls(html, locale, file) {
+  const { dir } = config.locales[locale];
+  const srcDir = posix.dirname(file);
+  const outDir = posix.join(dir, srcDir);
   const fix = (url) => {
-    if (!url || /^(?:[a-z][a-z0-9+.-]*:|\/|#|\.\.\/|\u0000)/i.test(url)) return { url };
-    const clean = url.replace(/^\.\//, '');
-    const path = clean.split(/[?#]/)[0];
-    if (pageByFile.has(path)) return isPublished(locale, path) ? { url: clean } : { url: `../${clean}`, fallback: true };
-    return { url: `../${clean}` };
+    if (!url || /^(?:#|\u0000|\u0001|\/\/)/.test(url)) return { url };
+    if (/^(?:[a-z][a-z0-9+.-]*:|\/)/i.test(url)) return { url: localizeSiteUrl(url, locale) };
+    const [, path, tail] = /^([^?#]*)(.*)$/.exec(url.replace(/^\.\//, ''));
+    const resolved = posix.normalize(posix.join(srcDir, path));
+    let target = resolved, fallback = false;
+    if (pageByFile.has(resolved)) {
+      if (isPublished(locale, resolved)) target = posix.join(dir, resolved);
+      else fallback = true;
+    }
+    return { url: posix.relative(outDir, target) + tail, fallback };
   };
-  // data: URIs (e.g. the inline noise SVG) contain their own url(%23id) references: set them aside.
   const kept = [];
+  const keep = (m) => `\u0000${kept.push(m) - 1}\u0000`;
+  const scripts = [];
   const out = html
-    .replace(/"data:[^"]*"|'data:[^']*'/g, (m) => `\u0000${kept.push(m) - 1}\u0000`)
+    // Script bodies may build markup in strings (e.g. src="' + img + '"): only their module imports move.
+    .replace(/(<script\b[^>]*>)([\s\S]*?)(<\/script>)/gi, (_, open, body, close) =>
+      `${open}\u0001${scripts.push(body.replace(/import\((['"])(\.\/[^'"]+)\1\)/g, (m, q, url) => `import(${q}${fix(url).url}${q})`)) - 1}\u0001${close}`)
+    // data: URIs (e.g. the inline noise SVG) contain their own url(%23id) references: set them aside.
+    .replace(/"data:[^"]*"|'data:[^']*'/g, keep)
     .replace(/(\s(?:href|src))=(["'])(.*?)\2/g, (_, a, q, url) => {
       const r = fix(url);
       return `${a}=${q}${r.url}${q}${r.fallback ? ` hreflang="${config.locales[SOURCE].hreflang}"` : ''}`;
     })
-    .replace(/url\((['"]?)([^'")]+)\1\)/g, (_, q, url) => `url(${q}${fix(url).url}${q})`)
-    .replace(/import\((['"])(\.\/[^'"]+)\1\)/g, (_, q, url) => `import(${q}${fix(url).url}${q})`);
-  return out.replace(/\u0000(\d+)\u0000/g, (_, i) => kept[i]);
+    .replace(/url\((['"]?)([^'")]+)\1\)/g, (_, q, url) => `url(${q}${fix(url).url}${q})`);
+  return out
+    .replace(/\u0000(\d+)\u0000/g, (_, i) => kept[i])
+    .replace(/\u0001(\d+)\u0001/g, (_, i) => scripts[i]);
+}
+
+// ---------------------------------------------------------------------------------------------
+// Strings inside <script> blocks. Only literals listed in a page's `scriptStrings` are translated,
+// so code, identifiers and state keys can never be changed by a translation.
+
+const JS_LITERAL = /(['"])((?:\\.|(?!\1)[^\\\n])*)\1/g;
+const unescapeJs = (s) => s.replace(/\\(.)/g, '$1');
+const escapeJs = (s, q) => s.replace(/\\/g, '\\\\').replace(new RegExp(q, 'g'), `\\${q}`);
+const scriptBodies = (html) => [...html.matchAll(/(<script\b[^>]*>)([\s\S]*?)<\/script>/gi)]
+  .map((m) => ({ start: m.index + m[1].length, end: m.index + m[1].length + m[2].length, body: m[2] }));
+
+/** Units for the configured script strings found in `html` (each listed string must occur). */
+export function scriptUnits(html, file) {
+  const wanted = new Set(pageByFile.get(file)?.scriptStrings ?? []);
+  const units = [];
+  for (const { start, body } of scriptBodies(html)) {
+    for (const m of body.matchAll(JS_LITERAL)) {
+      const value = unescapeJs(m[2]);
+      if (!wanted.has(value)) continue;
+      units.push({ kind: 'script', key: value, start: start + m.index, end: start + m.index + m[0].length, quote: m[1] });
+    }
+  }
+  const found = new Set(units.map((u) => u.key));
+  const absent = [...wanted].filter((s) => !found.has(s));
+  if (absent.length) throw new Error(`${file}: scriptStrings not found in its scripts: ${absent.join(' | ')}`);
+  return units;
 }
 
 /**
@@ -188,21 +255,23 @@ function rewriteUrls(html, locale) {
  * null when any string is missing or invalid.
  */
 export function renderPage(locale, file, enSource, translations = loadTranslations(locale)) {
-  const { units } = extract(enSource);
+  const units = [...extract(enSource).units, ...scriptUnits(enSource, file)];
   const missing = [], invalid = [], edits = [];
   for (const u of units) {
     const value = lookup(translations, file, u.key);
     if (value === null) { missing.push(u.key); continue; }
     const problems = validateTranslation(u, value);
     if (problems.length) { invalid.push({ key: u.key, problems }); continue; }
-    edits.push({ start: u.start, end: u.end, text: u.kind === 'attr' ? escapeAttr(value, u.quote) : value });
+    const text = u.kind === 'attr' ? escapeAttr(value, u.quote) : u.kind === 'script' ? u.quote + escapeJs(value, u.quote) + u.quote : value;
+    edits.push({ start: u.start, end: u.end, text });
   }
   if (missing.length || invalid.length) return { html: null, missing: [...new Set(missing)], invalid };
 
   const { lang, ogLocale } = config.locales[locale];
   const url = pageUrl(locale, file);
-  let html = rewriteUrls(splice(enSource, edits), locale);
+  let html = rewriteUrls(splice(enSource, edits), locale, file);
   html = replaceOnce(html, /<html lang="[^"]*"/, () => `<html lang="${lang}"`, '<html lang>', file);
+  if (isSecret(file)) return { html, missing, invalid };
   html = replaceOnce(html, /(<link rel="canonical" href=")[^"]*"/, (_, a) => `${a}${url}"`, 'canonical link', file);
   html = replaceOnce(html, /(<meta property="og:url" content=")[^"]*"/, (_, a) => `${a}${url}"`, 'og:url', file);
   html = replaceOnce(html, /(<meta name="twitter:url" content=")[^"]*"/, (_, a) => `${a}${url}"`, 'twitter:url', file);
@@ -216,6 +285,7 @@ export function renderSitemap() {
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
   ];
   for (const { file } of config.pages) {
+    if (isSecret(file)) continue;
     const locales = availableLocales(file);
     for (const l of locales) {
       lines.push('  <url>', `    <loc>${pageUrl(l, file)}</loc>`);
@@ -235,9 +305,10 @@ export function buildAll() {
   const files = new Map(), remove = [], errors = [];
   const sources = new Map();
   for (const { file } of config.pages) {
-    const en = fillRegions(read(file), SOURCE, file);
+    // A secret page's English source is used as-is and never rewritten.
+    const en = isSecret(file) ? read(file) : fillRegions(read(file), SOURCE, file);
     sources.set(file, en);
-    files.set(file, en);
+    if (!isSecret(file)) files.set(file, en);
   }
   for (const locale of targetLocales) {
     const translations = loadTranslations(locale);
@@ -271,7 +342,8 @@ function sourceKeys() {
   const perPage = new Map();
   for (const { file } of config.pages) {
     const seen = new Set();
-    const { units } = extract(fillRegions(read(file), SOURCE, file));
+    const src = isSecret(file) ? read(file) : fillRegions(read(file), SOURCE, file);
+    const units = [...extract(src).units, ...scriptUnits(src, file)];
     perPage.set(file, units.map((u) => u.key).filter((k) => !seen.has(k) && seen.add(k)));
   }
   return perPage;
@@ -289,7 +361,7 @@ function runExtract(prune) {
     }
     const layout = { _shared: {} };
     for (const [file, keys] of perPage) {
-      const name = file.replace(/\.html$/, '');
+      const name = pageId(file);
       layout[name] ??= {};
       for (const k of keys) (count.get(k) > 1 ? layout._shared : layout[name])[k] = known.get(k) ?? null;
     }

@@ -73,6 +73,28 @@ drafts held outside this repository, pending legal review. Do not commit
 - **Add a language:** add an entry to `locales` in `config.json`, then run `extract`, translate,
   set `publish`, and build.
 
+## Secret pages and script strings
+
+The Origin Archive (`archive/2026/index.html`) is configured with `"secret": true`. It is translated
+to `/pt/archive/2026/` and `/it/archive/2026/`, but:
+
+- the build never modifies its English source;
+- it is never listed in the sitemap;
+- it gets no hreflang links and no injected language selector;
+- visitors reach it only through the homepage tree link, which the build points at the same
+  language;
+- its links back to `https://myeternusapp.com` lead to that language's home page.
+
+Visible text that the page's JavaScript writes at runtime is listed in `scriptStrings` in the
+config. Only those exact string literals are translated, so code and state keys can't change.
+
+When translating the archive, keep these intact; the tests check them:
+
+- leading and trailing spaces in script strings;
+- the numbers in `.artifact-stat` (they animate);
+- the literal `"+"` (the "dodging" plus sign);
+- the `LOG_00x — ` prefix of each log title.
+
 ## Translation conventions
 
 - Product names stay in English, matching the app and Ask Eternus: Moments/Moment, Private, Circle,
