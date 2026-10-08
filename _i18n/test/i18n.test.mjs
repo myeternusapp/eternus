@@ -106,6 +106,25 @@ test('metadata: lang, canonical, social URLs and og:locale match the page', () =
   }
 });
 
+test('social previews: every page shares one existing branded image with matching size and Twitter/X card', () => {
+  const images = new Set();
+  for (const { out } of published) {
+    const els = elements(html(out));
+    const meta = (k) => get(els.find((e) => e.tag === 'meta' && (get(e, 'property') === k || get(e, 'name') === k)), 'content');
+    const og = meta('og:image');
+    assert.ok(og?.startsWith(`${config.origin}/`), `${out}: og:image must be an absolute site URL`);
+    assert.equal(meta('twitter:image'), og, `${out}: twitter:image differs from og:image`);
+    assert.equal(meta('twitter:card'), 'summary_large_image', out);
+    const file = join(ROOT, og.slice(config.origin.length + 1));
+    assert.ok(existsSync(file), `${out}: ${og} does not exist`);
+    const png = readFileSync(file);
+    assert.equal(png.toString('latin1', 1, 4), 'PNG', `${out}: expected a PNG preview image`);
+    assert.deepEqual([png.readUInt32BE(16), png.readUInt32BE(20)], [Number(meta('og:image:width')), Number(meta('og:image:height'))], `${out}: declared size`);
+    images.add(og);
+  }
+  assert.equal(images.size, 1, `pages use different preview images: ${[...images].join(', ')}`);
+});
+
 test('hreflang: alternates are reciprocal, self-referencing, complete and include x-default', () => {
   for (const file of pages) {
     const cluster = availableLocales(file);
