@@ -4,8 +4,8 @@ import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join, normalize as normPath } from 'node:path';
 import { test } from 'node:test';
 import {
-  ROOT, availableLocales, buildAll, config, isPublished, loadTranslations, outputFile, pageUrl, read,
-  renderSitemap, targetLocales, validateTranslation,
+  ROOT, availableLocales, buildAll, config, isPublished, isSecret, loadTranslations, outputFile, pageId, pageUrl, read,
+  renderSitemap, scriptUnits, targetLocales, validateTranslation,
 } from '../build.mjs';
 import { extract, normalize, tagSignature } from '../lib/extract.mjs';
 import { attr, parse, splice, walk } from '../lib/html.mjs';
@@ -13,7 +13,10 @@ import { attr, parse, splice, walk } from '../lib/html.mjs';
 const locales = Object.keys(config.locales);
 const pages = config.pages.map((p) => p.file);
 const published = locales.flatMap((l) => pages.filter((f) => isPublished(l, f)).map((f) => ({ locale: l, file: f, out: outputFile(l, f) })));
+// Regular site pages (the secret Origin Archive has no SEO metadata, selector or site navigation by design).
+const site = published.filter((p) => !isSecret(p.file));
 const html = (rel) => read(rel);
+const translationOf = (t, file, key) => t[pageId(file)]?.[key] ?? t._shared?.[key];
 const elements = (src) => [...walk(parse(src))].filter((n) => n.type === 'element');
 const get = (el, name) => attr(el, name)?.value ?? null;
 
@@ -62,9 +65,8 @@ test('translations: every stored translation is valid, including unpublished dra
   for (const locale of targetLocales) {
     for (const file of pages) {
       const t = loadTranslations(locale);
-      for (const u of extract(html(file)).units) {
-        const name = file.replace(/\.html$/, '');
-        const value = t[name]?.[u.key] ?? t._shared?.[u.key];
+      for (const u of [...extract(html(file)).units, ...scriptUnits(html(file), file)]) {
+        const value = translationOf(t, file, u.key);
         if (typeof value !== 'string') continue;
         assert.deepEqual(validateTranslation(u, value), [], `${locale}/${file}: ${u.key}`);
       }
@@ -94,7 +96,7 @@ test('unpublished translations are not generated and not linked', () => {
 });
 
 test('metadata: lang, canonical, social URLs and og:locale match the page', () => {
-  for (const { locale, file, out } of published) {
+  for (const { locale, file, out } of site) {
     const els = elements(html(out));
     const url = pageUrl(locale, file);
     const meta = (k) => els.find((e) => e.tag === 'meta' && (get(e, 'property') === k || get(e, 'name') === k));
@@ -108,7 +110,7 @@ test('metadata: lang, canonical, social URLs and og:locale match the page', () =
 
 test('social previews: every page shares one existing branded image with matching size and Twitter/X card', () => {
   const images = new Set();
-  for (const { out } of published) {
+  for (const { out } of site) {
     const els = elements(html(out));
     const meta = (k) => get(els.find((e) => e.tag === 'meta' && (get(e, 'property') === k || get(e, 'name') === k)), 'content');
     const og = meta('og:image');
@@ -126,7 +128,7 @@ test('social previews: every page shares one existing branded image with matchin
 });
 
 test('hreflang: alternates are reciprocal, self-referencing, complete and include x-default', () => {
-  for (const file of pages) {
+  for (const file of pages.filter((f) => !isSecret(f))) {
     const cluster = availableLocales(file);
     // A page that exists in one language only carries no alternates at all.
     const expected = cluster.length > 1
@@ -142,7 +144,7 @@ test('hreflang: alternates are reciprocal, self-referencing, complete and includ
 });
 
 test('language selector: present twice per page, one current language, correct lang/hreflang, links resolve', () => {
-  for (const { locale, out } of published) {
+  for (const { locale, out } of site) {
     const els = elements(html(out));
     const groups = els.filter((e) => (get(e, 'class') ?? '').split(/\s+/).includes('lang-switch'));
     assert.equal(groups.length, 2, `${out}: header + menu selectors`);
@@ -164,11 +166,13 @@ test('language selector: present twice per page, one current language, correct l
 
 test('links: every relative href, src, url() and import() resolves to a file', () => {
   for (const { out } of published) {
-    const src = html(out);
+    const raw = html(out);
+    // Script bodies are code (they may build markup in strings); only their module imports are URLs.
+    const src = raw.replace(/(<script\b[^>]*>)[\s\S]*?(<\/script>)/gi, '$1$2');
     const urls = [
       ...[...src.matchAll(/\s(?:href|src)=(["'])(.*?)\1/g)].map((m) => m[2]),
       ...[...src.matchAll(/url\((['"]?)([^'")]+)\1\)/g)].map((m) => m[2]),
-      ...[...src.matchAll(/import\((['"])(.*?)\1\)/g)].map((m) => m[2]),
+      ...[...raw.matchAll(/import\((['"])(.*?)\1\)/g)].map((m) => m[2]),
     ];
     for (const u of urls) {
       if (!u || /^(?:[a-z][a-z0-9+.-]*:|#|%23|\/)/i.test(u)) continue;
@@ -181,7 +185,13 @@ test('links: every relative href, src, url() and import() resolves to a file', (
 test('scripts: localised pages run exactly the same JavaScript as English (only asset paths change)', () => {
   const scripts = (src) => elements(src).filter((e) => e.tag === 'script').map((e) => src.slice(e.openEnd, e.closeStart));
   for (const { locale, file, out } of published.filter((p) => p.locale !== config.defaultLocale)) {
-    const en = scripts(html(file)).map((s) => s.replace(/(['"])\.\/assets\//g, '$1../assets/'));
+    // Expected: the English scripts with only the configured string literals swapped for their translations.
+    const t = loadTranslations(locale), src = html(file);
+    const expected = splice(src, scriptUnits(src, file).map((u) => {
+      const value = translationOf(t, file, u.key).replace(/\\/g, '\\\\').replace(new RegExp(u.quote, 'g'), `\\${u.quote}`);
+      return { start: u.start, end: u.end, text: u.quote + value + u.quote };
+    }));
+    const en = scripts(expected).map((s) => s.replace(/(['"])\.\/assets\//g, '$1../assets/'));
     assert.deepEqual(scripts(html(out)), en, `${locale}/${file}`);
   }
 });
@@ -196,7 +206,7 @@ test('styles: localised pages use exactly the same CSS as English (only asset pa
 });
 
 test('scripts: every label the JavaScript reads from markup exists on the page', () => {
-  for (const { out } of published) {
+  for (const { out } of site) {
     const src = html(out);
     const els = elements(src);
     const burger = els.find((e) => get(e, 'id') === 'nav-hamburger');
@@ -244,7 +254,71 @@ test('Ask Eternus: the page language decides the service-message language, via t
 test('sitemap: lists exactly the published pages with matching alternates', () => {
   const xml = read('sitemap.xml');
   const locs = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]).sort();
-  assert.deepEqual(locs, published.map(({ locale, file }) => pageUrl(locale, file)).sort());
+  assert.deepEqual(locs, site.map(({ locale, file }) => pageUrl(locale, file)).sort());
   assert.match(xml, /xmlns:xhtml="http:\/\/www\.w3\.org\/1999\/xhtml"/);
   assert.equal(xml.charCodeAt(0), '<'.charCodeAt(0), 'no BOM');
+});
+
+// ---------------------------------------------------------------------------------------------
+// Secret pages (the Origin Archive)
+
+const secrets = config.pages.filter((p) => p.secret);
+
+test('secret pages: English source is never written by the build and stays out of the sitemap and hreflang', () => {
+  const { files } = buildAll();
+  for (const { file, path } of secrets) {
+    assert.ok(!files.has(file), `${file}: the build must not rewrite the English secret page`);
+    assert.ok(!/i18n:|lang-switch|hreflang/.test(html(file)), `${file}: English source must carry no localisation markup`);
+    for (const l of locales) assert.ok(!renderSitemap().includes(`${l === config.defaultLocale ? '' : `/${config.locales[l].dir}`}${path}<`), `${l}${path} in sitemap`);
+  }
+  for (const { out } of published.filter((p) => isSecret(p.file))) {
+    const src = html(out);
+    assert.ok(!/rel="(canonical|alternate)"|lang-switch|i18n:/.test(src), `${out}: no SEO links or injected selector`);
+  }
+});
+
+test('secret pages: the discovery link and exits follow the selected language', () => {
+  for (const { file, path } of secrets) {
+    for (const locale of targetLocales.filter((l) => isPublished(l, file))) {
+      const dir = config.locales[locale].dir;
+      const home = html(outputFile(locale, 'index.html'));
+      assert.ok(home.includes(`href="/${dir}${path}"`), `${locale} home must lead to /${dir}${path}`);
+      assert.ok(!home.includes(`href="${path}"`), `${locale} home still links to the English secret page`);
+      const page = html(outputFile(locale, file));
+      assert.equal(get(elements(page).find((e) => e.tag === 'html'), 'lang'), config.locales[locale].lang);
+      const exits = [...page.matchAll(/href="(https:\/\/myeternusapp\.com[^"]*)"/g)].map((m) => m[1]);
+      assert.ok(exits.length > 0 && exits.every((u) => u === `${config.origin}/${dir}/`), `${locale}: exits ${exits}`);
+    }
+    assert.ok(html('index.html').includes(`href="${path}"`), 'English home keeps its original discovery link');
+  }
+});
+
+test('secret pages: translations keep what the page scripts depend on', () => {
+  for (const { file } of secrets) {
+    const src = html(file);
+    for (const locale of targetLocales.filter((l) => isPublished(l, file))) {
+      const t = loadTranslations(locale);
+      // Script strings are concatenated with other values: keep their leading/trailing spaces.
+      for (const u of scriptUnits(src, file)) {
+        const v = translationOf(t, file, u.key);
+        assert.equal(/^\s/.test(v), /^\s/.test(u.key), `${locale}: leading space of "${u.key}"`);
+        assert.equal(/\s$/.test(v), /\s$/.test(u.key), `${locale}: trailing space of "${u.key}"`);
+      }
+      const page = html(outputFile(locale, file));
+      const stats = [...page.matchAll(/<span class="artifact-stat">([^<]*)<\/span>/g)].map((m) => m[1]);
+      const enStats = [...src.matchAll(/<span class="artifact-stat">([^<]*)<\/span>/g)].map((m) => m[1]);
+      stats.forEach((s, i) => {
+        // The counter animates the digits; the "+" effect needs a literal "+" and no digits.
+        assert.deepEqual(s.match(/\d+/g), enStats[i].match(/\d+/g), `${locale}: numbers in "${s}"`);
+        assert.equal(s.includes('"+"'), enStats[i].includes('"+"'), `${locale}: "+" in "${s}"`);
+      });
+      // The playback bar shows the part of each log title before "—".
+      for (const m of src.matchAll(/(LOG_\d{3}) — /g)) assert.ok(page.includes(`${m[1]} — `), `${locale}: ${m[1]} prefix`);
+      // No configured English script literal is left in the generated scripts.
+      for (const u of scriptUnits(src, file)) {
+        const v = translationOf(t, file, u.key);
+        if (v !== u.key) assert.ok(!page.includes(`'${u.key.replace(/'/g, "\'")}'`), `${locale}: script literal "${u.key}" untranslated`);
+      }
+    }
+  }
 });

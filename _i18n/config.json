@@ -50,6 +50,31 @@
     {
       "file": "privacy-policy.html",
       "path": "/privacy-policy.html"
+    },
+    {
+      "file": "archive/2026/index.html",
+      "path": "/archive/2026/",
+      "id": "archive-2026",
+      "secret": true,
+      "scriptStrings": [
+        "TEST PROTOCOL — ",
+        "COPY",
+        "PASTE",
+        "TRANSMISSION COMPLETE",
+        "No APIs were harmed during this transmission.",
+        "Unlock reward",
+        "Unlocking will open once Eternus sign-in is connected to this page.",
+        "Checking your account…",
+        "Sign in to unlock",
+        "Sign in with your Eternus account to unlock this reward.",
+        "Unlocking…",
+        "Unlocking your reward…",
+        "Reward unlocked",
+        "Try again",
+        "Something went wrong and nothing was saved. Please try again.",
+        "Unlocked on ",
+        ". Your 12 months count from this date. We'll let you know when your frame is ready."
+      ]
     }
   ],
   "publish": {
@@ -57,13 +82,15 @@
       "index.html",
       "about.html",
       "faq.html",
-      "support.html"
+      "support.html",
+      "archive/2026/index.html"
     ],
     "it": [
       "index.html",
       "about.html",
       "faq.html",
-      "support.html"
+      "support.html",
+      "archive/2026/index.html"
     ]
   },
   "sameAsSource": [
@@ -77,6 +104,13 @@
     "Talk to Eternus",
     "Home",
     "Privacy",
-    "13. Cookies"
+    "13. Cookies",
+    "SÉRGIO",
+    "CLAUDE",
+    "LYRA",
+    "MINA",
+    "ChatGPT — OpenAI",
+    "Ctrl+C / Ctrl+V",
+    "🧍<br>Sérgio"
   ]
 }
