@@ -2,9 +2,9 @@
 id: account.delete
 title: "How do I delete my Eternus account?"
 status: current
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-08
 applies_to: [app, web]
-related: [account.export, account.sign-in, tree.manage-access]
+related: [account.export, account.sign-in, tree.manage-access, messenger.access-and-account-deletion]
 ---
 
 # How do I delete my Eternus account?
@@ -17,6 +17,7 @@ What deleting your account means:
 - **It can't be undone.** Eternus doesn't offer a way to restore a deleted account, and creating a new account later doesn't bring back the old account's content.
 - Your Moments aren't passed on to the people in your Circle or Legacy, and your account isn't turned into anything else.
 - It can't remove copies that other people made outside Eternus, such as screenshots or downloads.
+- If you've used Messenger, the people you messaged keep the messages they received from you in Eternus (see *What happens to Messenger conversations if access is removed or an account is deleted?*).
 
 If the deletion process is interrupted, Eternus recognises it the next time the account is opened — in the app or on Eternus Web — and tries to finish it.
 

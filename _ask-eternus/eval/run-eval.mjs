@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Runs the 159-question evaluation set against the STAGING deployment (approved test window only).
+// Runs the 180-question evaluation set against the STAGING deployment (approved test window only).
 //
 //   ASK_ETERNUS_DEBUG_TOKEN=... node eval/run-eval.mjs --endpoint <callable URL> \
 //     --project <project id> --app-id <Firebase app id> --api-key <web API key> [--runs 3] [--judge]

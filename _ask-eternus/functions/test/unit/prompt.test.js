@@ -9,7 +9,7 @@ test('system instruction contains every KB section and the assistant policy, and
   for (const rule of kb.assistantPolicy) assert.ok(s.includes(rule));
   assert.equal(s, systemInstruction(kb), 'identical for every request (cache-friendly prefix)');
   assert.ok(!/must_not_claim|intent_group/.test(s), 'no eval content');
-  assert.ok(s.length > 30_000 && s.length < 45_000, `size ${s.length}`);
+  assert.ok(s.length > 30_000 && s.length < 55_000, `size ${s.length}`);
 });
 
 test('classification is an ordered decision procedure: injection, off_topic, assistant_policy, clarify, account_specific, current, unknown', () => {
@@ -108,7 +108,7 @@ test('the visitor question is delimited data', () => {
 test('the response schema restricts sources to existing KB ids and kinds to the approved classes', () => {
   const sch = responseSchema(kb);
   assert.deepEqual(sch.properties.sources.items.properties.id.enum, kb.ids);
-  assert.equal(kb.ids.length, 39);
+  assert.equal(kb.ids.length, 43);
   assert.deepEqual(sch.properties.kind.enum, MODEL_KINDS);
   assert.ok(!MODEL_KINDS.includes('planned'), 'no planned answer class: planned items are stated inside current answers');
   assert.deepEqual(sch.required, ['kind', 'language', 'sources', 'answer']);
