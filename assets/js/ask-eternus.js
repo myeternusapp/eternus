@@ -12,6 +12,20 @@ export const MAX_QUESTION_CHARS = 500;
 /** Code points, as the server counts them. */
 export const questionLength = (s) => [...String(s ?? '').trim()].length;
 
+// Same rule as the server's locale check (functions/src/input.js): at most 15 characters.
+const LOCALE = /^[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8}){0,3}$/;
+
+/**
+ * Locale hint sent with each question: the page's language first, so /pt/ and /it/ get their own
+ * service messages, then the browser's. The server falls back to English for unsupported languages.
+ */
+export function requestLocale(pageLang, browserLang) {
+  for (const tag of [pageLang, browserLang]) {
+    if (typeof tag === 'string' && tag.length <= 15 && LOCALE.test(tag)) return tag;
+  }
+  return null;
+}
+
 /**
  * config: { firebase: { apiKey, authDomain, projectId, appId }, recaptchaSiteKey }
  * Returns { ask(question) } where ask resolves to the server response object, or to
@@ -31,7 +45,7 @@ export function initAskEternus(config) {
     async ask(question) {
       const q = String(question ?? '').trim();
       if (!q || questionLength(q) > MAX_QUESTION_CHARS) return { ok: false, kind: 'invalid_input' };
-      const payload = { question: q, locale: navigator.language || null, v: 1 };
+      const payload = { question: q, locale: requestLocale(document.documentElement.lang, navigator.language), v: 1 };
       for (let attempt = 0; ; attempt++) {
         try {
           const res = await call(payload);

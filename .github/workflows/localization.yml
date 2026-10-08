@@ -1,0 +1,38 @@
+# Validates the website localisation (EN / PT / IT). Read-only: it builds nothing that is
+# published, deploys nothing and needs no secrets or npm packages.
+name: Localization checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: localization-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Translation status
+        run: node _i18n/build.mjs status
+
+      # Fails if a published page has missing or invalid translations, or if any generated file
+      # (pt/, it/, English head/selector regions, sitemap.xml) is out of date with its sources.
+      - name: Generated pages are complete and up to date
+        run: node _i18n/build.mjs --check
+
+      - name: Localization tests
+        run: node --test _i18n/test/i18n.test.mjs

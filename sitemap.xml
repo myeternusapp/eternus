@@ -1,16 +1,88 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://myeternusapp.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://myeternusapp.com/" />
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://myeternusapp.com/pt/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://myeternusapp.com/it/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://myeternusapp.com/" />
+  </url>
+  <url>
+    <loc>https://myeternusapp.com/pt/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://myeternusapp.com/" />
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://myeternusapp.com/pt/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://myeternusapp.com/it/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://myeternusapp.com/" />
+  </url>
+  <url>
+    <loc>https://myeternusapp.com/it/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://myeternusapp.com/" />
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://myeternusapp.com/pt/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://myeternusapp.com/it/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://myeternusapp.com/" />
   </url>
   <url>
     <loc>https://myeternusapp.com/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://myeternusapp.com/about.html" />
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://myeternusapp.com/pt/about.html" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://myeternusapp.com/it/about.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://myeternusapp.com/about.html" />
+  </url>
+  <url>
+    <loc>https://myeternusapp.com/pt/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://myeternusapp.com/about.html" />
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://myeternusapp.com/pt/about.html" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://myeternusapp.com/it/about.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://myeternusapp.com/about.html" />
+  </url>
+  <url>
+    <loc>https://myeternusapp.com/it/about.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://myeternusapp.com/about.html" />
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://myeternusapp.com/pt/about.html" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://myeternusapp.com/it/about.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://myeternusapp.com/about.html" />
   </url>
   <url>
     <loc>https://myeternusapp.com/faq.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://myeternusapp.com/faq.html" />
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://myeternusapp.com/pt/faq.html" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://myeternusapp.com/it/faq.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://myeternusapp.com/faq.html" />
+  </url>
+  <url>
+    <loc>https://myeternusapp.com/pt/faq.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://myeternusapp.com/faq.html" />
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://myeternusapp.com/pt/faq.html" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://myeternusapp.com/it/faq.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://myeternusapp.com/faq.html" />
+  </url>
+  <url>
+    <loc>https://myeternusapp.com/it/faq.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://myeternusapp.com/faq.html" />
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://myeternusapp.com/pt/faq.html" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://myeternusapp.com/it/faq.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://myeternusapp.com/faq.html" />
   </url>
   <url>
     <loc>https://myeternusapp.com/support.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://myeternusapp.com/support.html" />
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://myeternusapp.com/pt/support.html" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://myeternusapp.com/it/support.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://myeternusapp.com/support.html" />
+  </url>
+  <url>
+    <loc>https://myeternusapp.com/pt/support.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://myeternusapp.com/support.html" />
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://myeternusapp.com/pt/support.html" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://myeternusapp.com/it/support.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://myeternusapp.com/support.html" />
+  </url>
+  <url>
+    <loc>https://myeternusapp.com/it/support.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://myeternusapp.com/support.html" />
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://myeternusapp.com/pt/support.html" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://myeternusapp.com/it/support.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://myeternusapp.com/support.html" />
   </url>
   <url>
     <loc>https://myeternusapp.com/privacy-policy.html</loc>
