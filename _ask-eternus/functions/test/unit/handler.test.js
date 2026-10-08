@@ -47,7 +47,7 @@ test('happy path: grounded answer with sources, kbVersion and requestId', async 
   assert.equal(r.kind, 'current');
   assert.equal(r.answer, CANARY_A);
   assert.deepEqual(r.sources, [{ id: 'layers.circle', title: 'What is Circle?' }]);
-  assert.equal(r.kbVersion, '1.2.0');
+  assert.equal(r.kbVersion, '1.3.0');
   assert.equal(r.requestId, 'req-1');
   assert.match(calls[0].user, /<visitor_question>/);
 });
