@@ -1,0 +1,82 @@
+{
+  "origin": "https://myeternusapp.com",
+  "defaultLocale": "en",
+  "locales": {
+    "en": {
+      "dir": "",
+      "lang": "en",
+      "hreflang": "en",
+      "ogLocale": "en_GB",
+      "label": "EN",
+      "name": "English",
+      "selectorLabel": "Language"
+    },
+    "pt": {
+      "dir": "pt",
+      "lang": "pt-PT",
+      "hreflang": "pt-PT",
+      "ogLocale": "pt_PT",
+      "label": "PT",
+      "name": "Português",
+      "selectorLabel": "Idioma"
+    },
+    "it": {
+      "dir": "it",
+      "lang": "it",
+      "hreflang": "it",
+      "ogLocale": "it_IT",
+      "label": "IT",
+      "name": "Italiano",
+      "selectorLabel": "Lingua"
+    }
+  },
+  "pages": [
+    {
+      "file": "index.html",
+      "path": "/"
+    },
+    {
+      "file": "about.html",
+      "path": "/about.html"
+    },
+    {
+      "file": "faq.html",
+      "path": "/faq.html"
+    },
+    {
+      "file": "support.html",
+      "path": "/support.html"
+    },
+    {
+      "file": "privacy-policy.html",
+      "path": "/privacy-policy.html"
+    }
+  ],
+  "publish": {
+    "pt": [
+      "index.html",
+      "about.html",
+      "faq.html",
+      "support.html"
+    ],
+    "it": [
+      "index.html",
+      "about.html",
+      "faq.html",
+      "support.html"
+    ]
+  },
+  "sameAsSource": [
+    "Eternus",
+    "FAQ",
+    "Private",
+    "Circle",
+    "Legacy",
+    "My Tree",
+    "Ask Eternus",
+    "Talk to Eternus",
+    "Home",
+    "Privacy",
+    "13. Cookies"
+  ]
+}
