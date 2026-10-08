@@ -9,6 +9,8 @@ test('system instruction contains every KB section and the assistant policy, and
   for (const rule of kb.assistantPolicy) assert.ok(s.includes(rule));
   assert.equal(s, systemInstruction(kb), 'identical for every request (cache-friendly prefix)');
   assert.ok(!/must_not_claim|intent_group/.test(s), 'no eval content');
+  // Raised from 45_000 for KB 1.3.0 (Messenger, ~49_300 chars, ~10% more input tokens); accepted
+  // provisionally — see "Follow-ups" in _ask-eternus/README.md.
   assert.ok(s.length > 30_000 && s.length < 55_000, `size ${s.length}`);
 });
 

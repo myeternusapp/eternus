@@ -80,6 +80,14 @@ every section about it opens with a sentence saying it may not be available yet.
 that sentence only after the release is approved and production behaviour is verified, and list it
 in `pre_beta_review` so it is checked.
 
+## Follow-ups
+
+- **System instruction size (2026-10-08).** KB 1.3.0 added the Messenger sections and grew the
+  system instruction from under 45,000 to about 49,300 characters (roughly 10% more input tokens
+  per question). The limit in `functions/test/unit/prompt.test.js` was raised to 55,000 and the
+  increase was accepted provisionally. To optimise later: shorten overlapping sections, or merge
+  sections that are always cited together, and re-run the staging evaluation afterwards.
+
 ## Other files
 
 - `eval/run-eval.mjs`, `eval/staging-gates.mjs`: staging checks; they need credentials from the
