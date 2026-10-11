@@ -113,7 +113,7 @@ function selectorLinks(locale, file, withCodes) {
 
 let selectorCss = null;
 function regions(locale, file) {
-  selectorCss ??= readFileSync(join(HERE, 'selector.css'), 'utf8').trim().split('\n');
+  selectorCss ??= lf(readFileSync(join(HERE, 'selector.css'), 'utf8')).trim().split('\n');
   const label = config.locales[locale].selectorLabel;
   const locales = availableLocales(file);
   const head = [
@@ -171,6 +171,15 @@ function replaceOnce(html, re, fn, what, file) {
 
 const pageByPath = new Map(config.pages.map((p) => [p.path, p.file]));
 
+/**
+ * A link to Eternus Web (config.appOrigin) that carries `lang=` (the Sign In / Sign Up links) gets the
+ * page's language, so the forms open in the language of the page they were opened from.
+ */
+function localizeAppUrl(url, locale) {
+  if (!config.appOrigin || !(url === config.appOrigin || url.startsWith(`${config.appOrigin}/`))) return url;
+  return url.replace(/([?&](?:amp;)?lang=)[^&#]*/, `$1${locale}`);
+}
+
 /** A site URL (https://origin/… or /…) for a page that exists in `locale` points at that version. */
 function localizeSiteUrl(url, locale) {
   const absolute = url === config.origin || url.startsWith(`${config.origin}/`);
@@ -194,7 +203,7 @@ function rewriteUrls(html, locale, file) {
   const outDir = posix.join(dir, srcDir);
   const fix = (url) => {
     if (!url || /^(?:#|\u0000|\u0001|\/\/)/.test(url)) return { url };
-    if (/^(?:[a-z][a-z0-9+.-]*:|\/)/i.test(url)) return { url: localizeSiteUrl(url, locale) };
+    if (/^(?:[a-z][a-z0-9+.-]*:|\/)/i.test(url)) return { url: localizeSiteUrl(localizeAppUrl(url, locale), locale) };
     const [, path, tail] = /^([^?#]*)(.*)$/.exec(url.replace(/^\.\//, ''));
     const resolved = posix.normalize(posix.join(srcDir, path));
     let target = resolved, fallback = false;
