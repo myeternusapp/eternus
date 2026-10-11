@@ -164,6 +164,20 @@ test('language selector: present twice per page, one current language, correct l
   }
 });
 
+test('Eternus Web links: Sign In / Sign Up open in the language of the page', () => {
+  const app = config.appOrigin;
+  let checked = 0;
+  for (const { locale, out } of site) {
+    for (const el of elements(html(out)).filter((e) => e.tag === 'a' && (get(e, 'href') ?? '').startsWith(`${app}/`))) {
+      const url = new URL(get(el, 'href').replace(/&amp;/g, '&'));
+      if (!url.searchParams.has('screen')) continue;
+      assert.equal(url.searchParams.get('lang'), locale, `${out}: ${get(el, 'href')}`);
+      checked++;
+    }
+  }
+  assert.ok(checked >= site.length * 2, `expected Sign In and Sign Up links on every page, checked ${checked}`);
+});
+
 test('links: every relative href, src, url() and import() resolves to a file', () => {
   for (const { out } of published) {
     const raw = html(out);

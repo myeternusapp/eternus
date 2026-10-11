@@ -1,5 +1,6 @@
 {
   "origin": "https://myeternusapp.com",
+  "appOrigin": "https://app.myeternusapp.com",
   "defaultLocale": "en",
   "locales": {
     "en": {
