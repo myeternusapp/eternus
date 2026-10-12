@@ -87,4 +87,25 @@
   <url>
     <loc>https://myeternusapp.com/privacy-policy.html</loc>
   </url>
+  <url>
+    <loc>https://myeternusapp.com/delete-account.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://myeternusapp.com/delete-account.html" />
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://myeternusapp.com/pt/delete-account.html" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://myeternusapp.com/it/delete-account.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://myeternusapp.com/delete-account.html" />
+  </url>
+  <url>
+    <loc>https://myeternusapp.com/pt/delete-account.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://myeternusapp.com/delete-account.html" />
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://myeternusapp.com/pt/delete-account.html" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://myeternusapp.com/it/delete-account.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://myeternusapp.com/delete-account.html" />
+  </url>
+  <url>
+    <loc>https://myeternusapp.com/it/delete-account.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://myeternusapp.com/delete-account.html" />
+    <xhtml:link rel="alternate" hreflang="pt-PT" href="https://myeternusapp.com/pt/delete-account.html" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://myeternusapp.com/it/delete-account.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://myeternusapp.com/delete-account.html" />
+  </url>
 </urlset>
