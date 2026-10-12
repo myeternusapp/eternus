@@ -76,6 +76,10 @@
         "Unlocked on ",
         ". Your 12 months count from this date. We'll let you know when your frame is ready."
       ]
+    },
+    {
+      "file": "delete-account.html",
+      "path": "/delete-account.html"
     }
   ],
   "publish": {
@@ -84,14 +88,16 @@
       "about.html",
       "faq.html",
       "support.html",
-      "archive/2026/index.html"
+      "archive/2026/index.html",
+      "delete-account.html"
     ],
     "it": [
       "index.html",
       "about.html",
       "faq.html",
       "support.html",
-      "archive/2026/index.html"
+      "archive/2026/index.html",
+      "delete-account.html"
     ]
   },
   "sameAsSource": [
@@ -112,6 +118,7 @@
     "MINA",
     "ChatGPT — OpenAI",
     "Ctrl+C / Ctrl+V",
-    "🧍<br>Sérgio"
+    "🧍<br>Sérgio",
+    "Account"
   ]
 }
