@@ -89,7 +89,8 @@
       "faq.html",
       "support.html",
       "archive/2026/index.html",
-      "delete-account.html"
+      "delete-account.html",
+      "privacy-policy.html"
     ],
     "it": [
       "index.html",
@@ -97,7 +98,8 @@
       "faq.html",
       "support.html",
       "archive/2026/index.html",
-      "delete-account.html"
+      "delete-account.html",
+      "privacy-policy.html"
     ]
   },
   "sameAsSource": [
@@ -119,6 +121,12 @@
     "ChatGPT — OpenAI",
     "Ctrl+C / Ctrl+V",
     "🧍<br>Sérgio",
-    "Account"
+    "Account",
+    "6. Messenger",
+    "7. Talk to Eternus",
+    "14. Ask Eternus",
+    "15. Website",
+    "Messenger",
+    "Website"
   ]
 }
