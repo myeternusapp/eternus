@@ -80,6 +80,10 @@
     {
       "file": "delete-account.html",
       "path": "/delete-account.html"
+    },
+    {
+      "file": "terms.html",
+      "path": "/terms.html"
     }
   ],
   "publish": {
@@ -90,7 +94,8 @@
       "support.html",
       "archive/2026/index.html",
       "delete-account.html",
-      "privacy-policy.html"
+      "privacy-policy.html",
+      "terms.html"
     ],
     "it": [
       "index.html",
@@ -99,7 +104,8 @@
       "support.html",
       "archive/2026/index.html",
       "delete-account.html",
-      "privacy-policy.html"
+      "privacy-policy.html",
+      "terms.html"
     ]
   },
   "sameAsSource": [
@@ -127,6 +133,7 @@
     "14. Ask Eternus",
     "15. Website",
     "Messenger",
-    "Website"
+    "Website",
+    "6. Talk to Eternus"
   ]
 }
