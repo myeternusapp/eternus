@@ -291,6 +291,20 @@ test('secret pages: English source is never written by the build and stays out o
   }
 });
 
+test('secret pages: kept out of search results, one h1, images served as files', () => {
+  for (const { out } of published.filter((p) => isSecret(p.file))) {
+    const src = html(out);
+    const els = elements(src);
+    const robots = els.filter((e) => e.tag === 'meta' && get(e, 'name') === 'robots');
+    assert.equal(robots.length, 1, `${out}: one robots meta`);
+    assert.match(get(robots[0], 'content'), /\bnoindex\b/, `${out}: robots noindex`);
+    assert.equal(els.filter((e) => e.tag === 'h1').length, 1, `${out}: exactly one <h1>`);
+    // Inline base64 images made each archive page over 1 MB; they live in archive/2026/assets/.
+    assert.ok(!/src="data:image\//.test(src), `${out}: inline data: image`);
+    assert.ok(Buffer.byteLength(src) < 200_000, `${out}: ${Buffer.byteLength(src)} bytes`);
+  }
+});
+
 test('secret pages: the discovery link and exits follow the selected language', () => {
   for (const { file, path } of secrets) {
     for (const locale of targetLocales.filter((l) => isPublished(l, file))) {
