@@ -2,9 +2,9 @@
 id: interactions.reactions-comments
 title: "Hearts, comments and the Inbox"
 status: current
-last_reviewed: 2026-10-06
+last_reviewed: 2026-10-08
 applies_to: [app]
-related: [tree.invitations, about.not-social-network]
+related: [tree.invitations, about.not-social-network, messenger.overview]
 ---
 
 # Hearts, comments and the Inbox
@@ -13,6 +13,6 @@ On Moments that have been shared with you, you can add or remove a **heart** and
 
 Hearts and comments don't change who can see a Moment.
 
-The **Inbox** in the Eternus app brings together things that may need your attention, such as pending invitations, along with the history of responses to invitations. You can respond, mark items as read and dismiss some of them. The Inbox isn't a private messaging system between people.
+The **Inbox** in the Eternus app brings together things that may need your attention, such as pending invitations, along with the history of responses to invitations. You can respond, mark items as read and dismiss some of them. The Inbox isn't a private messaging system between people; one-to-one messaging is a separate feature (see *What is Messenger?*).
 
 Hearts, comments and the Inbox are in the Eternus app. Eternus Web doesn't currently include them.

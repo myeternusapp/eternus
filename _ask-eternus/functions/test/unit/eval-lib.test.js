@@ -8,8 +8,8 @@ import { ASK_ROOT, kb } from './helpers.js';
 const qs = readFileSync(join(ASK_ROOT, 'eval', 'questions.jsonl'), 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
 const byId = (id) => qs.find((q) => q.id === id);
 
-test('eval set: 159 questions, all expected classes answerable by the service', () => {
-  assert.equal(qs.length, 159);
+test('eval set: 180 questions, all expected classes answerable by the service', () => {
+  assert.equal(qs.length, 180);
   const kinds = new Set(['current', 'clarify', 'unknown', 'off_topic', 'account_specific', 'injection', 'assistant_policy']);
   assert.ok(qs.every((q) => kinds.has(q.expected)), 'no expected class the service cannot return');
 });

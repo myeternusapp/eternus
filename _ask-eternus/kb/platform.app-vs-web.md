@@ -2,7 +2,7 @@
 id: platform.app-vs-web
 title: "What can I do on Eternus Web?"
 status: current
-last_reviewed: 2026-10-07
+last_reviewed: 2026-10-08
 applies_to: [app, web]
 related: [about.devices, moments.create, profile.edit]
 ---
@@ -25,6 +25,7 @@ related: [about.devices, moments.create, profile.edit]
 - adding or tagging people in Moments;
 - hearts, comments and the Inbox;
 - Talk;
+- Messenger, which is being prepared for the Beta of the Eternus Android app (see *What is Messenger?*);
 - Memorials;
 - the Legacy Profile details beyond Edit Profile, most Settings, data export and starting account deletion.
 

@@ -12,12 +12,20 @@ test('the committed KB v1 validates and packages', () => {
   const r = checkKb(ASK_ROOT);
   assert.deepEqual(r.fails, []);
   const built = buildKb(ASK_ROOT);
-  assert.equal(built.kbVersion, '1.2.0');
-  assert.equal(built.sections.length, 39);
+  assert.equal(built.kbVersion, '1.3.0');
+  assert.equal(built.sections.length, 43);
   assert.ok(verifyKb(built));
   assert.equal(built.contentHash, kb.contentHash, 'generated/kb.json is up to date');
   assert.ok(!JSON.stringify(built).includes('must_not_claim'), 'eval set is never packaged');
   assert.ok(built.sections.every((s) => !s.body.startsWith('---')), 'front matter stripped');
+});
+
+test('Messenger sections state that Messenger may not be available yet', () => {
+  const messenger = kb.sections.filter((s) => s.id.startsWith('messenger.'));
+  assert.equal(messenger.length, 4);
+  for (const s of messenger) {
+    assert.ok(s.body.startsWith('**Messenger is being prepared for the Beta of the Eternus Android app. It may not be available in your version of the app yet.**'), s.id);
+  }
 });
 
 test('a tampered or missing packaged KB is refused', () => {

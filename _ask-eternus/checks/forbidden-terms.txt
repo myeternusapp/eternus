@@ -18,6 +18,8 @@ apikey
 places_key
 NotebookLM
 Project Brain
+messenger-backend
+messenger-beta-local
 re:\bAIza[0-9A-Za-z_-]{20,}
 re:\b[0-9a-f]{32,}\b
 re:\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b(?<!support@myeternusapp\.com)(?<!privacy@myeternusapp\.com)(?<!hello@myeternusapp\.com)
@@ -111,7 +113,7 @@ forever
 eternity
 stored forever
 permanent digital legacy
-end-to-end
+end-to-end | allowed_in: messenger.overview
 completely secure
 100% secure
 never be accessed
