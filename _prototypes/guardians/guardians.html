@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <!-- PROTOTYPE ONLY: not published, not linked, not in the sitemap. Source: Guardians functional specification, 26 Oct 2026. -->
+  <title>Guardians · Eternus (prototype)</title>
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="icon" href="../../favicon.ico" sizes="48x48" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet"/>
+  <script>document.documentElement.classList.add('js');</script>
+  <style>
+    /* Language selector: EN / PT / IT. Injected into every localised page by _i18n/build.mjs. */
+    .lang-switch-list { list-style: none; display: flex; align-items: center; margin: 0; padding: 0; }
+    .lang-switch a {
+      display: inline-flex; align-items: center; justify-content: center;
+      text-decoration: none; color: var(--muted, #a89dae);
+      transition: color 0.3s, border-color 0.3s, background 0.3s;
+    }
+    .lang-switch a:hover { color: var(--gold-light, #e8c97a); }
+    .lang-switch a[aria-current="true"] { color: var(--gold-light, #e8c97a); }
+    .lang-switch-sr {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+    }
+
+    /* Header (desktop): compact codes between the page links and Sign In / Sign Up. */
+    .lang-switch--header .lang-switch-list { gap: 2px; }
+    .lang-switch--header a {
+      min-width: 28px; min-height: 30px; padding: 0 3px;
+      font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase;
+      border-bottom: 1px solid transparent;
+    }
+    .lang-switch--header a[aria-current="true"] { border-bottom-color: rgba(201,168,76,0.6); }
+    /* Between the hamburger breakpoint and wide screens, spacing shrinks with the viewport so the
+       selector and longer translated labels fit. Selectors outrank the pages' own nav rules. */
+    @media (min-width: 961px) and (max-width: 1240px) {
+      /* Linear from the tightest values at 961px to the pages' own values at 1240px. */
+      body > nav { padding-left: clamp(28px, 11.47vw - 82px, 60px); padding-right: clamp(28px, 11.47vw - 82px, 60px); }
+      nav .nav-center, nav .nav-links { gap: clamp(14px, 9.32vw - 75.6px, 40px); }
+      nav .nav-auth .btn-nav { padding-left: clamp(16px, 2.87vw - 11.6px, 24px); padding-right: clamp(16px, 2.87vw - 11.6px, 24px); }
+    }
+
+    /* Mobile menu: full language names, 44px touch targets. */
+    .lang-switch--menu {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px;
+      margin: 0 28px; padding: 18px 0 26px;
+      border-top: 1px solid rgba(201,168,76,0.18);
+    }
+    .lang-switch-heading {
+      font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: rgba(168,157,174,0.75);
+    }
+    .lang-switch--menu .lang-switch-list { gap: 8px; flex-wrap: wrap; }
+    .lang-switch--menu a {
+      min-height: 44px; padding: 0 16px;
+      font-size: 0.82rem; letter-spacing: 0.06em;
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 999px;
+    }
+    .lang-switch--menu a[aria-current="true"] { border-color: rgba(201,168,76,0.55); background: rgba(201,168,76,0.06); }
+
+    @media (max-width: 960px) { .lang-switch--header { display: none; } }
+    /* Small phones: translated Sign In / Sign Up labels are longer than the English ones. */
+    @media (max-width: 380px) {
+      html:not(:lang(en)) nav .nav-auth .btn-nav { letter-spacing: 0.04em; padding-left: 8px; padding-right: 8px; }
+    }
+    @media (min-width: 381px) and (max-width: 440px) {
+      html:not(:lang(en)) nav .nav-auth .btn-nav { letter-spacing: 0.1em; }
+    }
+    @media (prefers-reduced-motion: reduce) { .lang-switch a { transition: none; } }
+  </style>
+  <style>
+    /* ===== Light FAQ (approved): header and navigation of the homepage, same values and behaviour ===== */
+    :root {
+      --paper: #ffffff; --paper-warm: #faf8f4; --ink: #16131b; --ink-2: #47424d; --ink-3: #6c6672;
+      --line: #e9e5de; --line-strong: #d8d2c8; --gold-ink: #876718; --violet-ink: #5b3590;
+      --serif: 'Cormorant Garamond', 'Times New Roman', serif; --sans: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1); --gutter: clamp(20px, 5vw, 60px);
+    }
+    body > nav {
+      position: sticky; top: 0; left: auto; right: auto; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+      height: 76px; padding: 0 60px;
+      background: rgba(255,255,255,0.92);
+      -webkit-backdrop-filter: saturate(1.4) blur(14px); backdrop-filter: saturate(1.4) blur(14px);
+      border-bottom: 1px solid transparent; transition: border-color 0.3s, height 0.3s;
+      font-family: var(--sans); font-weight: 400; line-height: 1.65;
+    }
+    body > nav.nav-scrolled { border-bottom-color: var(--line); }
+    body > nav .nav-logo { display: inline-flex; align-items: center; gap: 12px; font-family: var(--serif); font-size: 1.55rem; font-weight: 500; color: var(--ink); text-decoration: none; letter-spacing: 0.01em; }
+    body > nav .nav-logo img { height: 22px; width: auto; display: block; }
+    body > nav .nav-center { display: flex; align-items: center; gap: 40px; margin: 0; }
+    body > nav .nav-links { display: flex; align-items: center; gap: 34px; list-style: none; }
+    body > nav .nav-links a, body > nav .nav-links a:visited { font-size: 0.88rem; color: var(--ink-3); text-decoration: none; letter-spacing: 0.02em; text-transform: none; transition: color 0.3s; }
+    body > nav .nav-links a:hover, body > nav .nav-links a[aria-current="page"] { color: var(--ink); }
+    body > nav .nav-auth { display: flex; align-items: center; gap: 8px; opacity: 1; visibility: visible; pointer-events: auto; }
+    body > nav .btn, body > .mobile-menu .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      min-height: 48px; padding: 0 26px; border-radius: 999px; border: 1px solid transparent;
+      font-family: var(--sans); font-size: 0.86rem; font-weight: 500; letter-spacing: 0.04em; text-transform: none;
+      text-decoration: none; cursor: pointer; white-space: nowrap; box-shadow: none;
+      transition: background 0.3s, color 0.3s, border-color 0.3s, transform 0.3s var(--ease);
+    }
+    body > nav .btn:hover, body > .mobile-menu .btn:hover { transform: none; }
+    body > nav .btn-primary, body > .mobile-menu .btn-primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+    body > nav .btn-primary:hover, body > .mobile-menu .btn-primary:hover { background: #2a2431; }
+    body > nav .btn-outline, body > .mobile-menu .btn-outline { background: #fff; color: var(--ink); border-color: var(--gold); }
+    body > nav .btn-outline:hover, body > .mobile-menu .btn-outline:hover { background: rgba(201,168,76,0.08); border-color: var(--gold-ink); }
+    body > nav .btn-nav { min-height: 40px; padding: 0 18px; font-size: 0.8rem; }
+    body > nav .btn:focus-visible, body > .mobile-menu .btn:focus-visible { outline: 2px solid var(--gold-ink); outline-offset: 3px; }
+    body > nav .lang-switch a { color: var(--ink-3); }
+    body > nav .lang-switch a:hover, body > nav .lang-switch a[aria-current="true"] { color: var(--ink); }
+    body > nav .lang-switch--header a[aria-current="true"] { border-bottom-color: var(--gold); }
+    body > nav .nav-hamburger { display: none; width: 44px; height: 44px; margin: 0 -10px 0 0; padding: 0; background: none; border: 0; cursor: pointer; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+    body > nav .nav-hamburger span { display: block; width: 22px; height: 1.5px; background: var(--ink); transition: transform 0.35s var(--ease), opacity 0.2s; }
+    body > nav .nav-hamburger:hover span { background: var(--ink); }
+    body > nav .nav-hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+    body > nav .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    body > nav .nav-hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+    body > .mobile-menu {
+      display: block; position: fixed; inset: 64px 0 auto 0; top: 64px; z-index: 99; padding: 0;
+      background: #fff; border-bottom: 1px solid var(--line); box-shadow: 0 24px 40px -24px rgba(22,19,27,0.25);
+      -webkit-backdrop-filter: none; backdrop-filter: none;
+      opacity: 0; visibility: hidden; transform: translateY(-8px);
+      transition: opacity 0.3s, transform 0.3s var(--ease), visibility 0s linear 0.3s;
+      max-height: calc(100vh - 64px); max-height: calc(100dvh - 64px); overflow-y: auto; overscroll-behavior: contain;
+      font-family: var(--sans); font-weight: 400; line-height: 1.65;
+    }
+    body > .mobile-menu.open { opacity: 1; visibility: visible; transform: none; transition: opacity 0.3s, transform 0.3s var(--ease); }
+    body > .mobile-menu .mobile-menu-links { list-style: none; padding: 12px 28px 8px; }
+    body > .mobile-menu .mobile-menu-links li { border-bottom: 0; }
+    body > .mobile-menu .mobile-menu-links a, body > .mobile-menu .mobile-menu-links a:visited {
+      display: flex; align-items: center; min-height: 52px; padding: 0;
+      font-family: var(--serif); font-size: 1.45rem; letter-spacing: 0; text-transform: none; color: var(--ink); text-decoration: none;
+      border-bottom: 1px solid var(--line);
+    }
+    body > .mobile-menu .mobile-menu-links li:last-child a { border-bottom: 0; }
+    body > .mobile-menu .mobile-menu-auth { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 6px 28px 22px; }
+    body > .mobile-menu .mobile-menu-auth .btn { min-height: 48px; padding: 0 12px; font-size: 0.8rem; }
+    body > .mobile-menu .lang-switch--menu { border-top-color: var(--line); }
+    body > .mobile-menu .lang-switch-heading { color: var(--ink-3); }
+    body > .mobile-menu .lang-switch a { color: var(--ink-3); border-color: var(--line); }
+    body > .mobile-menu .lang-switch a:hover, body > .mobile-menu .lang-switch a[aria-current="true"] { color: var(--ink); }
+    body > .mobile-menu .lang-switch--menu a[aria-current="true"] { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+    @media (max-width: 960px) {
+      body > nav { height: 64px; padding: 0 20px; }
+      body > nav .nav-links { display: none; }
+      body > nav .nav-center { gap: 8px; margin: 0 0 0 auto; }
+      body > nav .nav-hamburger { display: flex; margin-left: 0; }
+      body > nav .nav-auth { display: none; }
+    }
+    @media (max-width: 420px) {
+      body > nav .nav-logo { font-size: 1.3rem; gap: 8px; }
+      body > nav .nav-logo img { height: 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) { body > nav .nav-hamburger span, body > .mobile-menu { transition: none; } }
+
+    :root { --black: #06060a; --gold: #c9a84c; --gold-light: #e8c97a; --white: #f5f0ea; --muted: #6c6672; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body { background: #fff; color: var(--ink-2); font-family: var(--sans); font-size: 1rem; line-height: 1.65; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    img { max-width: 100%; display: block; } a { color: inherit; } ul, ol { list-style: none; }
+    :focus-visible { outline: 2px solid var(--gold-ink); outline-offset: 3px; border-radius: 4px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 60px; }
+    .label { display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-ink); margin-bottom: 18px; }
+    .dev { font-size: 0.62rem; letter-spacing: 0.14em; color: var(--ink-3); border: 1px solid var(--line-strong); border-radius: 999px; padding: 3px 10px; }
+    h1, h2, h3 { font-family: var(--serif); color: var(--ink); font-weight: 500; letter-spacing: -0.012em; }
+    h1 em, h2 em { font-style: italic; font-weight: 400; color: var(--gold-ink); }
+    h2 { font-size: clamp(2rem, 3.4vw, 2.9rem); line-height: 1.08; margin-bottom: 20px; max-width: 18em; }
+    h3 { font-size: 1.45rem; line-height: 1.2; margin-bottom: 10px; }
+    .lead { font-size: clamp(1.02rem, 1.2vw, 1.1rem); line-height: 1.75; color: var(--ink-2); max-width: 40em; }
+    .note { margin-top: 28px; max-width: 44em; font-family: var(--serif); font-style: italic; font-size: 1.22rem; line-height: 1.5; color: var(--gold-ink); }
+    section.g { padding: 96px 0; border-top: 1px solid var(--line); }
+    section.g.warm { background: var(--paper-warm); }
+
+    /* Prototype ribbon */
+    .proto { background: #fff7e0; color: #5c4510; font-size: 0.78rem; text-align: center; padding: 6px 16px; border-bottom: 1px solid #ecd9a3; }
+
+    /* Opening: dark, with three equal points around the story (the three Guardians) */
+    .g-hero { background: var(--ink); color: #fff; padding: 104px 0 100px; overflow: hidden; }
+    .g-hero .wrap { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 56px; align-items: center; }
+    .g-hero .label { color: var(--gold-light); }
+    .g-hero h1 { color: #fff; font-size: clamp(2.6rem, 5vw, 4.3rem); line-height: 1.04; margin-bottom: 24px; }
+    .g-hero h1 em { color: var(--gold-light); }
+    .g-hero .intro { font-size: clamp(1.04rem, 1.25vw, 1.14rem); line-height: 1.75; color: rgba(255,255,255,0.84); max-width: 32em; }
+    .g-hero .principle { margin-top: 22px; font-family: var(--serif); font-style: italic; font-size: 1.4rem; line-height: 1.4; color: var(--gold-light); max-width: 26em; }
+    .g-status { display: flex; gap: 12px; align-items: flex-start; margin-top: 34px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,0.14); max-width: 36em; font-size: 0.92rem; line-height: 1.6; color: rgba(255,255,255,0.78); }
+    .g-status .pill { flex: none; font-size: 0.62rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-light); border: 1px solid rgba(232,201,122,0.55); border-radius: 999px; padding: 4px 11px; margin-top: 1px; }
+    .trio { width: 100%; max-width: 360px; justify-self: center; overflow: visible; }
+    .trio line { stroke: rgba(232,201,122,0.45); stroke-width: 1; }
+    .trio .node { fill: var(--ink); stroke: var(--gold-light); stroke-width: 1.5; }
+    .trio .core { fill: var(--gold-light); }
+    .trio .halo { fill: none; stroke: rgba(232,201,122,0.18); stroke-width: 1; }
+    .js .trio line { stroke-dasharray: 160; stroke-dashoffset: 160; animation: draw 1.6s cubic-bezier(0.65,0,0.25,1) 0.3s forwards; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+
+    /* Is / is not */
+    .isnot { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 36px; }
+    .isnot > div { border: 1px solid var(--line); border-radius: 18px; padding: 30px 30px 26px; }
+    .isnot .yes { background: var(--paper-warm); }
+    .isnot h3 { font-size: 1.3rem; margin-bottom: 16px; }
+    .tick li, .cross li { position: relative; padding-left: 30px; margin-bottom: 12px; line-height: 1.65; }
+    .tick li::before { content: ''; position: absolute; left: 2px; top: 0.5em; width: 12px; height: 7px; border-left: 1.6px solid var(--gold-ink); border-bottom: 1.6px solid var(--gold-ink); transform: rotate(-45deg); }
+    .cross li::before, .cross li::after { content: ''; position: absolute; left: 3px; top: 0.78em; width: 13px; height: 1.6px; background: var(--ink-3); transform: rotate(45deg); }
+    .cross li::after { transform: rotate(-45deg); }
+
+    /* Three equal cards */
+    .three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 36px; }
+    .three > div { border-top: 1px solid var(--gold); padding-top: 22px; }
+    .three .dot { display: block; width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid var(--gold); background: #fff; margin-bottom: 16px; box-shadow: 0 0 0 5px rgba(201,168,76,0.12); }
+    .three p { color: var(--ink-2); }
+
+    /* Steps */
+    .steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin-top: 36px; counter-reset: s; }
+    .steps li { position: relative; padding-top: 52px; color: var(--ink-2); line-height: 1.6; counter-increment: s; }
+    .steps li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--gold); color: var(--gold-ink); font-weight: 500; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; background: #fff; }
+    .steps li::after { content: ''; position: absolute; left: 44px; right: -14px; top: 17px; height: 1px; background: var(--line-strong); }
+    .steps li:last-child::after { display: none; }
+
+    /* While alive */
+    .alive-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 56px; align-items: start; }
+    .panel { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 30px 30px 26px; }
+    .panel h3 { font-size: 1.25rem; margin-bottom: 16px; }
+    .panel .small { margin-top: 16px; font-size: 0.95rem; color: var(--ink-3); }
+
+    /* Death reported: the timeline */
+    .tl { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin-top: 44px; }
+    .tl::before { content: ''; position: absolute; left: 7px; right: 7px; top: 7px; height: 1px; background: linear-gradient(to right, var(--gold), rgba(201,168,76,0.4)); }
+    .tl li { position: relative; padding-top: 36px; }
+    .tl li::before { content: ''; position: absolute; left: 0; top: 0; width: 15px; height: 15px; border-radius: 50%; background: #fff; border: 1.5px solid var(--gold); }
+    .tl li:first-child::before, .tl li:last-child::before { background: var(--gold); }
+    .tl .when { display: block; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-ink); margin-bottom: 8px; }
+    .tl h3 { font-size: 1.3rem; }
+    .tl p { color: var(--ink-2); line-height: 1.65; }
+    .protect { margin-top: 48px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 24px; padding: 32px 34px; border: 1px solid var(--gold); border-radius: 18px; background: var(--paper-warm); }
+    .protect .shield { width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--gold); display: flex; align-items: center; justify-content: center; color: var(--gold-ink); background: #fff; }
+    .protect h3 { font-size: 1.4rem; }
+    .protect p { color: var(--ink-2); }
+    .protect p + p { margin-top: 12px; }
+    .protect strong { color: var(--ink); font-weight: 600; }
+
+    /* Preserved */
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 36px; }
+
+    /* Tree */
+    .tree-grid { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 56px; align-items: start; }
+    .branch { width: 100%; max-width: 300px; margin-top: 28px; overflow: visible; }
+    .branch path, .branch line { fill: none; stroke: var(--line-strong); stroke-width: 1.5; }
+    .branch .new { stroke: var(--gold); stroke-dasharray: 4 5; }
+    .branch circle { fill: #fff; stroke: var(--ink-3); stroke-width: 1.5; }
+    .branch .pres { stroke: var(--gold); fill: var(--paper-warm); }
+    .branch .kid { stroke: var(--gold); fill: #fff; stroke-dasharray: 3 3; }
+    .vsteps { counter-reset: v; }
+    .vsteps li { position: relative; padding: 0 0 22px 50px; counter-increment: v; color: var(--ink-2); line-height: 1.65; }
+    .vsteps li::before { content: counter(v); position: absolute; left: 0; top: -2px; width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--gold); color: var(--gold-ink); font-weight: 500; font-size: 0.86rem; display: flex; align-items: center; justify-content: center; background: #fff; }
+    .vsteps li::after { content: ''; position: absolute; left: 16px; top: 34px; bottom: 2px; width: 1px; background: var(--line-strong); }
+    .vsteps li:last-child::after { display: none; }
+    .vsteps li:last-child { color: var(--ink); font-weight: 500; }
+    .callout { margin-top: 8px; padding: 18px 22px; border-left: 2px solid var(--gold); background: var(--paper-warm); border-radius: 0 12px 12px 0; color: var(--ink-2); }
+
+    /* Visibility */
+    .vis { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 56px; align-items: center; }
+    .msg { border: 1px solid var(--line); border-radius: 18px; padding: 26px; display: grid; gap: 14px; }
+    .msg .row { display: flex; align-items: center; gap: 12px; color: var(--ink-2); font-size: 0.95rem; }
+    .msg .av { width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid var(--gold); background: var(--paper-warm); flex: none; }
+    .msg .bubble { margin-left: 46px; padding: 10px 14px; border-radius: 14px 14px 14px 4px; background: var(--paper-warm); border: 1px solid var(--line); width: 72%; height: 16px; }
+
+    /* When things change */
+    .cards3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 36px; }
+    .cards3 > div { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 28px 26px 22px; }
+    .cards3 li { position: relative; padding-left: 18px; margin-bottom: 12px; color: var(--ink-2); line-height: 1.6; font-size: 0.97rem; }
+    .cards3 li::before { content: '—'; position: absolute; left: 0; color: var(--gold-ink); }
+    .cards3 li:last-child { color: var(--ink); }
+
+    /* Support */
+    .support-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 56px; align-items: start; }
+    .dash li { position: relative; padding-left: 22px; margin-bottom: 10px; color: var(--ink-2); line-height: 1.6; }
+    .dash li::before { content: '—'; position: absolute; left: 0; color: var(--gold-ink); }
+    .mail { display: inline-block; margin-top: 18px; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: 2px; font-weight: 500; }
+    .mail:hover { color: var(--gold-ink); }
+
+    /* FAQ */
+    .qa { margin-top: 36px; border-top: 1px solid var(--line); max-width: 860px; }
+    .qa-item { border-bottom: 1px solid var(--line); }
+    .qa-btn { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px 0; background: none; border: 0; font-family: var(--serif); font-size: 1.28rem; font-weight: 500; color: var(--ink); text-align: left; cursor: pointer; }
+    .qa-cue { flex: none; width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid var(--gold); position: relative; background: rgba(201,168,76,0.08); transition: background 0.3s, transform 0.4s; }
+    .qa-cue::before, .qa-cue::after { content: ''; position: absolute; left: 50%; top: 50%; width: 10px; height: 1.5px; background: var(--gold-ink); transform: translate(-50%, -50%); transition: opacity 0.3s, background 0.3s; }
+    .qa-cue::after { transform: translate(-50%, -50%) rotate(90deg); }
+    .qa-item.open .qa-cue { background: var(--ink); border-color: var(--ink); transform: rotate(180deg); }
+    .qa-item.open .qa-cue::before { background: #fff; }
+    .qa-item.open .qa-cue::after { opacity: 0; }
+    .qa-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.4s cubic-bezier(0.22,1,0.36,1); }
+    .qa-item.open .qa-a { grid-template-rows: 1fr; }
+    .qa-a > div { overflow: hidden; }
+    .qa-a p { padding: 0 48px 22px 0; color: var(--ink-2); line-height: 1.75; }
+    .qa-item:not(.open) .qa-a > div { visibility: hidden; transition: visibility 0s linear 0.4s; }
+
+    /* Closing */
+    .g-close { padding: 8px 60px 104px; }
+    .g-close .inner { max-width: 1000px; margin: 0 auto; background: var(--ink); border-radius: 20px; padding: 76px 64px; text-align: center; }
+    .g-close h2 { color: #fff; margin: 0 auto 18px; max-width: 20em; font-size: clamp(2rem, 3.6vw, 3rem); }
+    .g-close h2 em { color: var(--gold-light); }
+    .g-close p { color: rgba(255,255,255,0.82); font-size: 1.08rem; max-width: 34em; margin: 0 auto; line-height: 1.7; }
+
+    @media (prefers-reduced-motion: reduce) { .js .trio line { animation: none; stroke-dashoffset: 0; } .qa-a, .qa-cue { transition: none; } }
+    @media (max-width: 960px) {
+      .g-hero .wrap { grid-template-columns: 1fr; gap: 40px; }
+      .trio { max-width: 260px; justify-self: start; }
+      .steps, .tl { grid-template-columns: 1fr 1fr; row-gap: 36px; }
+      .steps li:nth-child(2)::after, .tl::before { display: none; }
+      .tl li::after { content: ''; position: absolute; left: 22px; right: 0; top: 7px; height: 1px; background: rgba(201,168,76,0.4); }
+      .alive-grid, .tree-grid, .vis, .support-grid { grid-template-columns: 1fr; gap: 32px; }
+      .cards3, .three { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .wrap { padding: 0 24px; }
+      .g-hero { padding: 56px 0 56px; }
+      .g-hero .principle { font-size: 1.22rem; }
+      section.g { padding: 64px 0; }
+      .isnot, .two { grid-template-columns: 1fr; gap: 16px; }
+      .isnot > div, .panel { padding: 24px 22px 20px; }
+      .steps, .tl { grid-template-columns: 1fr; row-gap: 26px; }
+      .steps li::after, .tl li::after { display: none; }
+      .tl::before { display: block; left: 7px; right: auto; top: 8px; bottom: 8px; width: 1px; height: auto; background: linear-gradient(to bottom, var(--gold), rgba(201,168,76,0.4)); }
+      .tl li { padding: 0 0 0 36px; }
+      .steps li { padding: 0 0 0 50px; min-height: 34px; }
+      .protect { grid-template-columns: 1fr; padding: 26px 22px; gap: 16px; }
+      .qa-btn { font-size: 1.15rem; }
+      .qa-a p { padding-right: 8px; }
+      .g-close { padding: 0 24px 64px; }
+      .g-close .inner { padding: 48px 24px; }
+      .trio { max-width: 170px; }
+      .g-status { flex-direction: column; gap: 10px; }
+    }
+
+    /* ---------- Footer (approved design, shared by every page) ----------
+       Desktop: logo + name | links on one line | social icons; thin line; centred copyright.
+       Up to 960px: logo + name and icons on one row, links below, then the copyright.
+       Scoped to body > footer so it overrides each page's older footer rules. */
+    body > footer {
+      display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; column-gap: 40px;
+      padding: 52px max(clamp(20px, 5vw, 60px), calc((100% - 1200px) / 2)) 30px;
+      background: #16131b; border-top: 0;
+      font-family: 'Jost', 'Helvetica Neue', Arial, sans-serif;
+    }
+    body > footer .footer-top, body > footer .footer-bottom { display: contents; }
+    body > footer .footer-brand { grid-column: 1; grid-row: 1; display: flex; flex: none; flex-wrap: nowrap; align-items: center; margin: 0; max-width: none; text-align: left; }
+    /* the logo file has 23px of transparent space on its left (of 178px): the symbol sits on the content edge */
+    body > footer .footer-brand-logo { display: block; flex: none; width: 64px; height: auto; margin: 0 6px 0 calc(64px * -23 / 178); }
+    body > footer .footer-logo { display: inline; margin: 0; font-family: 'Cormorant Garamond', 'Times New Roman', serif; font-size: 2rem; font-weight: 400; line-height: 1; letter-spacing: 0; color: #c9a84c; }
+    body > footer .footer-tagline, body > footer .footer-contact { display: none; }
+    body > footer .footer-nav { grid-column: 2; grid-row: 1; justify-self: center; display: flex; flex-wrap: nowrap; justify-content: center; gap: clamp(22px, 2.6vw, 40px); margin: 0; padding: 0; list-style: none; white-space: nowrap; }
+    body > footer .footer-nav a, body > footer .footer-nav a:visited { font-size: 0.86rem; font-weight: 400; letter-spacing: 0; text-transform: none; color: rgba(255,255,255,0.82); text-decoration: none; transition: color 0.3s; }
+    body > footer .footer-nav a:hover { color: #e8c97a; text-decoration: none; }
+    body > footer .footer-socials { grid-column: 3; grid-row: 1; justify-self: end; display: flex; gap: 4px; order: 0; margin: 0 -12px 0 0; }
+    body > footer .footer-socials a, body > footer .footer-socials a:visited { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; color: #e8c97a; text-decoration: none; transition: background 0.3s; }
+    body > footer .footer-socials a:hover { color: #e8c97a; background: rgba(255,255,255,0.08); text-decoration: none; }
+    body > footer .footer-socials svg { display: block; width: 19px; height: 19px; }
+    body > footer a:focus { outline: none; }
+    body > footer a:focus-visible { outline: 2px solid #e8c97a; outline-offset: 3px; }
+    body > footer .footer-bottom > span { grid-column: 1 / -1; grid-row: 2; margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.12); text-align: center; font-size: calc(0.8rem + 1px); letter-spacing: 0; color: rgba(201,168,76,0.82); }
+    @media (max-width: 960px) {
+      body > footer { grid-template-columns: minmax(0, 1fr) auto; row-gap: 26px; padding: 44px 24px 28px; }
+      body > footer .footer-brand-logo { width: 52px; margin-left: calc(52px * -23 / 178); }
+      body > footer .footer-logo { font-size: 1.7rem; }
+      body > footer .footer-nav { grid-column: 1 / -1; grid-row: 2; justify-self: start; justify-content: flex-start; flex-wrap: wrap; gap: 12px 24px; white-space: normal; }
+      body > footer .footer-socials { grid-column: 2; grid-row: 1; }
+      body > footer .footer-bottom > span { grid-row: 3; margin-top: 2px; }
+    }
+    @media (max-width: 380px) {
+      body > footer { grid-template-columns: minmax(0, 1fr); }
+      body > footer .footer-socials { grid-column: 1; grid-row: 2; justify-self: start; margin: -10px 0 0 -12px; }
+      body > footer .footer-nav { grid-row: 3; }
+      body > footer .footer-bottom > span { grid-row: 4; }
+    }
+    /* Phones (up to 640px), same as the homepage: links in tidy columns with 40px touch rows, even vertical rhythm. */
+    @media (max-width: 640px) {
+      body > footer { row-gap: 20px; padding: 40px 24px 26px; }
+      body > footer .footer-nav { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 0 28px; text-align: left; }
+      body > footer .footer-nav a, body > footer .footer-nav a:visited { display: inline-flex; align-items: center; min-height: 40px; font-size: 0.9rem; }
+      body > footer .footer-bottom > span { margin-top: 6px; padding-top: 20px; line-height: 1.65; }
+    }
+    @media (max-width: 380px) {
+      body > footer .footer-nav { grid-template-columns: repeat(2, auto); gap: 0 40px; }
+      body > footer .footer-socials { margin-top: -8px; }
+    }
+
+
+  </style>
+</head>
+<body>
+
+  <div class="proto" role="note">Prototype for review only. Not published.</div>
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="../../index.html">
+      <img src="../../assets/logo-eternus-gold.webp" alt="Eternus" width="40" height="22" />
+      Eternus
+    </a>
+    <div class="nav-center">
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../../about.html">About</a></li>
+        <li><a href="../../faq.html">FAQ</a></li>
+        <li><a href="../../privacy-policy.html">Privacy</a></li>
+        <li><a href="../../support.html">Support</a></li>
+      </ul>
+      <!-- i18n:language-selector:header -->
+      <div class="lang-switch lang-switch--header" role="group" aria-label="Language" translate="no">
+        <ul class="lang-switch-list">
+          <li><a href="guardians.html" hreflang="en" lang="en" aria-current="true">EN<span class="lang-switch-sr"> English</span></a></li>
+          <li><a href="pt/guardians.html" hreflang="pt-PT" lang="pt-PT">PT<span class="lang-switch-sr"> Português</span></a></li>
+          <li><a href="it/guardians.html" hreflang="it" lang="it">IT<span class="lang-switch-sr"> Italiano</span></a></li>
+        </ul>
+      </div>
+      <!-- /i18n:language-selector:header -->
+      <div class="nav-auth">
+        <a class="btn btn-outline btn-nav" href="https://app.myeternusapp.com/?screen=signin&lang=en">Sign In</a>
+        <a class="btn btn-primary btn-nav" href="https://app.myeternusapp.com/?screen=signup&lang=en">Sign Up</a>
+      </div>
+    </div>
+    <button class="nav-hamburger" id="nav-hamburger" aria-label="Open navigation" data-i18n-close-label="Close navigation" aria-controls="mobile-menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <ul class="mobile-menu-links">
+      <li><a href="../../index.html" class="mobile-link">Home</a></li>
+      <li><a href="../../about.html" class="mobile-link">About</a></li>
+      <li><a href="../../faq.html" class="mobile-link">FAQ</a></li>
+      <li><a href="../../privacy-policy.html" class="mobile-link">Privacy</a></li>
+      <li><a href="../../support.html" class="mobile-link">Support</a></li>
+    </ul>
+    <div class="mobile-menu-auth">
+      <a class="btn btn-outline" href="https://app.myeternusapp.com/?screen=signin&lang=en">Sign In</a>
+      <a class="btn btn-primary" href="https://app.myeternusapp.com/?screen=signup&lang=en">Sign Up</a>
+    </div>
+    <!-- i18n:language-selector:menu -->
+    <div class="lang-switch lang-switch--menu" role="group" aria-labelledby="lang-switch-heading" translate="no">
+      <span class="lang-switch-heading" id="lang-switch-heading">Language</span>
+      <ul class="lang-switch-list">
+        <li><a href="guardians.html" hreflang="en" lang="en" aria-current="true">English</a></li>
+        <li><a href="pt/guardians.html" hreflang="pt-PT" lang="pt-PT">Português</a></li>
+        <li><a href="it/guardians.html" hreflang="it" lang="it">Italiano</a></li>
+      </ul>
+    </div>
+    <!-- /i18n:language-selector:menu -->
+  </div>
+
+  <main>
+  <section class="g-hero" aria-labelledby="g-title">
+    <div class="wrap">
+      <div>
+        <p class="label">Guardians</p>
+        <h1 id="g-title">Trusted hands for <em>your story.</em></h1>
+        <p class="intro">Guardians are the people you choose to help ensure that what matters to you is never left without care.</p>
+        <p class="principle">They preserve your story. They do not create it, and they never rewrite it.</p>
+        <p class="g-status"><span class="pill">In development</span><span>The Guardians area already appears in My Tree. The rules on this page have been approved for development; the features they describe are not all available yet.</span></p>
+      </div>
+      <svg class="trio" viewBox="0 0 240 220" aria-hidden="true">
+  <circle class="halo" cx="120" cy="128" r="74"/>
+  <line x1="120" y1="40" x2="44" y2="172"/><line x1="44" y1="172" x2="196" y2="172"/><line x1="196" y1="172" x2="120" y2="40"/>
+  <line x1="120" y1="40" x2="120" y2="128"/><line x1="44" y1="172" x2="120" y2="128"/><line x1="196" y1="172" x2="120" y2="128"/>
+  <circle class="node" cx="120" cy="40" r="11"/><circle class="node" cx="44" cy="172" r="11"/><circle class="node" cx="196" cy="172" r="11"/>
+  <circle class="core" cx="120" cy="128" r="7"/>
+</svg>
+    </div>
+  </section>
+
+  <section class="g" id="role">
+    <div class="wrap">
+      <p class="label">The role</p>
+      <h2>What a Guardian is, <em>and is not.</em></h2>
+      <div class="isnot">
+        <div class="yes"><h3>A Guardian is</h3><ul class="tick"><li>Someone you trust to help preserve your account and your legacy after your death.</li><li>Someone who helps your story stay protected and your family tree keep growing.</li></ul></div>
+        <div><h3>A Guardian is not</h3><ul class="cross"><li>A replacement for you, or someone who takes on your identity.</li><li>The owner of your memories.</li><li>A representative of an artificial version of you.</li></ul></div>
+      </div>
+      <p class="note">Preserving an existing account is different from creating a Memorial for someone else. A preserved account keeps the identity and the legacy its owner built.</p>
+    </div>
+  </section>
+
+  <section class="g" id="three">
+    <div class="wrap">
+      <p class="label">Three Guardians<span class="dev">In development</span></p>
+      <h2>Three people, <em>equal responsibilities.</em></h2>
+      <p class="lead">Each person names three Guardians, so preservation can continue even if one of them dies, becomes unavailable or can no longer take part.</p>
+      <div class="three"><div><span class="dot" aria-hidden="true"></span><h3>The same role</h3><p>All three have equivalent responsibilities. No one is automatically in charge of the others.</p></div><div><span class="dot" aria-hidden="true"></span><h3>An explicit yes</h3><p>Each Guardian must accept the nomination explicitly.</p></div><div><span class="dot" aria-hidden="true"></span><h3>No extra access</h3><p>Being a Guardian gives no additional permissions over your content.</p></div></div>
+    </div>
+  </section>
+
+  <section class="g" id="invitation">
+    <div class="wrap">
+      <p class="label">Being invited<span class="dev">In development</span></p>
+      <h2>A clear, <em>conscious choice.</em></h2>
+      <ol class="steps"><li>You receive a notification and a notice in the app.</li><li>A short explanation of the responsibilities is shown.</li><li>You can read the full details in About Guardians, on this website.</li><li>You choose to accept or decline.</li></ol>
+      <p class="note">Acceptance is always explicit. Reading this page does not mean you have accepted an invitation.</p>
+    </div>
+  </section>
+
+  <section class="g warm" id="while-alive">
+    <div class="wrap alive-grid">
+      <div>
+        <p class="label">While you are alive<span class="dev">In development</span></p>
+        <h2>Your account <em>stays yours.</em></h2>
+        <p class="lead">You keep control of your account. Only you can name, remove or replace your Guardians, and each new Guardian must accept the invitation. Replacing a Guardian does not change your Moments, your My Tree or anyone else's permissions.</p>
+        <p class="note">Being named a Guardian is not permission to manage your account.</p>
+      </div>
+      <div class="panel"><h3>While your account is active, Guardians cannot</h3><ul class="cross"><li>Create, edit or delete Moments on your behalf.</li><li>Change family relationships or permissions.</li><li>See your Private content.</li><li>Start managing your legacy.</li></ul><p class="small">They keep only the Circle or Legacy access you have given them, like anyone else.</p></div>
+    </div>
+  </section>
+
+  <section class="g" id="if-a-death-is-reported">
+    <div class="wrap">
+      <p class="label">If a death is reported<span class="dev">In development</span></p>
+      <h2>Careful, protected <em>and never automatic.</em></h2>
+      <ol class="tl"><li><span class="when">Day 0</span><h3>One Guardian reports the death</h3><p>The account is paused straight away as a precaution: Moments can no longer be created, edited or deleted. A report is not a confirmation of death.</p></li><li><span class="when">Next</span><h3>The other two Guardians are asked</h3><p>They can answer "I confirm I know of the death", "I do not confirm" or "I don't know / I don't have enough information". Normally, all three must confirm.</p></li><li><span class="when">30 days</span><h3>A safety period</h3><p>It starts on the day of the first report. Even if all three Guardians confirm at once, the account cannot be preserved before the 30 days end.</p></li><li><span class="when">After</span><h3>Preserved, only if</h3><p>all three Guardians have confirmed, there has been no valid challenge and the required checks are complete.</p></li></ol>
+      <div class="protect">
+        <span class="shield"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>
+        <div><h3>You are always protected</h3><p>If a death is reported by mistake, you can still sign in. You see a notice in the app and receive an email (and a push notification, where available). You can choose "I'm alive". After a secure identity check, the process is cancelled and the precautionary pause is lifted.</p><p><strong>Your valid confirmation outweighs any report, even if all three Guardians made it. Not responding is never, on its own, proof of death.</strong></p></div>
+      </div>
+      <p class="note">If the Guardians disagree, do not answer, or not all confirmations can be obtained, Eternus support reviews the situation individually. Silence never counts as approval.</p>
+    </div>
+  </section>
+
+  <section class="g warm" id="preserved">
+    <div class="wrap">
+      <p class="label">A preserved account<span class="dev">In development</span></p>
+      <h2>Everything stays <em>as it was left.</em></h2>
+      <div class="two">
+        <div class="panel"><h3>What remains</h3><ul class="tick"><li>The profile.</li><li>The My Tree.</li><li>The Moments, in their original timeline.</li><li>Circle and Legacy permissions, still respected.</li><li>Private content, still private.</li></ul></div>
+        <div class="panel"><h3>What Guardians cannot do</h3><ul class="cross"><li>Change or delete the original Moments.</li><li>Change, after the fact, who could see them.</li><li>Rewrite the story.</li></ul></div>
+      </div>
+      <p class="note">Preserving does not transfer ownership of the memories to the Guardians. It never makes anything public.</p>
+    </div>
+  </section>
+
+  <section class="g" id="family-tree">
+    <div class="wrap tree-grid">
+      <div>
+        <p class="label">The family tree<span class="dev">In development</span></p>
+        <h2>A tree that can <em>keep growing.</em></h2>
+        <p class="lead">A preserved account is not the end of a family tree. A great-grandchild born years later can still become part of it, without changing the relationships the owner recorded.</p>
+        <svg class="branch" viewBox="0 0 300 170" aria-hidden="true">
+  <path d="M150 34 L150 74 M150 74 L70 74 L70 112 M150 74 L230 74 L230 112"/>
+  <path class="new" d="M230 132 L230 150 L262 150"/>
+  <circle class="pres" cx="150" cy="22" r="13"/><circle cx="70" cy="122" r="11"/><circle cx="230" cy="122" r="11"/>
+  <circle class="kid" cx="276" cy="150" r="10"/>
+</svg>
+      </div>
+      <div>
+        <ol class="vsteps"><li>In the My Tree of a preserved account, an authorised Guardian can request to add a relative.</li><li>The relative must already be part of another person's My Tree on Eternus.</li><li>The person involved, or someone entitled to represent them, must authorise it.</li><li>Only after that authorisation is the link made, without duplicating anyone's account. It is recorded.</li></ol>
+        <p class="callout">One Guardian is enough to make the request. No vote among the Guardians is needed, but the authorisation of the person involved always is.</p>
+        <p class="note">Adding a relative gives them no automatic access to Private, Circle or Legacy content. Guardians can never change the relationships the owner recorded during their life.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="g" id="visibility">
+    <div class="wrap vis">
+      <div>
+        <p class="label">Visibility<span class="dev">In development</span></p>
+        <h2>Guardians are <em>not a secret.</em></h2>
+        <p class="lead">Authorised members of My Tree and Legacy will be able to see who the Guardians are, open their profiles and contact them through Eternus Messenger, even if they are not in the same family tree. This helps families know who is responsible for preservation and report problems.</p>
+        <p class="note">Seeing the Guardians gives no management powers. A Messenger contact does not create a family relationship or change any permissions.</p>
+      </div>
+      <div class="msg" aria-hidden="true">
+        <div class="row"><span class="av"></span><span class="av"></span><span class="av"></span></div>
+        <div class="bubble"></div><div class="bubble" style="width:52%"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="g warm" id="when-things-change">
+    <div class="wrap">
+      <p class="label">When things change<span class="dev">In development</span></p>
+      <h2>Continuity, <em>even when people change.</em></h2>
+      <div class="cards3"><div><h3>Replacing a Guardian</h3><ul><li>When two Guardians remain, both must agree on the replacement, and the new Guardian must accept.</li><li>When only one remains, Eternus support accompanies the replacement, with the appropriate checks.</li><li>When none remain, family members or other entitled people can tell Eternus support, which reviews documents, identities and circumstances first.</li><li>Being family does not, on its own, give anyone the powers of a Guardian. Until it is resolved, the legacy stays protected.</li></ul></div><div><h3>Stepping down</h3><ul><li>A Guardian can ask to step down.</li><li>Normally this is only complete once a replacement has accepted the role.</li><li>In conflict, inability, incapacity or other exceptional circumstances, the Guardian can contact Eternus support.</li></ul></div><div><h3>If a Guardian dies</h3><ul><li>The remaining Guardians can report it and start a replacement.</li><li>There is no need to wait for that Guardian's own account to be preserved.</li><li>If the usual steps are not possible, including when several Guardians die in the same event, the case goes to Eternus support.</li></ul></div></div>
+    </div>
+  </section>
+
+  <section class="g" id="support">
+    <div class="wrap support-grid">
+      <div>
+        <p class="label">Eternus support<span class="dev">In development</span></p>
+        <h2>When support <em>steps in.</em></h2>
+        <p class="lead">Some situations are reviewed individually by Eternus support, through official channels including email:</p>
+        <p class="note">Support never gains automatic access to Private content, and Eternus staff never become Guardians.</p>
+      </div>
+      <div><ul class="dash"><li>All three Guardians die at the same time.</li><li>One or more Guardians cannot be reached.</li><li>There is disagreement about the death.</li><li>A replacement is difficult.</li><li>A Guardian steps down because of incapacity or serious circumstances.</li><li>No one is available to take on the role.</li><li>A report may be wrong or abusive.</li></ul><a class="mail" href="mailto:support@myeternusapp.com">support@myeternusapp.com</a></div>
+    </div>
+  </section>
+
+  <section class="g" id="questions">
+    <div class="wrap">
+      <p class="label">Questions</p>
+      <h2>About the <em>responsibility.</em></h2>
+      <div class="qa"><div class="qa-item"><h3 style="margin:0;font-size:inherit"><button type="button" class="qa-btn" id="qa-b0" aria-expanded="false" aria-controls="qa-p0"><span>Is this available now?</span><span class="qa-cue" aria-hidden="true"></span></button></h3><div class="qa-a" id="qa-p0" role="region" aria-labelledby="qa-b0"><div><p>The Guardians area already appears in My Tree. The rules on this page have been approved for development; the features they describe are not all available yet.</p></div></div></div><div class="qa-item"><h3 style="margin:0;font-size:inherit"><button type="button" class="qa-btn" id="qa-b1" aria-expanded="false" aria-controls="qa-p1"><span>Will I be able to see private memories?</span><span class="qa-cue" aria-hidden="true"></span></button></h3><div class="qa-a" id="qa-p1" role="region" aria-labelledby="qa-b1"><div><p>No. Private content stays private, both while the owner is alive and after the account is preserved.</p></div></div></div><div class="qa-item"><h3 style="margin:0;font-size:inherit"><button type="button" class="qa-btn" id="qa-b2" aria-expanded="false" aria-controls="qa-p2"><span>Can I edit or delete Moments?</span><span class="qa-cue" aria-hidden="true"></span></button></h3><div class="qa-a" id="qa-p2" role="region" aria-labelledby="qa-b2"><div><p>No. Guardians protect the story; they do not change it.</p></div></div></div><div class="qa-item"><h3 style="margin:0;font-size:inherit"><button type="button" class="qa-btn" id="qa-b3" aria-expanded="false" aria-controls="qa-p3"><span>What if I'm the only one who knows about the death?</span><span class="qa-cue" aria-hidden="true"></span></button></h3><div class="qa-a" id="qa-p3" role="region" aria-labelledby="qa-b3"><div><p>One Guardian can report it. The other two Guardians are asked to confirm, and the 30-day safety period starts on the day of the first report.</p></div></div></div><div class="qa-item"><h3 style="margin:0;font-size:inherit"><button type="button" class="qa-btn" id="qa-b4" aria-expanded="false" aria-controls="qa-p4"><span>What if a death is reported by mistake?</span><span class="qa-cue" aria-hidden="true"></span></button></h3><div class="qa-a" id="qa-p4" role="region" aria-labelledby="qa-b4"><div><p>The owner can still sign in and choose "I'm alive". After a secure identity check, the process is cancelled and the precautionary pause is lifted.</p></div></div></div><div class="qa-item"><h3 style="margin:0;font-size:inherit"><button type="button" class="qa-btn" id="qa-b5" aria-expanded="false" aria-controls="qa-p5"><span>What if I'm not sure?</span><span class="qa-cue" aria-hidden="true"></span></button></h3><div class="qa-a" id="qa-p5" role="region" aria-labelledby="qa-b5"><div><p>You can answer "I don't know / I don't have enough information". Nothing is ever approved because someone stayed silent.</p></div></div></div><div class="qa-item"><h3 style="margin:0;font-size:inherit"><button type="button" class="qa-btn" id="qa-b6" aria-expanded="false" aria-controls="qa-p6"><span>Does being a Guardian make me part of the family tree?</span><span class="qa-cue" aria-hidden="true"></span></button></h3><div class="qa-a" id="qa-p6" role="region" aria-labelledby="qa-b6"><div><p>No. Being a Guardian is separate from My Tree. It does not create a family relationship and does not change your access to anyone's memories.</p></div></div></div><div class="qa-item"><h3 style="margin:0;font-size:inherit"><button type="button" class="qa-btn" id="qa-b7" aria-expanded="false" aria-controls="qa-p7"><span>Can I decline, or step down later?</span><span class="qa-cue" aria-hidden="true"></span></button></h3><div class="qa-a" id="qa-p7" role="region" aria-labelledby="qa-b7"><div><p>You can decline an invitation. Stepping down is normally complete once someone else has accepted the role; in exceptional circumstances, you can contact Eternus support.</p></div></div></div><div class="qa-item"><h3 style="margin:0;font-size:inherit"><button type="button" class="qa-btn" id="qa-b8" aria-expanded="false" aria-controls="qa-p8"><span>What happens after the 30 days?</span><span class="qa-cue" aria-hidden="true"></span></button></h3><div class="qa-a" id="qa-p8" role="region" aria-labelledby="qa-b8"><div><p>The account can become Preserved only if all three Guardians have confirmed, there has been no valid challenge and the required checks are complete.</p></div></div></div><div class="qa-item"><h3 style="margin:0;font-size:inherit"><button type="button" class="qa-btn" id="qa-b9" aria-expanded="false" aria-controls="qa-p9"><span>Does Eternus staff see private content?</span><span class="qa-cue" aria-hidden="true"></span></button></h3><div class="qa-a" id="qa-p9" role="region" aria-labelledby="qa-b9"><div><p>No. Support helps in exceptional cases, but never gains automatic access to Private content, and Eternus staff never become Guardians.</p></div></div></div></div>
+    </div>
+  </section>
+
+  <section class="g-close" aria-label="Eternus">
+    <div class="inner"><h2>A life ends. <em>Its story doesn't have to.</em></h2><p>Guardians don't replace the person who is gone. They protect what that person chose to leave.</p></div>
+  </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img class="footer-brand-logo" src="../../assets/logo-eternus-gold.webp" alt="" width="178" height="88" />
+        <span class="footer-logo">Eternus</span>
+        <p class="footer-tagline">Preserve your moments. Build what remains.</p>
+      </div>
+      <ul class="footer-nav">
+        <li><a href="../../about.html">About</a></li>
+        <li><a href="../../faq.html">FAQ</a></li>
+        <li><a href="../../privacy-policy.html">Privacy</a></li>
+        <li><a href="../../terms.html">Terms</a></li>
+        <li><a href="../../support.html">Support</a></li>
+        <li><a href="../../delete-account.html">Delete account</a></li>
+      </ul>
+      <div class="footer-contact">
+        <a href="mailto:hello@myeternusapp.com">hello@myeternusapp.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-socials" role="group" aria-label="Eternus social media">
+        <a href="https://www.facebook.com/myeternusapp" target="_blank" rel="noopener noreferrer" aria-label="Eternus on Facebook (opens in a new tab)">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M13.5 22v-9h3l.5-3.5h-3.5V7.25c0-1 .3-1.75 1.75-1.75H17V2.25A22 22 0 0 0 14.5 2C12 2 10 3.5 10 6.5v3H7V13h3v9z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/eternusapp/" target="_blank" rel="noopener noreferrer" aria-label="Eternus on Instagram (opens in a new tab)">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/myeternusapp" target="_blank" rel="noopener noreferrer" aria-label="Eternus on LinkedIn (opens in a new tab)">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M5.37 24H.4V7.98h4.97zM2.88 5.8A2.9 2.9 0 1 1 2.9 0a2.9 2.9 0 0 1-.02 5.8zM24 24h-4.97v-7.8c0-1.86-.04-4.25-2.59-4.25-2.59 0-2.99 2.02-2.99 4.12V24H8.48V7.98h4.77v2.19h.07c.66-1.26 2.29-2.59 4.71-2.59 5.04 0 5.97 3.32 5.97 7.63z"/></svg>
+        </a>
+      </div>
+      <span>&copy; <span id="year"></span> Eternus. All rights reserved.</span>
+    </div>
+  </footer>
+
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    (function () {
+      var hamburger = document.getElementById('nav-hamburger'), mobileMenu = document.getElementById('mobile-menu');
+      var openLabel = hamburger.getAttribute('aria-label'), closeLabel = hamburger.getAttribute('data-i18n-close-label');
+      var nav = document.querySelector('body > nav');
+      var upd = function () { nav.classList.toggle('nav-scrolled', window.scrollY > 8); };
+      window.addEventListener('scroll', upd, { passive: true }); upd();
+      function setMenu(open) {
+        mobileMenu.classList.toggle('open', open); hamburger.classList.toggle('open', open);
+        hamburger.setAttribute('aria-label', open ? closeLabel : openLabel);
+        hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+        mobileMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
+      }
+      hamburger.addEventListener('click', function () { setMenu(!mobileMenu.classList.contains('open')); });
+      document.querySelectorAll('.mobile-link').forEach(function (l) { l.addEventListener('click', function () { setMenu(false); }); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mobileMenu.classList.contains('open')) { setMenu(false); hamburger.focus(); } });
+      // questions: one open at a time
+      var items = Array.prototype.slice.call(document.querySelectorAll('.qa-item'));
+      items.forEach(function (it) {
+        var b = it.querySelector('.qa-btn');
+        b.addEventListener('click', function () {
+          var open = !it.classList.contains('open');
+          items.forEach(function (o) { o.classList.remove('open'); o.querySelector('.qa-btn').setAttribute('aria-expanded', 'false'); });
+          if (open) { it.classList.add('open'); b.setAttribute('aria-expanded', 'true'); }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
