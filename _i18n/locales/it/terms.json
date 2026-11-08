@@ -2,8 +2,8 @@
   "Terms of Use — Eternus": "Termini di utilizzo — Eternus",
   "The terms for using Eternus during the beta: who can use it, your content, what is not allowed, deleting your account and your rights as a consumer.": "I termini per usare Eternus durante la beta: chi può usarla, i tuoi contenuti, cosa non è consentito, l'eliminazione dell'account e i tuoi diritti di consumatore.",
   "Eternus, terms of use, terms and conditions": "Eternus, termini di utilizzo, termini e condizioni",
+  "Terms of Use": "Termini di utilizzo",
   "The rules for using Eternus during the beta, in plain language.": "Le regole per usare Eternus durante la beta, in un linguaggio semplice.",
-  "Last updated: <span class=\"legal-pending\" data-pending=\"DATE\">[Pending DATE — publication date]</span>": "Ultimo aggiornamento: <span class=\"legal-pending\" data-pending=\"DATE\">[In sospeso DATE — data di pubblicazione]</span>",
   "1. About these terms": "1. Questi termini",
   "2. Who can use Eternus": "2. Chi può usare Eternus",
   "3. A beta service": "3. Un servizio in beta",
@@ -49,6 +49,5 @@
   "You can contact us first at <a href=\"mailto:support@myeternusapp.com\">support@myeternusapp.com</a> so we can try to solve any problem.": "Puoi contattarci prima a <a href=\"mailto:support@myeternusapp.com\">support@myeternusapp.com</a> per provare a risolvere qualsiasi problema.",
   "Language": "Lingua",
   "These terms are available in English, Portuguese and Italian with the same content. The English version is the reference version. If a translation differs from it, the English version applies, unless the law that protects you as a consumer gives you the right to rely on the version in your language or on the interpretation more favourable to you; in that case, that right applies. Nothing in this section limits rights you have under mandatory law.": "Questi termini sono disponibili in inglese, portoghese e italiano con lo stesso contenuto. La versione inglese è la versione di riferimento. Se una traduzione è diversa, si applica la versione inglese, salvo che la legge che ti tutela come consumatore ti dia il diritto di avvalerti della versione nella tua lingua o dell’interpretazione a te più favorevole; in tal caso prevale tale diritto. Nulla in questa sezione limita i diritti che ti spettano in base a norme imperative.",
-  "Questions about these terms?": "Domande su questi termini?",
-  "Last updated: 13 October 2026": "Ultimo aggiornamento: 13 ottobre 2026"
+  "Questions about these terms?": "Domande su questi termini?"
 }
