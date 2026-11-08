@@ -974,6 +974,31 @@
       body > footer .footer-nav { grid-template-columns: repeat(2, auto); gap: 0 40px; }
       body > footer .footer-socials { margin-top: -8px; }
     }
+    /* ===== "Privacy first" on phones (up to 640px) =====
+       dark header band (label, title, description, link) across the full width; the principles stay on white,
+       each in a dark rounded card. Private beta is unchanged. */
+    @media (max-width: 640px) {
+      .privacy { border-top: 0; padding-top: 0; }
+      .privacy-grid > div:first-child {
+        margin: 0 calc(-1 * var(--gutter)); padding: 56px var(--gutter) 52px;
+        background: var(--ink);
+      }
+      .privacy .eyebrow { color: var(--gold-light); }
+      .privacy .h2 { color: #fff; }
+      .privacy .h2 em { color: var(--gold-light); }
+      .privacy .lead { color: rgba(255,255,255,0.8); }
+      .privacy .btn-link { color: #fff; border-bottom-color: var(--gold-light); padding-bottom: 4px; }
+      .privacy .btn-link:hover { color: var(--gold-light); }
+      .privacy .btn-link:focus-visible { outline-color: var(--gold-light); }
+      .privacy .btn-link .arrow { color: var(--gold-light); }
+      .privacy .nots { border-top: 0; gap: 10px; }
+      .privacy .not, .privacy .not:nth-child(even) {
+        padding: 22px 20px 20px; border: 0; border-radius: 14px; background: var(--ink);
+      }
+      .privacy .not-title { color: #fff; }
+      .privacy .not-title em { color: var(--gold-light); }
+      .privacy .not-text { color: rgba(255,255,255,0.76); }
+    }
   </style>
   <script>document.documentElement.classList.add('js');</script>
 </head>
