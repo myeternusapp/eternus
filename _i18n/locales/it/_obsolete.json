@@ -1,4 +1,6 @@
 {
+  "<strong>Technical:</strong> an identifier for each installation with the device model (to show your active sessions), your settings and timestamps.": "<strong>Dati tecnici:</strong> un identificativo per ogni installazione con il modello del dispositivo (per mostrare le sessioni attive), le tue impostazioni e le date.",
+  "Google: Firebase and Google Cloud (sign-in, database, file storage, server functions, hosting, logs and backups), Google Workspace (sending service emails from hello@myeternusapp.com), Vertex AI and reCAPTCHA (Ask Eternus only), and Google Maps Platform (place suggestions).": "Google: Firebase e Google Cloud (accesso, database, archiviazione dei file, funzioni server, hosting, log e backup), Google Workspace (invio delle email di servizio da hello@myeternusapp.com), Vertex AI e reCAPTCHA (solo per Ask Eternus), e Google Maps Platform (suggerimenti di luoghi).",
   "i": "i",
   "ii": "ii",
   "iii": "iii",
@@ -62,6 +64,5 @@
   "My Tree brings together the people you have intentionally included in your Legacy — while every person keeps control of their own memories and story.": "My Tree riunisce le persone che hai incluso intenzionalmente nel tuo Legacy — mentre ogni persona mantiene il controllo dei propri ricordi e della propria storia.",
   "A diagram showing you at the centre, connected to people you have included in your Legacy, plus an option to invite someone new.": "Diagramma con te al centro e i collegamenti alle persone che hai incluso nel tuo Legacy, più un'opzione per invitare qualcuno di nuovo.",
   "Your memories remain yours. Eternus is built around intentional access, clear boundaries and trusted connections.": "I tuoi ricordi restano tuoi. Eternus si basa su accessi intenzionali, confini chiari e legami di fiducia.",
-  "Intentional sharing": "Condivisione intenzionale",
-  "Last updated: <span class=\"legal-pending\" data-pending=\"DATE\">[Pending DATE — publication date]</span>": "Ultimo aggiornamento: <span class=\"legal-pending\" data-pending=\"DATE\">[In sospeso DATE — data di pubblicazione]</span>"
+  "Intentional sharing": "Condivisione intenzionale"
 }
