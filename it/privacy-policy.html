@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-  INTERNAL NOTE (not shown to visitors). Prepared from the Eternus legal pack v3.
-  Elements with data-pending mark unresolved legal, operational or deployment items.
-  The website build refuses to publish while any of them remain (see _i18n/README.md).
--->
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
@@ -857,18 +852,6 @@
       .nav-auth, nav.nav-scrolled .nav-auth { transition: none; }
     }
 
-    /* Pending legal fields (working files only): the build refuses to publish any page that
-       still contains data-pending. See _i18n/README.md, "Pending legal fields". */
-    .legal-pending {
-      color: #f2c27a; background: rgba(232,160,60,0.12);
-      border: 1px dashed rgba(232,160,60,0.75); border-radius: 4px; padding: 0 4px;
-      box-decoration-break: clone; -webkit-box-decoration-break: clone;
-    }
-    .legal-pending-note, .legal-section p.legal-pending-note {
-      color: #f2c27a; background: rgba(232,160,60,0.08);
-      border-left: 3px solid rgba(232,160,60,0.85); border-radius: 4px;
-      padding: 12px 16px; margin: 0 0 18px; font-size: 0.84rem; line-height: 1.7;
-    }
     .legal-gates { margin-bottom: 28px; }
     .legal-list.legal-steps { counter-reset: legal-step; }
     .legal-list.legal-steps li { padding-left: 26px; }
@@ -1188,7 +1171,7 @@
     <p class="legal-eyebrow">Note legali</p>
     <h1 class="legal-title">Privacy, fin dalla progettazione.</h1>
     <p class="legal-intro">Questa informativa spiega quali dati personali tratta Eternus, perché, dove sono conservati, per quanto tempo e come puoi esercitare i tuoi diritti.</p>
-    <span class="legal-updated">Ultimo aggiornamento: 14 novembre 2026</span>
+    <span class="legal-updated">Ultimo aggiornamento: 24 novembre 2026</span>
   </section>
 
   <!-- BODY -->
@@ -1207,16 +1190,17 @@
           <li><a href="#others">4. Persone che non usano Eternus</a></li>
           <li><a href="#usage">5. Perché usiamo i dati</a></li>
           <li><a href="#messenger">6. Messenger</a></li>
-          <li><a href="#talk">7. Talk to Eternus</a></li>
-          <li><a href="#providers">8. Chi tratta i dati per nostro conto</a></li>
-          <li><a href="#transfers">9. Dove sono conservati i dati</a></li>
-          <li><a href="#retention">10. Per quanto tempo conserviamo i dati</a></li>
-          <li><a href="#deletion">11. Eliminare il tuo account</a></li>
-          <li><a href="#rights">12. I tuoi diritti</a></li>
-          <li><a href="#children">13. Età</a></li>
-          <li><a href="#ask-eternus">14. Ask Eternus</a></li>
-          <li><a href="#cookies">15. Sito</a></li>
-          <li><a href="#changes">16. Modifiche a questa informativa</a></li>
+          <li><a href="#guardians">7. Guardiani e preservazione</a></li>
+          <li><a href="#talk">8. Talk to Eternus</a></li>
+          <li><a href="#providers">9. Chi tratta i dati per nostro conto</a></li>
+          <li><a href="#transfers">10. Dove sono conservati i dati</a></li>
+          <li><a href="#retention">11. Per quanto tempo conserviamo i dati</a></li>
+          <li><a href="#deletion">12. Eliminare il tuo account</a></li>
+          <li><a href="#rights">13. I tuoi diritti</a></li>
+          <li><a href="#children">14. Età</a></li>
+          <li><a href="#ask-eternus">15. Ask Eternus</a></li>
+          <li><a href="#cookies">16. Sito</a></li>
+          <li><a href="#changes">17. Modifiche a questa informativa</a></li>
         </ol>
       </div>
       <div class="legal-jump-progress" aria-hidden="true"><span></span></div>
@@ -1234,16 +1218,17 @@
           <li><a href="#others">4. Persone che non usano Eternus</a></li>
           <li><a href="#usage">5. Perché usiamo i dati</a></li>
           <li><a href="#messenger">6. Messenger</a></li>
-          <li><a href="#talk">7. Talk to Eternus</a></li>
-          <li><a href="#providers">8. Chi tratta i dati per nostro conto</a></li>
-          <li><a href="#transfers">9. Dove sono conservati i dati</a></li>
-          <li><a href="#retention">10. Per quanto tempo conserviamo i dati</a></li>
-          <li><a href="#deletion">11. Eliminare il tuo account</a></li>
-          <li><a href="#rights">12. I tuoi diritti</a></li>
-          <li><a href="#children">13. Età</a></li>
-          <li><a href="#ask-eternus">14. Ask Eternus</a></li>
-          <li><a href="#cookies">15. Sito</a></li>
-          <li><a href="#changes">16. Modifiche a questa informativa</a></li>
+          <li><a href="#guardians">7. Guardiani e preservazione</a></li>
+          <li><a href="#talk">8. Talk to Eternus</a></li>
+          <li><a href="#providers">9. Chi tratta i dati per nostro conto</a></li>
+          <li><a href="#transfers">10. Dove sono conservati i dati</a></li>
+          <li><a href="#retention">11. Per quanto tempo conserviamo i dati</a></li>
+          <li><a href="#deletion">12. Eliminare il tuo account</a></li>
+          <li><a href="#rights">13. I tuoi diritti</a></li>
+          <li><a href="#children">14. Età</a></li>
+          <li><a href="#ask-eternus">15. Ask Eternus</a></li>
+          <li><a href="#cookies">16. Sito</a></li>
+          <li><a href="#changes">17. Modifiche a questa informativa</a></li>
         </ol>
       </nav>
 
@@ -1281,6 +1266,8 @@
             <li><strong>Ciò che aggiungi:</strong> Moments (testo, foto, video, audio, date, luoghi), chi può vederli, commenti, cuori, Memorials e i tuoi legami in My Tree.</li>
             <li><strong>Traduzioni:</strong> quando tu, o qualcuno che può vedere uno dei tuoi Moments, chiedi la traduzione di un Moment: la traduzione del titolo e del testo, la lingua in cui è stato scritto e le eventuali correzioni dell'autore.</li>
             <li><strong>Messaggi</strong> che invii e ricevi in Messenger.</li>
+            <li><strong>Guardiani:</strong> le persone che scegli come Guardiani, o che scelgono te, e gli inviti, le segnalazioni e le risposte legati a questo ruolo (sezione 07).</li>
+            <li><strong>Notifiche:</strong> se usi l'app Android, un token per le notifiche push per ogni installazione in cui hai effettuato l'accesso, con la lingua dell'app, perché le notifiche possano essere consegnate a quel dispositivo. Una notifica push ha un testo fisso, come «Hai un nuovo messaggio», e solo gli identificativi interni di cui l'app ha bisogno per aprire la schermata giusta: nessun nome e nessun testo di Moments, commenti o messaggi. Nelle Impostazioni scegli quali tipi di notifiche push ricevere; le tue scelte sono salvate nel tuo account ed eliminate con esso. Gli avvisi di sicurezza dell'account non possono essere disattivati: sono gli avvisi su una segnalazione di scomparsa e sulla sua gestione (la sospensione dell'account, un esame da parte dell'assistenza Eternus, la chiusura della segnalazione o la preservazione dell'account) e su una richiesta di recuperare un account preservato, sia che riguardino il tuo account sia un account di cui sei Guardiano. I promemoria, i riepiloghi e i «Ricordi di questo giorno» sono programmati sul tuo dispositivo. Conserviamo anche nel tuo account una cronologia degli avvisi mostrati nella sezione Notifiche dell'app: attività nella tua Circle (un Moment condiviso con te, commenti e cuori sui tuoi Moments); modifiche ai tuoi Guardiani; modifiche dei Guardiani di un account di cui sei Guardiano, o per cui c'è una proposta perché tu lo diventi; proposte per il My Tree fatte a te e le risposte a quelle che hai fatto; e avvisi di sicurezza dell'account. Ogni voce contiene solo il tipo di avviso, identificativi interni di ciò a cui si riferisce, la data e se l'hai già visto. I messaggi non sono inclusi; restano in Messenger. Le voci vengono registrate anche se disattivi le notifiche push, che controllano solo gli avvisi sul telefono.</li>
             <li><strong>Talk to Eternus:</strong> ciò che scrivi o detti, e le risposte.</li>
             <li><strong>Dati tecnici:</strong> un identificativo per ogni installazione con il modello del dispositivo (per mostrare le sessioni attive), le tue impostazioni e le date. Se traduci Moments, un contatore delle nuove traduzioni richieste dal tuo account nell'ultimo minuto, per prevenire abusi e limitare i costi.</li>
           </ul>
@@ -1293,7 +1280,7 @@
             <h2 class="legal-heading">Persone che non usano Eternus</h2>
             <a class="legal-anchor" href="#others" aria-label="Copia il link a questa sezione"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
-          <p>I tuoi Moments e Memorials possono menzionare o mostrare altre persone e un invito contiene l'email della persona invitata. Condividi solo ciò che hai il diritto di condividere. Chiunque può chiederci informazioni sui dati che lo riguardano scrivendo a <a href="mailto:support@myeternusapp.com">support@myeternusapp.com</a>.</p>
+          <p>I tuoi Moments e Memorials possono menzionare o mostrare altre persone e un invito, anche quello a diventare Guardiano, contiene l'email della persona invitata. Condividi solo ciò che hai il diritto di condividere. Chiunque può chiederci informazioni sui dati che lo riguardano scrivendo a <a href="mailto:support@myeternusapp.com">support@myeternusapp.com</a>.</p>
           <ul class="legal-list">
             <li>Base giuridica: il legittimo interesse dei nostri utenti a conservare e condividere i propri ricordi con le persone che scelgono, e il nostro a fornire tale servizio — art. 6, par. 1, lett. f), GDPR.</li>
             <li>Condividi in modo responsabile: aggiungi informazioni, foto o registrazioni di altre persone solo se ne hai il diritto, e solo per chi deve vederle.</li>
@@ -1311,10 +1298,10 @@
             <a class="legal-anchor" href="#usage" aria-label="Copia il link a questa sezione"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
           <ul class="legal-list">
-            <li>Per fornire Eternus: il tuo account, i tuoi Moments, la condivisione con le persone che scegli, gli inviti, My Tree, Messenger e le email di servizio. Base giuridica: esecuzione del contratto con te (i Termini di utilizzo) — art. 6, par. 1, lett. b), GDPR.</li>
-            <li>Per mantenere Eternus sicura e funzionante: sicurezza, prevenzione degli abusi, log del server, backup e registrazioni delle eliminazioni degli account. Base giuridica: il nostro legittimo interesse a mantenere sicuri Eternus e i suoi utenti, a ripristinare il servizio in caso di guasti e a garantire che gli account eliminati restino eliminati — art. 6, par. 1, lett. f), GDPR. Conserviamo solo quanto necessario a queste finalità, per i periodi della sezione 10, e puoi opporti (sezione 12).</li>
-            <li>Per mantenere, dopo l'eliminazione del tuo account, i messaggi, i commenti e i cuori che hai lasciato ad altre persone, come parte dei loro ricordi e senza il tuo nome. Base giuridica: il legittimo interesse delle persone a cui hai scritto, o dei cui Moments hai commentato, a mantenere complete le loro conversazioni e i loro ricordi — art. 6, par. 1, lett. f), GDPR. Il tuo nome viene rimosso e ne sei informato prima di eliminare l'account. Puoi opporti scrivendo a support@myeternusapp.com (sezione 12); valutiamo ogni opposizione rispetto agli interessi di queste persone.</li>
-            <li>Per tradurre un Moment quando qualcuno lo chiede: quando qualcuno che può vedere un Moment tocca Traduci, il titolo e il testo vengono tradotti nella sua lingua e la traduzione viene conservata per non doverla rifare. Nulla viene tradotto se non lo chiede qualcuno che può vedere il Moment. Base giuridica: per chi fa la richiesta, compreso l'autore che traduce il proprio Moment, esecuzione del contratto con lui (i Termini di utilizzo) — art. 6, par. 1, lett. b), GDPR. Per l'autore di un Moment la cui traduzione viene chiesta da qualcuno con cui lo ha condiviso, il nostro legittimo interesse, e quello dell'autore e delle persone che ha scelto, a permettere a queste persone di leggere il Moment nella propria lingua — art. 6, par. 1, lett. f), GDPR. Il testo viene tradotto solo per persone che possono già vedere il Moment, nell'Unione europea, e Google non lo usa per addestrare i suoi modelli. Puoi opporti scrivendo a support@myeternusapp.com (sezione 12); valutiamo ogni opposizione.</li>
+            <li>Per fornire Eternus: il tuo account, i tuoi Moments, la condivisione con le persone che scegli, gli inviti, My Tree, Messenger, i Guardiani, le notifiche e le email di servizio. Base giuridica: esecuzione del contratto con te (i Termini di utilizzo) — art. 6, par. 1, lett. b), GDPR.</li>
+            <li>Per mantenere Eternus sicura e funzionante: sicurezza, prevenzione degli abusi, log del server, backup e registrazioni delle eliminazioni degli account. Base giuridica: il nostro legittimo interesse a mantenere sicuri Eternus e i suoi utenti, a ripristinare il servizio in caso di guasti e a garantire che gli account eliminati restino eliminati — art. 6, par. 1, lett. f), GDPR. Conserviamo solo quanto necessario a queste finalità, per i periodi della sezione 11, e puoi opporti (sezione 13).</li>
+            <li>Per mantenere, dopo l'eliminazione del tuo account, i messaggi, i commenti e i cuori che hai lasciato ad altre persone, come parte dei loro ricordi e senza il tuo nome. Base giuridica: il legittimo interesse delle persone a cui hai scritto, o dei cui Moments hai commentato, a mantenere complete le loro conversazioni e i loro ricordi — art. 6, par. 1, lett. f), GDPR. Il tuo nome viene rimosso e ne sei informato prima di eliminare l'account. Puoi opporti scrivendo a support@myeternusapp.com (sezione 13); valutiamo ogni opposizione rispetto agli interessi di queste persone.</li>
+            <li>Per tradurre un Moment quando qualcuno lo chiede: quando qualcuno che può vedere un Moment tocca Traduci, il titolo e il testo vengono tradotti nella sua lingua e la traduzione viene conservata per non doverla rifare. Nulla viene tradotto se non lo chiede qualcuno che può vedere il Moment. Base giuridica: per chi fa la richiesta, compreso l'autore che traduce il proprio Moment, esecuzione del contratto con lui (i Termini di utilizzo) — art. 6, par. 1, lett. b), GDPR. Per l'autore di un Moment la cui traduzione viene chiesta da qualcuno con cui lo ha condiviso, il nostro legittimo interesse, e quello dell'autore e delle persone che ha scelto, a permettere a queste persone di leggere il Moment nella propria lingua — art. 6, par. 1, lett. f), GDPR. Il testo viene tradotto solo per persone che possono già vedere il Moment, nell'Unione europea, e Google non lo usa per addestrare i suoi modelli. Puoi opporti scrivendo a support@myeternusapp.com (sezione 13); valutiamo ogni opposizione.</li>
             <li>Per rispondere alle tue richieste sui tuoi dati. Base giuridica: adempimento dei nostri obblighi di legge in materia di protezione dei dati — art. 6, par. 1, lett. c), GDPR.</li>
           </ul>
           <p>Non usiamo i tuoi dati per pubblicità o marketing.</p>
@@ -1326,12 +1313,29 @@
             <h2 class="legal-heading">Messenger</h2>
             <a class="legal-anchor" href="#messenger" aria-label="Copia il link a questa sezione"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
-          <p>Messenger funziona tra persone che condividono un accesso Circle o Legacy. Ogni messaggio è salvato nella tua conversazione e in quella dell'altra persona. Puoi eliminare un messaggio per te in qualsiasi momento; chi lo ha inviato può eliminarlo per entrambi entro 24 ore dall'invio. Dopo, resta una breve registrazione (chi l'ha inviato e quando), senza il testo. Il blocco impedisce nuovi messaggi in entrambe le direzioni.</p>
+          <p>Messenger funziona tra persone che condividono un accesso Circle o Legacy, e tra le persone con accesso Legacy a un account e i Guardiani di quell'account (sezione 07). Ogni messaggio è salvato nella tua conversazione e in quella dell'altra persona. Puoi eliminare un messaggio per te in qualsiasi momento; chi lo ha inviato può eliminarlo per entrambi entro 24 ore dall'invio. Dopo, resta una breve registrazione (chi l'ha inviato e quando), senza il testo. Il blocco impedisce nuovi messaggi in entrambe le direzioni.</p>
+        </section>
+
+        <section class="legal-section" id="guardians">
+          <div class="legal-section-head">
+            <span class="legal-num">07</span>
+            <h2 class="legal-heading">Guardiani e preservazione</h2>
+            <a class="legal-anchor" href="#guardians" aria-label="Copia il link a questa sezione"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
+          </div>
+          <p>I Guardiani sono fino a tre persone che il titolare di un account sceglie per aiutare a confermare una segnalazione della sua scomparsa, perché l'account possa essere preservato. I Guardiani non sono rappresentanti legali né eredi del titolare. Questa sezione riguarda i dati personali coinvolti.</p>
+          <ul class="legal-list">
+            <li><strong>Cosa trattiamo:</strong> l'email del Guardiano invitato e il messaggio facoltativo del titolare; se ogni Guardiano ha accettato, rifiutato, rinunciato o è stato sostituito; una segnalazione di scomparsa (chi l'ha fatta e quando), la risposta di ogni Guardiano e quando è stata data, e il motivo per cui un caso richiede una verifica; i familiari proposti per il My Tree e le loro risposte; le situazioni che i Guardiani segnalano all'assistenza Eternus, e gli avvisi che non è stato possibile consegnare; quando si dimostra che una segnalazione era errata, una registrazione di questa chiusura, per limitare le segnalazioni ripetute; una richiesta del titolare di recuperare un account preservato, con il tipo di verifica dell'identità e di prova di vita utilizzato, eventuali opposizioni e il loro esito; e le decisioni dell'assistenza Eternus, con chi le ha prese, quando, il motivo, il risultato e, quando la decisione si basa su prove, un riepilogo delle prove verificate.</li>
+            <li><strong>Perché:</strong> per offrire i Guardiani come parte di Eternus: inviti, segnalazioni e conferme, la sospensione e la preservazione di un account, le modifiche dei Guardiani, le proposte per il My Tree, il contatto tramite Messenger e le relative email e notifiche. Base giuridica: esecuzione del contratto con il titolare e con ogni Guardiano (i Termini di utilizzo) — art. 6, par. 1, lett. b), GDPR. Verifiche dell'assistenza, controlli per il recupero, limiti alle segnalazioni ripetute e relative registrazioni: il nostro legittimo interesse, e quello dei titolari degli account, a proteggere gli account da segnalazioni errate o abusive e da recuperi non autorizzati, e a poter dimostrare come è stata presa ogni decisione — art. 6, par. 1, lett. f), GDPR.</li>
+            <li><strong>Chi può vederli:</strong> dopo che un Guardiano ha accettato, il suo nome e la sua foto del profilo sono visibili in My Tree alle persone con accesso Legacy all'account, anche mentre il titolare è in vita, e i Guardiani si vedono tra loro. Queste persone possono scrivere ai Guardiani in Messenger (sezione 06). Il titolare e i Guardiani vedono lo stato di una segnalazione. L'assistenza Eternus lavora su un caso solo quando richiede una verifica o quando il titolare chiede il recupero, con strumenti che mostrano le informazioni del caso e non i contenuti dell'account. Essere Guardiano non dà, di per sé, accesso a contenuti Private, Circle o Legacy.</li>
+            <li><strong>Come si decide la preservazione:</strong> un account viene preservato automaticamente, con un controllo giornaliero, in uno di due casi: tre Guardiani hanno confermato e nessuno ha dissentito o risposto di non essere sicuro; oppure l'assistenza Eternus ha verificato un atto ufficiale del decesso, che sostituisce le risposte dei Guardiani ma non gli altri controlli e produce effetto non prima di 14 giorni dopo; un nuovo dissenso di un Guardiano annulla questa verifica. In entrambi i casi devono essere trascorsi almeno 30 giorni dalla segnalazione e dall'avviso al titolare, e «Sono qui» prevale sempre. Ciò che non è chiaro viene esaminato da una persona dell'assistenza Eternus. L'assistenza può chiudere una segnalazione, sbloccare un caso trattenuto per verifica perché i controlli normali si applichino di nuovo, oppure registrare o revocare una verifica; non può mai segnalare una scomparsa e non preserva mai un account direttamente. Finché l'account è sospeso, il titolare può annullare la segnalazione con «Sono qui»; dopo la preservazione, può accedere e chiedere nell'app che l'account venga recuperato, e una persona dell'assistenza Eternus esamina la richiesta. La preservazione è uno stato dell'account Eternus: non è una dichiarazione legale di morte e non ha effetti al di fuori di Eternus.</li>
+            <li><strong>Per quanto tempo:</strong> gli inviti a diventare Guardiano, le modifiche dei Guardiani, le proposte per il My Tree e le situazioni segnalate dai Guardiani sono conservati finché esistono gli account coinvolti, e vengono eliminati quando uno di questi account viene eliminato, tranne una proposta per il My Tree che ha già ricevuto risposta, che resta nel My Tree del familiare senza l'identità di chi l'ha proposta (sezione 12). Una segnalazione di scomparsa, anche se annullata con «Sono qui», è conservata finché esiste l'account del titolare e viene eliminata con esso. Una richiesta di recuperare un account preservato viene eliminata con l'account del titolare. La registrazione delle segnalazioni chiuse su un account viene eliminata con quell'account; l'identificativo di un account eliminato che ha fatto una segnalazione viene rimosso da essa. Le registrazioni delle decisioni dell'assistenza sono conservate finché il processo a cui si riferiscono è in corso e, dopo, finché servono per finalità di audit, per rispondere a reclami e per adempiere obblighi di legge. Non vengono eliminate quando un account viene eliminato: conservano chi ha preso ogni decisione, quando e il risultato, e perdono il motivo, il riepilogo delle prove verificate e il riferimento all'account. Anche così, può restare possibile associarle all'account tramite riferimenti interni conservati in registrazioni dell'assistenza e di sicurezza, finché queste sono conservate. Se un account eliminato era Guardiano nel caso di un'altra persona, quel caso conserva un identificativo interno non collegato a nessun nome, email o profilo. Le copie delle email relative ai Guardiani seguono la regola delle email di servizio (sezione 11).</li>
+            <li><strong>I tuoi diritti:</strong> i diritti della sezione 13 valgono per i titolari degli account, per i Guardiani e per chiunque sia invitato o proposto. Chi è invitato può rifiutare, un Guardiano può rinunciare in qualsiasi momento finché l'account è attivo e, finché l'account è attivo, il titolare può rimuovere un Guardiano in qualsiasi momento. Quando ci basiamo sul nostro legittimo interesse, puoi opporti scrivendo a support@myeternusapp.com.</li>
+          </ul>
         </section>
 
         <section class="legal-section" id="talk">
           <div class="legal-section-head">
-            <span class="legal-num">07</span>
+            <span class="legal-num">08</span>
             <h2 class="legal-heading">Talk to Eternus</h2>
             <a class="legal-anchor" href="#talk" aria-label="Copia il link a questa sezione"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
@@ -1341,11 +1345,11 @@
 
         <section class="legal-section" id="providers">
           <div class="legal-section-head">
-            <span class="legal-num">08</span>
+            <span class="legal-num">09</span>
             <h2 class="legal-heading">Chi tratta i dati per nostro conto</h2>
             <a class="legal-anchor" href="#providers" aria-label="Copia il link a questa sezione"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
-          <p>Google: Firebase e Google Cloud (accesso, database, archiviazione dei file, funzioni server, hosting, log e backup), Google Workspace (invio delle email di servizio da hello@myeternusapp.com), Vertex AI e reCAPTCHA (solo per Ask Eternus), Cloud Translation (traduzioni dei Moments) e Google Maps Platform (suggerimenti di luoghi).</p>
+          <p>Google: Firebase e Google Cloud (accesso, database, archiviazione dei file, funzioni server, notifiche push, hosting, log e backup), Google Workspace (invio delle email di servizio da hello@myeternusapp.com), Vertex AI e reCAPTCHA (solo per Ask Eternus), Cloud Translation (traduzioni dei Moments) e Google Maps Platform (suggerimenti di luoghi).</p>
           <p>Quando digiti un luogo, ad esempio in un Moment o nel tuo profilo, il testo che scrivi può essere inviato a Google Maps Platform per mostrare suggerimenti.</p>
           <p>Quando tocchi Traduci su un Moment, il titolo e il testo vengono inviati a Google Cloud Translation, che li traduce nell'Unione europea. Google conserva il testo solo brevemente in memoria per tradurlo, non lo usa per addestrare o migliorare i suoi modelli di traduzione e non ne rivendica la proprietà. Le traduzioni vengono fatte solo quando qualcuno le chiede; leggere una traduzione già esistente non invia di nuovo il testo.</p>
           <p>Prima di ciò, la lingua di un Moment viene rilevata sul tuo dispositivo, così che Traduci venga proposto solo quando il Moment è in un'altra lingua: nell'app Android dall'identificazione della lingua sul dispositivo di Google ML Kit e, su Eternus Web, dal rilevamento della lingua del browser stesso, quando il browser lo offre e il relativo modello linguistico è già sul tuo dispositivo. Eternus non invia il testo da nessuna parte per rilevarne la lingua. Nell'app Android, ML Kit può inviare a Google informazioni tecniche per diagnostica e analisi di utilizzo: dati del dispositivo (come produttore, modello e versione del sistema operativo), il nome del pacchetto e la versione dell'app, informazioni su prestazioni ed errori, la dimensione dei dati in ingresso e in uscita e le lingue identificate. Google dichiara di cifrare queste informazioni durante la trasmissione e di non condividerle con terzi. Il testo stesso non figura tra le informazioni indicate da Google.</p>
@@ -1355,7 +1359,7 @@
 
         <section class="legal-section" id="transfers">
           <div class="legal-section-head">
-            <span class="legal-num">09</span>
+            <span class="legal-num">10</span>
             <h2 class="legal-heading">Dove sono conservati i dati</h2>
             <a class="legal-anchor" href="#transfers" aria-label="Copia il link a questa sezione"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
@@ -1372,7 +1376,7 @@
 
         <section class="legal-section" id="retention">
           <div class="legal-section-head">
-            <span class="legal-num">10</span>
+            <span class="legal-num">11</span>
             <h2 class="legal-heading">Per quanto tempo conserviamo i dati</h2>
             <a class="legal-anchor" href="#retention" aria-label="Copia il link a questa sezione"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
@@ -1380,11 +1384,15 @@
             <li>Il tuo account e i tuoi contenuti: finché non li elimini o non elimini l'account.</li>
             <li>Traduzioni di un Moment: finché il Moment o il tuo account non vengono eliminati. Quando il titolo o il testo di un Moment cambiano, la traduzione del testo precedente viene rimossa; le correzioni fatte dall'autore vengono mantenute perché possa rivederle.</li>
             <li>Il contatore delle nuove traduzioni: contiene solo il numero di traduzioni richieste nel minuto in corso e viene sovrascritto a ogni nuova traduzione; viene eliminato quando il tuo account viene eliminato.</li>
+            <li>Token per le notifiche push: finché non esci dall'account su quel dispositivo, finché Google non segnala che il token non funziona più o finché il tuo account non viene eliminato.</li>
+            <li>La cronologia delle notifiche: ogni voce viene conservata per 90 giorni e poi eliminata automaticamente, di solito entro il giorno successivo. Viene eliminata anche quando il tuo account viene eliminato.</li>
             <li>Messaggi, commenti e cuori lasciati ad altre persone: finché quelle persone li conservano, senza il tuo nome dopo l'eliminazione dell'account.</li>
             <li>Foto, audio e video eliminati possono essere recuperati da noi per un massimo di 7 giorni, poi vengono cancellati.</li>
             <li>Log del server: 30 giorni. Google conserva i log di audit amministrativo per 400 giorni.</li>
             <li>Backup del database: li creiamo manualmente prima di modifiche al servizio. Ogni backup viene riesaminato 30 giorni dopo la creazione e cancellato manualmente quando non è più necessario. Un backup cancellato può ancora essere recuperato per un massimo di 7 giorni, poi viene eliminato.</li>
-            <li>Copie delle email di servizio automatiche che inviamo da hello@myeternusapp.com (inviti, verifica dell'email e conferme di modifica dell'email, e avvisi di sicurezza dell'account, come la modifica della password): il nostro obiettivo è cancellarle entro 90 giorni dall'invio. Le email di reimpostazione della password sono inviate direttamente da Firebase Authentication e non ne conserviamo copia. La corrispondenza con l'assistenza non è inclusa qui; vedi il punto successivo.</li>
+            <li>Copie delle email di servizio automatiche che inviamo da hello@myeternusapp.com (inviti, avvisi dei Guardiani, verifica dell'email e conferme di modifica dell'email, e avvisi di sicurezza dell'account, come la modifica della password): il nostro obiettivo è cancellarle entro 90 giorni dall'invio. Le email di reimpostazione della password sono inviate direttamente da Firebase Authentication e non ne conserviamo copia. La corrispondenza con l'assistenza non è inclusa qui; vedi il punto successivo.</li>
+            <li>Guardiani: vedi sezione 07.</li>
+            <li>Avvisi interni di sicurezza: quando l'assistenza Eternus compie un passaggio su una segnalazione di scomparsa o su una richiesta di recuperare un account preservato, viene inviata un'email interna automatica da hello@myeternusapp.com a security@myeternusapp.com, un indirizzo che recapita nello stesso account hello@myeternusapp.com, dove il messaggio viene conservato. Contiene il tipo di passaggio, riferimenti interni alla richiesta e all'account, l'indirizzo email della persona dell'assistenza Eternus che lo ha compiuto (o, per una richiesta di recupero, l'indicazione che l'ha fatta il titolare) e l'ora; non contiene motivi, prove né contenuti dell'account. Queste email non rientrano nella regola delle email di servizio indicata sopra: sono conservate alle stesse condizioni delle registrazioni delle decisioni dell'assistenza (sezione 07).</li>
             <li>Registrazione minima di ogni eliminazione dell'account: conservata finché è necessaria per proteggere l'account eliminato, in modo che l'accesso non possa essere ripristinato. Contiene solo un identificativo interno, l'indicazione che l'eliminazione è stata completata e, se disponibile, la data della richiesta. Non contiene nome, email né profilo.</li>
             <li>Registrazioni delle richieste ricevute:
               <ul>
@@ -1399,22 +1407,23 @@
 
         <section class="legal-section" id="deletion">
           <div class="legal-section-head">
-            <span class="legal-num">11</span>
+            <span class="legal-num">12</span>
             <h2 class="legal-heading">Eliminare il tuo account</h2>
             <a class="legal-anchor" href="#deletion" aria-label="Copia il link a questa sezione"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
           <p>Nell'app Android: Impostazioni → Account e sicurezza → Elimina account. Se usi Eternus Web, o non puoi usare l'app, puoi chiederci via email di eliminare il tuo account: vedi <a href="delete-account.html">come eliminare il tuo account</a>.</p>
           <ul class="legal-list">
-            <li><strong>Viene eliminato:</strong> il profilo, i Moments, foto, audio e video, le conversazioni di Talk to Eternus, le sessioni, la tua copia di ogni conversazione, i Memorials che hai creato, il tuo accesso all'Eternus di altre persone e il loro al tuo, gli inviti in sospeso e il tuo account di accesso. I commenti che altre persone hanno lasciato sui tuoi Moments vengono eliminati con essi.</li>
+            <li><strong>Viene eliminato:</strong> il profilo, i Moments, foto, audio e video, le conversazioni di Talk to Eternus, le sessioni, i token per le notifiche push, la tua cronologia delle notifiche, la tua copia di ogni conversazione, i Memorials che hai creato, il tuo accesso all'Eternus di altre persone e il loro al tuo, gli inviti in sospeso e il tuo account di accesso. I commenti che altre persone hanno lasciato sui tuoi Moments vengono eliminati con essi.</li>
             <li><strong>Resta ad altre persone:</strong> i messaggi che hai inviato restano nelle conversazioni di chi li ha ricevuti, indicati come inviati da «Account eliminato». I commenti lasciati sui Moments di altre persone restano senza il tuo nome. I cuori che hai dato restano nel conteggio, senza collegamento a te.</li>
-            <li><strong>Cosa resta tecnicamente:</strong> un identificativo interno del tuo ex account resta associato ai messaggi conservati da altri e ai blocchi che hanno impostato; non è collegato al tuo nome, email o profilo. Conserviamo una registrazione minima dell'eliminazione per impedire che gli accessi vengano ripristinati.</li>
-            <li><strong>Backup:</strong> i tuoi dati restano nei backup creati prima dell'eliminazione finché quei backup non vengono cancellati (sezione 10). Se ripristiniamo un backup, applichiamo di nuovo le eliminazioni completate prima di usare i dati.</li>
+            <li><strong>Cosa resta tecnicamente:</strong> un identificativo interno del tuo ex account resta associato ai messaggi conservati da altri e ai blocchi che hanno impostato; non è collegato al tuo nome, email o profilo. Conserviamo una registrazione minima dell'eliminazione per impedire che gli accessi vengano ripristinati. Gli avvisi già registrati nella cronologia delle notifiche di altre persone, per esempio una segnalazione sul tuo account comunicata ai suoi Guardiani, possono conservare identificativi interni del tuo ex account o di elementi collegati a esso finché quelle voci non raggiungono la fine del loro periodo di conservazione (sezione 11); non sono collegati al tuo nome, alla tua email o al tuo profilo.</li>
+            <li><strong>Guardiani:</strong> vengono eliminati i tuoi inviti a diventare Guardiano, i ruoli di Guardiano che avevi, le modifiche dei Guardiani e le situazioni segnalate che ti riguardano, e le proposte per il My Tree che ti sono state fatte. Se eri Guardiano di qualcuno il cui account è sospeso dopo una segnalazione, o preservato, nel suo account può restare una registrazione tecnica minima di posto vacante, senza la tua identità, perché gli altri Guardiani possano scegliere qualcuno al tuo posto. Un collegamento al My Tree che hai proposto come Guardiano, e che il familiare ha accettato o rifiutato, resta senza la tua identità. La segnalazione della tua scomparsa, se esiste, viene eliminata; le registrazioni dell'assistenza che la riguardano sono conservate solo nella forma ridotta descritta nella sezione 07. Un account sospeso dopo una segnalazione, o preservato, non può essere eliminato dall'app.</li>
+            <li><strong>Backup:</strong> i tuoi dati restano nei backup creati prima dell'eliminazione finché quei backup non vengono cancellati (sezione 11). Se ripristiniamo un backup, applichiamo di nuovo le eliminazioni completate prima di usare i dati.</li>
           </ul>
         </section>
 
         <section class="legal-section" id="rights">
           <div class="legal-section-head">
-            <span class="legal-num">12</span>
+            <span class="legal-num">13</span>
             <h2 class="legal-heading">I tuoi diritti</h2>
             <a class="legal-anchor" href="#rights" aria-label="Copia il link a questa sezione"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
@@ -1426,7 +1435,7 @@
 
         <section class="legal-section" id="children">
           <div class="legal-section-head">
-            <span class="legal-num">13</span>
+            <span class="legal-num">14</span>
             <h2 class="legal-heading">Età</h2>
             <a class="legal-anchor" href="#children" aria-label="Copia il link a questa sezione"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
@@ -1435,7 +1444,7 @@
 
         <section class="legal-section" id="ask-eternus">
           <div class="legal-section-head">
-            <span class="legal-num">14</span>
+            <span class="legal-num">15</span>
             <h2 class="legal-heading">Ask Eternus</h2>
             <a class="legal-anchor" href="#ask-eternus" aria-label="Copia il link a questa sezione"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
@@ -1449,7 +1458,7 @@
 
         <section class="legal-section" id="cookies">
           <div class="legal-section-head">
-            <span class="legal-num">15</span>
+            <span class="legal-num">16</span>
             <h2 class="legal-heading">Sito</h2>
             <a class="legal-anchor" href="#cookies" aria-label="Copia il link a questa sezione"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
@@ -1458,7 +1467,7 @@
 
         <section class="legal-section" id="changes">
           <div class="legal-section-head">
-            <span class="legal-num">16</span>
+            <span class="legal-num">17</span>
             <h2 class="legal-heading">Modifiche a questa informativa</h2>
             <a class="legal-anchor" href="#changes" aria-label="Copia il link a questa sezione"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="i-link" d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path class="i-link" d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/><polyline class="i-check" points="5 12.5 10 17 19 7"/></svg></a>
           </div>
